@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>trs的个人博客</title>
+        <link>https://ther1sing3un.github.io/</link>
+        <description>这是我的全新 Hugo 网站</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 08 Dec 2021 23:50:32 &#43;0800</lastBuildDate>
+            <atom:link href="https://ther1sing3un.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>Hello,world</title>
+    <link>https://ther1sing3un.github.io/helloworld/</link>
+    <pubDate>Wed, 08 Dec 2021 23:50:32 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/helloworld/</guid>
+    <description><![CDATA[hello 刘朝阳真帅 确实]]></description>
+</item></channel>
+</rss>

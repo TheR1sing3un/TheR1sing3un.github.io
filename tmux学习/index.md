@@ -44,7 +44,7 @@
 
 启动Tmux窗口,底部有一个状态栏。状态栏左侧是窗口信息(编号和名称)，右侧是系统信息
 
-![image-20211002142538408](C:\Users\TheR1sing3un\AppData\Roaming\Typora\typora-user-images\image-20211002142538408.png)
+![image-20211002142538408](https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002142538408.png)
 
 > 退出
 
@@ -120,7 +120,7 @@ tmux split-window #划分上下两个窗格
 tmux split-window -h #划分左右两个窗格
 ```
 
-![image-20211002151708877](C:\Users\TheR1sing3un\AppData\Roaming\Typora\typora-user-images\image-20211002151708877.png)
+![image-20211002151708877](https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002151708877.png)
 
 ### 5.2移动光标
 

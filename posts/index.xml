@@ -1,9 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>所有文章 - trs的个人博客</title>
+        <title>所有文章 - blog of trs</title>
         <link>https://ther1sing3un.github.io/posts/</link>
-        <description>所有文章 | trs的个人博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 08 Dec 2021 23:50:32 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <description>所有文章 | blog of trs</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Wed, 08 Dec 2021 23:50:32 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Hello,world</title>
     <link>https://ther1sing3un.github.io/helloworld/</link>
     <pubDate>Wed, 08 Dec 2021 23:50:32 &#43;0800</pubDate>

@@ -1,6 +1,6 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>blog of trs</title>
+        <title>trs的个人博客</title>
         <link>https://ther1sing3un.github.io/</link>
         <description>只是平凡记录着</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>

@@ -19,4 +19,14 @@
 
 🔮[Littlechai的个人博客](https://lxy-littlechai.github.io/ "每日一膜lxy")
 
+---
+
+> 算法竞赛大神和后端开发同届大佬
+
+🏆[Attack204的个人博客](http://blog.attack204.com/ "大二就进字节的猛人")
+
+
+
+
+
 

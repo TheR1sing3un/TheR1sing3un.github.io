@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>面试 - 标签 - trs的个人博客</title>
-        <link>https://ther1sing3un.github.io/tags/%E9%9D%A2%E8%AF%95/</link>
-        <description>面试 - 标签 - trs的个人博客</description>
+        <title>算法 - 标签 - trs的个人博客</title>
+        <link>https://ther1sing3un.github.io/tags/%E7%AE%97%E6%B3%95/</link>
+        <description>算法 - 标签 - trs的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
-            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Thu, 30 Dec 2021 10:40:18 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/tags/%E9%9D%A2%E8%AF%95/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Thu, 30 Dec 2021 10:40:18 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
     <title>LRU算法原理及实现</title>
     <link>https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/</link>
     <pubDate>Thu, 30 Dec 2021 10:40:18 &#43;0800</pubDate>

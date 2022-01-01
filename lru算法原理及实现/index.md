@@ -419,8 +419,155 @@ public class LRUCacheSimple {
 
 ---
 
+## LRU(Golang实现)
+
+上述是Java版本的LRU实现，下述我使用Golang语言进行实现，大致思路和逻辑是相同的。
+
+> 代码如下
+
+```go
+package LRU
+
+import "fmt"
+
+type Node struct {
+   key  int
+   val  int
+   pre  *Node
+   next *Node
+}
+
+type LRUCache struct {
+   Cap    int           //最大容量
+   bucket map[int]*Node //HashMap
+   head   *Node
+   tail   *Node
+   Size   int
+}
+
+//LRUCache的构造
+func New(cap int) *LRUCache {
+   cache := &LRUCache{
+      Cap:    cap,
+      bucket: make(map[int]*Node, cap),
+      head:   &Node{0, 0, nil, nil},
+      tail:   &Node{0, 0, nil, nil},
+      Size:   0,
+   }
+   cache.head.next = cache.tail
+   cache.tail.pre = cache.head
+   return cache
+}
+
+//添加一个节点到首位(也就是最近一个访问的)
+func (this *LRUCache) addNodeFirst(node *Node) {
+   //判断是否到容量上限
+   if this.Size == this.Cap {
+      //到达上限之后,删除最后一个节点
+      this.deleteNode(this.tail.pre)
+   }
+   //添加节点到首位
+   node.pre = this.head
+   node.next = this.head.next
+   this.head.next.pre = node
+   this.head.next = node
+   //添加该映射
+   this.bucket[node.key] = node
+   this.Size++
+}
+
+//将某个key变成最近使用的(假定该key一定存在)
+func (this *LRUCache) makeNodeFirst(key int) {
+   //根据key获取该节点
+   node := this.bucket[key]
+   //先删除该节点
+   this.deleteNode(node)
+   //再加入该节点到首位
+   this.addNodeFirst(node)
+}
+
+//删除某个节点
+func (this *LRUCache) deleteNode(node *Node) {
+   //先删除映射
+   delete(this.bucket, node.key)
+   //从双向链表中删除该节点
+   node.pre.next = node.next
+   node.next.pre = node.pre
+   this.Size--
+}
+
+//put方法
+func (this *LRUCache) Put(key, val int) {
+   //先判断是否已有该节点,有则更新
+   node := this.bucket[key]
+   if node == nil {
+      //当没有该节点时,直接加入到首位
+      node := &Node{key, val, nil, nil}
+      this.addNodeFirst(node)
+   } else {
+      //如果已经有该节点,那么先直接更新该节点的值并且提前至首位
+      node.val = val
+      this.makeNodeFirst(key)
+   }
+}
+
+//get方法,如果不存在则返回-1(假设值都是正数)
+func (this *LRUCache) Get(key int) int {
+   node := this.bucket[key]
+   if node == nil {
+      //不存在则返回-1
+      return -1
+   } else {
+      //将节点提前到首位
+      this.makeNodeFirst(key)
+      //返回值
+      return node.val
+   }
+}
+
+func (this *LRUCache) Print() {
+   cur := this.head.next
+   for ; cur != this.tail; cur = cur.next {
+      fmt.Printf("%d->%d ", cur.key, cur.val)
+   }
+   fmt.Println()
+}
+```
+
+> 测试代码如下
+
+```go
+package LRU
+
+import (
+   "fmt"
+   "testing"
+)
+
+func TestLRUCache_New(t *testing.T) {
+   cache := New(5)
+   for i := 1; i < 8; i++ {
+      fmt.Printf("加入节点%d\n", i)
+      cache.Put(i, 11*i)
+      cache.Print()
+   }
+   fmt.Printf("查询节点%d ,值为%d\n", 3, cache.Get(3))
+   cache.Print()
+   fmt.Printf("查询节点%d ,值为%d\n", 6, cache.Get(6))
+   cache.Print()
+   fmt.Printf("查询节点%d ,值为%d\n", 7, cache.Get(7))
+   cache.Print()
+}
+```
+
+![image-20220101151943479](https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220101151943479.png)
+
+---
+
+
+
 ## 总结
 
-至此，我们就完成了两种方法手写LRU算法，不需要过多练习，只需要记住核心思想就是每次get时候我就提前，每次put也要提前，并且需要判断是否满载，若满则删除最后的(最久未被访问的节点)。
+至此，我们就完成了三种手写LRU算法，不需要过多练习，只需要记住核心思想就是每次get时候我就提前，每次put也要提前，并且需要判断是否满载，若满则删除最后的(最久未被访问的节点)。
 
 

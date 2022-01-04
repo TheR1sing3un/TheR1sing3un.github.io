@@ -419,7 +419,7 @@ public class LRUCacheSimple {
 
 ---
 
-## LRU(Golang实现)
+## LRU(GoLang实现)
 
 上述是Java版本的LRU实现，下述我使用Golang语言进行实现，大致思路和逻辑是相同的。
 
@@ -564,7 +564,187 @@ func TestLRUCache_New(t *testing.T) {
 
 ---
 
+## 优化
 
+上述的LRU容器还是一个根本不能投入生产使用的玩具级实现，可以在进一步进行优化。
+
+> 值的类型
+
+上述的实现我们都是默认value是int，而且是正整数的int，然而生产中，不应该使用固定的value值。Java中应该使用泛型，GoLang中可以使用interface。
+
+> 最大容量
+
+上述我们的容器最大容量的单位是键值对的个数，这是不太合理的，因为实际中我们应该限制的是缓存占用大小，因此可以将最大限制改成byte为单位，而且需要对淘汰算法进行优化，这时候我们可能超出容量后，需要淘汰的不止是一个缓存，可以是多个，直到当前已用内存小于最大内存。
+
+> 并发安全
+
+上述我们写的只能在单线程下使用，没有考虑到并发问题，那么其实只需要对每次链表和队列的写查进行相应的加锁即可。Java可以使用synchronized关键字也可以使用ReentrantLock/ReentrantReadWriteLock来对其加锁。GoLang可以使用标准库的sync.Mutex来加锁。
+
+> 其他
+
+我们这次写的是每次都更新到首位的LRU，称为lru-1，也有lru-k的方式，这个需要根据情况进行优化。
+
+### 优化后代码
+
+针对上述的几个问题，我写了一个GoLang的优化后的LRU算法(仍然是lru-1)
+
+```go
+package lru
+
+import (
+   "container/list"
+   "fmt"
+)
+
+type Cache struct {
+   //缓存队列最大缓存大小
+   maxBytes int64
+   //缓存队列目前已经使用大小
+   usedBytes int64
+   //链表
+   cacheList *list.List
+   //map映射key->Element
+   cacheMap map[string]*list.Element
+   //删除记录时的回调函数
+   OnEvicted func(key string, value Value)
+}
+
+//键值对类型
+type entry struct {
+   key   string
+   value Value
+}
+
+//缓存的值的类型
+type Value interface {
+   //返回Value的内存大小
+   Len() int
+}
+
+//实例化函数
+func New(maxBytes int64, onEvicted func(string, Value)) *Cache {
+   return &Cache{
+      maxBytes:  maxBytes,
+      usedBytes: 0,
+      cacheList: list.New(),
+      cacheMap:  make(map[string]*list.Element),
+      OnEvicted: onEvicted,
+   }
+}
+
+//查找
+func (c *Cache) Get(key string) (Value, bool) {
+   //先从map里查找是否有该值
+   if element, ok := c.cacheMap[key]; ok {
+      //若有则将该提至最近使用的
+      c.cacheList.MoveToFront(element)
+      //返回(将element的value强转成自定义的Value类型
+      e := element.Value.(*entry)
+      return e.value, true
+   }
+   return nil, false
+}
+
+//删除最久未被使用的节点
+func (c *Cache) RemoveOldest() {
+   //获取最后一个节点
+   cur := c.cacheList.Back()
+   if cur != nil {
+      //从list中删除
+      c.cacheList.Remove(cur)
+      //从map中删除
+      entry := cur.Value.(*entry)
+      delete(c.cacheMap, entry.key)
+      //更新当前已用内存
+      c.usedBytes -= int64(len(entry.key)) + int64(entry.value.Len())
+      //运行回调函数
+      if c.OnEvicted != nil {
+         c.OnEvicted(entry.key, entry.value)
+      }
+   }
+}
+
+//添加缓存
+func (c *Cache) Put(key string, value Value) {
+   //判断当前是否已经有该key
+   if element, ok := c.cacheMap[key]; ok {
+      //已经有该节点,则将该节点更新并移至队首(最近访问)
+      c.cacheList.MoveToFront(element)
+      entry := element.Value.(*entry)
+      //更新当前已用内存(加上当前新增的value大小再减去原本的value大小)
+      c.usedBytes += int64(value.Len()) - int64(entry.value.Len())
+      //更新值
+      entry.value = value
+   } else {
+      //若不存在,则添加至队首,并更新map
+      element := c.cacheList.PushFront(&entry{key, value})
+      //添加至map
+      c.cacheMap[key] = element
+      //更新已用内存
+      c.usedBytes += int64(len(key)) + int64(value.Len())
+   }
+   //添加之后判断是否已经超过最大内存(当最大内存不为0时而且已用内存超过最大内存时删除最近未使用的节点)
+   for c.maxBytes != 0 && c.maxBytes < c.usedBytes {
+      c.RemoveOldest()
+   }
+}
+
+//获取当前缓存的数据条数
+func (c *Cache) Len() int {
+   return c.cacheList.Len()
+}
+
+func (c *Cache) Print() {
+   for cur := c.cacheList.Front(); cur != nil; cur = cur.Next() {
+      kv := cur.Value.(*entry)
+      fmt.Printf("%s->%s ", kv.key, kv.value)
+   }
+   fmt.Println()
+}
+```
+
+```go
+package gocache
+
+import (
+   "github.com/TheR1sing3un/gocache/gocache/lru"
+   "sync"
+)
+
+type cache struct {
+   //互斥锁
+   lock sync.Mutex
+   //lru缓存队列
+   lru *lru.Cache
+   //最大缓存大小
+   cacheBytes int64
+}
+
+//缓存put方法
+func (c *cache) put(key string, value ByteView) {
+   c.lock.Lock()
+   defer c.lock.Unlock()
+   if c.lru == nil {
+      //懒加载lru
+      c.lru = lru.New(c.cacheBytes, nil)
+   }
+   c.lru.Put(key, value)
+}
+
+//缓存get方法
+func (c *cache) get(key string) (value ByteView, ok bool) {
+   c.lock.Lock()
+   defer c.lock.Unlock()
+   if c.lru == nil {
+      //还未初始化(当前肯定没有数据)
+      return
+   }
+   if value, ok := c.lru.Get(key); ok {
+      return value.(ByteView), true
+   }
+   return
+}
+```
 
 ## 总结
 

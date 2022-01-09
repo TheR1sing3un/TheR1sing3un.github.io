@@ -30,7 +30,7 @@
 - 基于AQS并发包的`ReentrantLock`等并发工具
 - 管道流
 
-*保证线程安全对立*
+*保证队列线程安全*
 
 - 使用线程不安全的队列，但是对其访问进行加锁
 - 使用线程安全的队列
@@ -39,7 +39,7 @@
 
 1. 基于`synchronized`锁的`wait`/`notify`的等待通知机制 + 线程不安全的队列
 2. 基于AQS并发包的`Lock`和`Condition`的条件等待机制 + 线程不安全的队列
-3. 基于`BlockingQueue`阻塞队列的入列和出列机制
+3. 基于`BlockingQueue`阻塞队列的入列和出列机制(`BlockingQueue`本身是线程安全的)
 
 ---
 

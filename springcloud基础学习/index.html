@@ -1,0 +1,2815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>SpringCloud基础学习 - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="SpringCloud基础学习" />
+<meta property="og:description" content="SpringCould学习 前言 版本选择 1 2 3 4 5 6 SpringCloud:Hoxtom.SR1SpringBoot:2.2.2RELEASE" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-09T20:58:13+08:00" />
+<meta property="article:modified_time" content="2021-12-09T20:58:13+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="SpringCloud基础学习"/>
+<meta name="twitter:description" content="SpringCould学习 前言 版本选择 1 2 3 4 5 6 SpringCloud:Hoxtom.SR1SpringBoot:2.2.2RELEASE"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="https://ther1sing3un.github.io/tmux%E5%AD%A6%E4%B9%A0/" /><link rel="next" href="https://ther1sing3un.github.io/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E6%8B%9B%E6%BB%91%E9%93%81%E5%8D%A2%E5%AE%9E%E5%BD%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "SpringCloud基础学习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Java, SpringCloud, 微服务","wordcount":  9108 ,
+        "url": "https:\/\/ther1sing3un.github.io\/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0\/","datePublished": "2021-12-09T20:58:13+08:00","dateModified": "2021-12-09T20:58:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">SpringCloud基础学习</h1><h2 class="single-subtitle">关于SpringCloud相关组件的基本入门学习</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/spring/"><i class="far fa-folder fa-fw"></i>Spring</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-09">2021-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9108 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png"
+        title="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a>
+      <ul>
+        <li><a href="#版本选择">版本选择</a></li>
+      </ul>
+    </li>
+    <li><a href="#模块构建">模块构建</a>
+      <ul>
+        <li><a href="#支付模块构建">支付模块构建</a>
+          <ul>
+            <li><a href="#构建微服务模块统一步骤">构建微服务模块统一步骤</a></li>
+            <li><a href="#创建支付模块">创建支付模块</a></li>
+            <li><a href="#创建消费者模块">创建消费者模块</a>
+              <ul>
+                <li><a href="#resttemplate">RestTemplate</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#工程重构">工程重构</a></li>
+      </ul>
+    </li>
+    <li><a href="#eureka">Eureka</a>
+      <ul>
+        <li><a href="#idea创建eurekaserver">IDEA创建EurekaServer</a></li>
+        <li><a href="#将payment注册进eureka中">将payment注册进Eureka中</a></li>
+        <li><a href="#将order注册进eureka中">将order注册进Eureka中</a></li>
+        <li><a href="#集群eureka搭建">集群Eureka搭建</a></li>
+        <li><a href="#将服务注册进集群">将服务注册进集群</a></li>
+        <li><a href="#paymentprovider集群搭建">PaymentProvider集群搭建</a>
+          <ul>
+            <li><a href="#集群信息完善">集群信息完善</a></li>
+          </ul>
+        </li>
+        <li><a href="#服务发现">服务发现</a></li>
+        <li><a href="#eureka自我保护">Eureka自我保护</a></li>
+      </ul>
+    </li>
+    <li><a href="#zookeeper">ZooKeeper</a>
+      <ul>
+        <li><a href="#创建payment">创建payment</a></li>
+        <li><a href="#创建order">创建order</a></li>
+      </ul>
+    </li>
+    <li><a href="#consul">Consul</a></li>
+    <li><a href="#ribbon">Ribbon</a></li>
+    <li><a href="#openfeign">OpenFeign</a>
+      <ul>
+        <li><a href="#openfeign超时控制">OpenFeign超时控制</a></li>
+        <li><a href="#openfeign日志">OpenFeign日志</a>
+          <ul>
+            <li><a href="#开启日志">开启日志</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#hystix">Hystix</a>
+      <ul>
+        <li><a href="#重要概念">重要概念</a></li>
+        <li><a href="#实践">实践</a>
+          <ul>
+            <li><a href="#创建生产者">创建生产者</a></li>
+            <li><a href="#创建消费者">创建消费者</a></li>
+            <li><a href="#服务降级">服务降级</a>
+              <ul>
+                <li><a href="#服务提供方降级">服务提供方降级</a></li>
+                <li><a href="#服务消费方降级">服务消费方降级</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#全局服务降级">全局服务降级</a></li>
+        <li><a href="#服务熔断">服务熔断</a></li>
+        <li><a href="#监控页面">监控页面</a></li>
+      </ul>
+    </li>
+    <li><a href="#gateway">GateWay</a>
+      <ul>
+        <li><a href="#入门配置">入门配置</a></li>
+        <li><a href="#动态路由">动态路由</a></li>
+        <li><a href="#常用predicate">常用Predicate</a>
+          <ul>
+            <li><a href="#after-route-predicate">After Route Predicate</a></li>
+            <li><a href="#before-route-predicate">Before Route Predicate</a></li>
+            <li><a href="#between-route-predicate">Between Route Predicate</a></li>
+            <li><a href="#cookie-route-predicate">Cookie Route Predicate</a></li>
+            <li><a href="#header-route-predicate">Header Route Predicate</a></li>
+            <li><a href="#method-route-predicate">Method Route Predicate</a></li>
+            <li><a href="#path-route-predicate">Path Route Predicate</a></li>
+            <li><a href="#query-route-predicate">Query Route Predicate</a></li>
+          </ul>
+        </li>
+        <li><a href="#filter">Filter</a>
+          <ul>
+            <li><a href="#自定义全局日志过滤器">自定义全局日志过滤器</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#config">Config</a>
+      <ul>
+        <li><a href="#服务端连接github">服务端(连接github)</a></li>
+        <li><a href="#客户端连接服务端">客户端(连接服务端)</a></li>
+        <li><a href="#客户端动态更新">客户端动态更新</a></li>
+      </ul>
+    </li>
+    <li><a href="#bus">Bus</a>
+      <ul>
+        <li><a href="#实践-1">实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#stream">Stream</a>
+      <ul>
+        <li><a href="#实践-2">实践</a>
+          <ul>
+            <li><a href="#生产者">生产者</a></li>
+            <li><a href="#消费者">消费者</a></li>
+          </ul>
+        </li>
+        <li><a href="#重复消费">重复消费</a></li>
+      </ul>
+    </li>
+    <li><a href="#sleuth">Sleuth</a>
+      <ul>
+        <li><a href="#搭建zipkin">搭建zipkin</a></li>
+        <li><a href="#实践-3">实践</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="springcould学习">SpringCould学习</h1>
+<h2 id="前言">前言</h2>
+<h3 id="版本选择">版本选择</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">SpringCloud</span><span class="p">:</span><span class="w"> </span><span class="l">Hoxtom.SR1</span><span class="w">
+</span><span class="w"></span><span class="nt">SpringBoot</span><span class="p">:</span><span class="w"> </span><span class="m">2.2</span><span class="l">.2RELEASE</span><span class="w">
+</span><span class="w"></span><span class="nt">CloudAibaba</span><span class="p">:</span><span class="w"> </span><span class="m">2.1</span><span class="l">.0RELEASe</span><span class="w">
+</span><span class="w"></span><span class="nt">Java</span><span class="p">:</span><span class="w"> </span><span class="m">1.8</span><span class="w">
+</span><span class="w"></span><span class="nt">Maven</span><span class="p">:</span><span class="w"> </span><span class="m">3.</span><span class="l">5及以上</span><span class="w">
+</span><span class="w"></span><span class="nt">Mysql</span><span class="p">:</span><span class="w"> </span><span class="m">5.</span><span class="l">7及以上</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="模块构建">模块构建</h2>
+<blockquote>
+<p>新建项目</p>
+</blockquote>
+<ol>
+<li>
+<p>选择maven创建</p>
+</li>
+<li>
+<p>选择骨架</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163136341.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163136341.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163136341.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163136341.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163136341.png"
+        title="image-20211002163136341" /></p>
+</li>
+<li>
+<p>修改字符编码</p>
+<p><strong>都改成utf-8</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163349833.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163349833.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163349833.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163349833.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163349833.png"
+        title="image-20211002163349833" /></p>
+</li>
+<li>
+<p>注解生效激活</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163559775.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163559775.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163559775.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163559775.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002163559775.png"
+        title="image-20211002163559775" /></p>
+</li>
+<li>
+<p>设置java编译版本</p>
+</li>
+<li>
+<p>File Type过滤(将项目下显示的一些杂七杂八的文件过滤掉)</p>
+</li>
+<li>
+<p>将src删掉</p>
+</li>
+<li>
+<p>将pom.xml中加入如下</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002165209310.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002165209310.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002165209310.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002165209310.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002165209310.png"
+        title="image-20211002165209310" /></p>
+</li>
+<li>
+<p>统一管理jar包版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--统一管理Jar包版本--&gt;</span>
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+    <span class="nt">&lt;maven.compiler.source&gt;</span>12<span class="nt">&lt;/maven.compiler.source&gt;</span>
+    <span class="nt">&lt;maven.compiler.target&gt;</span>12<span class="nt">&lt;/maven.compiler.target&gt;</span>
+    <span class="nt">&lt;junit.version&gt;</span>4.12<span class="nt">&lt;/junit.version&gt;</span>
+    <span class="nt">&lt;lombok.version&gt;</span>1.18.10<span class="nt">&lt;/lombok.version&gt;</span>
+    <span class="nt">&lt;log4j.version&gt;</span>1.2.17<span class="nt">&lt;/log4j.version&gt;</span>
+    <span class="nt">&lt;mysql.version&gt;</span>5.1.47<span class="nt">&lt;/mysql.version&gt;</span>
+    <span class="nt">&lt;druid.version&gt;</span>1.1.16<span class="nt">&lt;/druid.version&gt;</span>
+    <span class="nt">&lt;mybatis.spring.boot.version&gt;</span>1.3.0<span class="nt">&lt;/mybatis.spring.boot.version&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>编写dependencyManagement</p>
+<p><strong>作用</strong>:</p>
+<ul>
+<li>统一声明版本号</li>
+<li>升级时只需该父工程的pom.xml中的版本号就可以处处升级</li>
+<li>子模块不用写版本号</li>
+<li>如果子模块要使用别的版本，只用自己声明version</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--子模块继承之后，提供作用：锁定版本+子module不用写groupId和version--&gt;</span>
+  <span class="nt">&lt;dependencyManagement&gt;</span><span class="c">&lt;!--定义规范，但不导入--&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-project-info-reports-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>3.0.0<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--spring boot 2.2.2--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-dependencies<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.2.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>import<span class="nt">&lt;/scope&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--spring cloud Hoxton.SR1--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-cloud-dependencies<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>Hoxton.SR1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>import<span class="nt">&lt;/scope&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--spring cloud 阿里巴巴--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.alibaba.cloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-cloud-alibaba-dependencies<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.1.0.RELEASE<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>import<span class="nt">&lt;/scope&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--mysql--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>${mysql.version}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!-- druid--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>druid<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>${druid.version}<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--mybatis--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>${mybatis.spring.boot.version}<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--junit--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>${junit.version}<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+      <span class="c">&lt;!--log4j--&gt;</span>
+      <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>log4j<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>log4j<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>${log4j.version}<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+  <span class="nt">&lt;/dependencyManagement&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>增加热启动插件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--热启动插件--&gt;</span>
+  <span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+      <span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+          <span class="nt">&lt;fork&gt;</span>true<span class="nt">&lt;/fork&gt;</span>
+          <span class="nt">&lt;addResources&gt;</span>true<span class="nt">&lt;/addResources&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+  <span class="nt">&lt;/build&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>maven中跳过单元测试</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002170708015.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002170708015.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002170708015.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002170708015.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002170708015.png"
+        title="image-20211002170708015" /></p>
+</li>
+<li>
+<p>父工程创建完成后执行 mvn:install将父工程发布到仓库方便子工程继承</p>
+</li>
+</ol>
+<hr>
+<h3 id="支付模块构建">支付模块构建</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002171500936.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002171500936.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002171500936.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002171500936.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002171500936.png"
+        title="image-20211002171500936" /></p>
+<h4 id="构建微服务模块统一步骤">构建微服务模块统一步骤</h4>
+<ol>
+<li>建module</li>
+<li>改pom</li>
+<li>写yml</li>
+<li>主启动</li>
+<li>业务类</li>
+</ol>
+<hr>
+<h4 id="创建支付模块">创建支付模块</h4>
+<ol>
+<li>
+<p>创建module，继承自父亲模块(maven无骨架创建)</p>
+</li>
+<li>
+<p>改pom文件</p>
+<p>把需要使用的pom文件导入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>druid-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.1.10<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--mysql-connector-java--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!--jdbc--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-jdbc<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-devtools<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>改yml</p>
+<ul>
+<li>
+<p>在模块下的resources下新建application.yaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8001</span><span class="w"> </span><span class="c">#服务端口号</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-payment-service</span><span class="w"> </span><span class="c">#服务名称</span><span class="w">
+</span><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">com.alibaba.druid.pool.DruidDataSource</span><span class="w"> </span><span class="c">#当前数据源操作类型</span><span class="w">
+</span><span class="w">    </span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l">org.gjt.mm.mysql.Driver</span><span class="w"> </span><span class="c">#mysql驱动包</span><span class="w">
+</span><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">jdbc:mysql://${person.mysql.host}:${person.mysql.port}/springcloud?useUnicode-true&amp;charcterEncoding=utf-8&amp;useSSL=false</span><span class="w">
+</span><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">lcy021030</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">person</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">mysql</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="m">49.234.111.177</span><span class="w">
+</span><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">3306</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>主启动类</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173808036.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173808036.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173808036.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173808036.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173808036.png"
+        title="image-20211002173808036" /></p>
+<p>创建主启动类</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173930824.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173930824.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173930824.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173930824.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211002173930824.png"
+        title="image-20211002173930824" /></p>
+</li>
+<li>
+<p>业务类</p>
+<blockquote>
+<p>数据库建表</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> CREATE TABLE <span class="sb">`</span>payment<span class="sb">`</span> <span class="o">(</span>  <span class="sb">`</span>id<span class="sb">`</span> bigint<span class="o">(</span>20<span class="o">)</span> NOT NULL AUTO_INCREMENT COMMENT <span class="s1">&#39;ID&#39;</span>,  <span class="sb">`</span>serial<span class="sb">`</span> varchar<span class="o">(</span>200<span class="o">)</span> DEFAULT <span class="s1">&#39;&#39;</span>,  PRIMARY KEY <span class="o">(</span><span class="sb">`</span>id<span class="sb">`</span><span class="o">))</span> <span class="nv">ENGINE</span><span class="o">=</span>InnoDB <span class="nv">AUTO_INCREMENT</span><span class="o">=</span><span class="m">1</span> DEFAULT <span class="nv">CHARSET</span><span class="o">=</span>utf8
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>创建实体类</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="nd">@NoArgsConstructor</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@Data</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Payment</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">serial</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Data</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommonResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Integer</span> <span class="n">SUCCESS</span> <span class="o">=</span> <span class="n">20000</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Integer</span> <span class="n">ERROR</span> <span class="o">=</span> <span class="n">40000</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">code</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">message</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">T</span> <span class="n">data</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CommonResult</span> <span class="nf">ok</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">SUCCESS</span><span class="o">,</span><span class="s">&#34;success&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CommonResult</span> <span class="nf">error</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">CommonResult</span><span class="o">(</span><span class="n">ERROR</span><span class="o">,</span><span class="s">&#34;error&#34;</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">msg</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">CommonResult</span> <span class="nf">code</span><span class="o">(</span><span class="kt">int</span> <span class="n">code</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">code</span> <span class="o">=</span> <span class="n">code</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">CommonResult</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">data</span><span class="o">(</span><span class="n">T</span> <span class="n">data</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>编写PaymentDao层</p>
+</blockquote>
+<blockquote>
+<p>编写PaymentMapper</p>
+</blockquote>
+<p><strong>文件头</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34; &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">&#34;pro.risingsun.springcloud.dao.PaymentDao&#34;</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写Service</p>
+</blockquote>
+<blockquote>
+<p>写controller</p>
+</blockquote>
+<blockquote>
+<p>postman自测</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="创建消费者模块">创建消费者模块</h4>
+<blockquote>
+<p>创建模块</p>
+</blockquote>
+<blockquote>
+<p>写实体类(Payment和CommonResult)</p>
+</blockquote>
+<blockquote>
+<p>使用RestTemplate</p>
+</blockquote>
+<h5 id="resttemplate">RestTemplate</h5>
+<ol>
+<li>
+<p>创建config.ApplicationContexConfig</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003113322154.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003113322154.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003113322154.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003113322154.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003113322154.png"
+        title="image-20211003113322154" /></p>
+</li>
+<li>
+<p>将RestTemplate注册成bean</p>
+</li>
+</ol>
+<blockquote>
+<p>完善消费者的OrderConsumer</p>
+</blockquote>
+<p>​	<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003114013088.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003114013088.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003114013088.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003114013088.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003114013088.png"
+        title="image-20211003114013088" /></p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<hr>
+<h3 id="工程重构">工程重构</h3>
+<p>将部分相似的代码进行重构整合</p>
+<blockquote>
+<p>创建新模块cloud-api-commons</p>
+</blockquote>
+<blockquote>
+<p>写pom</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003122500391.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003122500391.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003122500391.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003122500391.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003122500391.png"
+        title="image-20211003122500391" /></p>
+<blockquote>
+<p>将entites移入</p>
+</blockquote>
+<blockquote>
+<p>放入本地库</p>
+</blockquote>
+<p><code>maven:clean</code></p>
+<p><code>maven:install</code></p>
+<blockquote>
+<p>改造原本的两个模块的公共内容</p>
+</blockquote>
+<ul>
+<li>
+<p>删掉entities</p>
+</li>
+<li>
+<p>在各自的pom文件中引入</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003123314000.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003123314000.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003123314000.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003123314000.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003123314000.png"
+        title="image-20211003123314000" /></p>
+</li>
+</ul>
+<hr>
+<h2 id="eureka">Eureka</h2>
+<p>一种服务注册中心，使用Eureka的客户端连接到到Eureka Server并维持心跳连接。这样就可以通过Eureka Server来监控系统的各个微服务是否正常运行</p>
+<p><strong>EurekaServer</strong></p>
+<p>提供注册服务，各个微服务节点通过配置启动后，会从EurekaServer中心进行注册。这样RurekaSever中的服务注册表中将会存储所有可用服务节点的信息，服务节点的信息可以在界面中直观看到</p>
+<p><strong>EurekaClient</strong></p>
+<p>一个Java客户端，用于简化EurekaServer的交互，客户端同时也具备一个内置的、使用轮询负载算法的负载均衡器。在应用启动后，将会用EurekaServer发送心跳(默认30秒为一个周期)。如果EurekaServer在多个心跳周期内没有接收到某个节点的心跳，EurekaServer就会从服务注册表中把这个服务节点移除(默认90秒)</p>
+<h3 id="idea创建eurekaserver">IDEA创建EurekaServer</h3>
+<blockquote>
+<p>创建模块</p>
+</blockquote>
+<blockquote>
+<p>改pom</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+    <span class="c">&lt;!--自定义的api通用包--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>pro.risingsun.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="c">&lt;!--eureka-server--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写yaml</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">7001</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">instance</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">localhost</span><span class="w"> </span><span class="c">#eureka服务端的实例名称</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="c">#不注册自己</span><span class="w">
+</span><span class="w">    </span><span class="nt">fetch-registry</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="c">#false表示自己就是注册中心,不需要去检索自己的服务</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w"> 
+</span><span class="w">      </span><span class="c">#设置与EurekaServer交互的地址查询服务和注册服务都需要依赖这个地址</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultzone</span><span class="p">:</span><span class="w"> </span><span class="l">http://${eureka.instance.hostname}:${server.port}/eureka/</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003140501015.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003140501015.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003140501015.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003140501015.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003140501015.png"
+        title="image-20211003140501015" /></p>
+<p>​		<strong>打上注解@EnbaleEurekaServer表示自己是EurekaServer</strong></p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p>输入localhost:7001</p>
+<hr>
+<h3 id="将payment注册进eureka中">将payment注册进Eureka中</h3>
+<blockquote>
+<p>改pom</p>
+</blockquote>
+<p>增加EurekaClient的依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改配置</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c">#表示自己注册进EurekaServer</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="c">#是否从EurekaServer抓取已有的配置信息,默认为true(单节点无所谓,集群必须设置为true才可以配置ribbon使用负载均衡)</span><span class="w">
+</span><span class="w">    </span><span class="nt">fetch-registry</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w"> 
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:7001/eureka</span><span class="w"> </span><span class="c">#EurekeServer的地址</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改主启动类</p>
+</blockquote>
+<p>加上注解<code>@EnableEurekaClient</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003141734790.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003141734790.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003141734790.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003141734790.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003141734790.png"
+        title="image-20211003141734790" /></p>
+<blockquote>
+<p>启动测试</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142127016.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142127016.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142127016.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142127016.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142127016.png"
+        title="image-20211003142127016" /></p>
+<p><strong>这里的应用名称是我们在yaml文件中配置的,如下图:</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142202567.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142202567.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142202567.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142202567.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003142202567.png"
+        title="image-20211003142202567" /></p>
+<hr>
+<h3 id="将order注册进eureka中">将order注册进Eureka中</h3>
+<p>步骤如上，基本一致</p>
+<hr>
+<h3 id="集群eureka搭建">集群Eureka搭建</h3>
+<p><strong>互相注册，相互守望</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003144311133.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003144311133.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003144311133.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003144311133.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003144311133.png"
+        title="image-20211003144311133" /></p>
+<blockquote>
+<p>创建cloud-eureka-server7002</p>
+</blockquote>
+<p>参考7001进行创建</p>
+<blockquote>
+<p>修改映射文件</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003145905291.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003145905291.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003145905291.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003145905291.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003145905291.png"
+        title="image-20211003145905291" /></p>
+<blockquote>
+<p>写yaml</p>
+</blockquote>
+<p>互相注册，相互守望</p>
+<ol>
+<li>
+<p>修改7001的配置文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150049850.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150049850.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150049850.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150049850.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150049850.png"
+        title="image-20211003150049850" /></p>
+</li>
+<li>
+<p>修改7002的配置文件</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150203275.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150203275.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150203275.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150203275.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150203275.png"
+        title="image-20211003150203275" /></p>
+</li>
+</ol>
+<blockquote>
+<p>主启动类</p>
+</blockquote>
+<blockquote>
+<p>测试访问<code>eureka7001:7001</code></p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150653411.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150653411.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150653411.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150653411.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150653411.png"
+        title="image-20211003150653411" /></p>
+<blockquote>
+<p>测试访问<code>eureka7002:7002</code></p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150741619.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150741619.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150741619.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150741619.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003150741619.png"
+        title="image-20211003150741619" /></p>
+<hr>
+<h3 id="将服务注册进集群">将服务注册进集群</h3>
+<blockquote>
+<p>改配置文件</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003151030412.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003151030412.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003151030412.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003151030412.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003151030412.png"
+        title="image-20211003151030412" /></p>
+<hr>
+<h3 id="paymentprovider集群搭建">PaymentProvider集群搭建</h3>
+<p>参考8001搭建8002和8003</p>
+<blockquote>
+<p>修改consumer的服务调用URL</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003153614901.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003153614901.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003153614901.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003153614901.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003153614901.png"
+        title="image-20211003153614901" /></p>
+<p><strong>但是这样消费者还是找不到是哪个生产者，因为三个生产者的服务名称都是cloud-payment-service，因此需要开启负载均衡</strong></p>
+<blockquote>
+<p>开启负载均衡</p>
+</blockquote>
+<p>使用<code>@LoadBalances注解赋予RestTemplate负载均衡能力</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003160759256.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003160759256.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003160759256.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003160759256.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003160759256.png"
+        title="image-20211003160759256" /></p>
+<hr>
+<h4 id="集群信息完善">集群信息完善</h4>
+<blockquote>
+<p>增加实例名称</p>
+</blockquote>
+<p>在payment8001和8002的配置文件中增加</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164120964.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164120964.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164120964.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164120964.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164120964.png"
+        title="image-20211003164120964" /></p>
+<blockquote>
+<p>增加ip显示</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164345463.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164345463.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164345463.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164345463.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003164345463.png"
+        title="image-20211003164345463" /></p>
+<hr>
+<h3 id="服务发现">服务发现</h3>
+<p>对于注册进eureke里面的微服务，可以通过服务发现来获得该服务的信息</p>
+<blockquote>
+<p>修改cloud-provider-payment8001的Controller</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003165853936.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003165853936.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003165853936.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003165853936.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003165853936.png"
+        title="image-20211003165853936" /></p>
+<blockquote>
+<p>主启动类增加注解</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170023899.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170023899.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170023899.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170023899.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170023899.png"
+        title="image-20211003170023899" /></p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170104407.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170104407.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170104407.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170104407.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003170104407.png"
+        title="image-20211003170104407" /></p>
+<hr>
+<h3 id="eureka自我保护">Eureka自我保护</h3>
+<p>某时刻某一个微服务不可用了，Eureka不会立刻清理，仍旧会对该微服务的消息进行保存</p>
+<p><strong>属于CAP中的AP分支</strong></p>
+<hr>
+<h2 id="zookeeper">ZooKeeper</h2>
+<h3 id="创建payment">创建payment</h3>
+<blockquote>
+<p>服务器上启动Zookeeper</p>
+</blockquote>
+<blockquote>
+<p>新建模块cloud-provider-payment8004</p>
+</blockquote>
+<blockquote>
+<p>改pom文件</p>
+</blockquote>
+<p>将Eureka的依赖改成zookeeper的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zookeeper-discovery<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改配置文件(将Eureka的改成Zookeeper)</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174617468.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174617468.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174617468.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174617468.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174617468.png"
+        title="image-20211003174617468" /></p>
+<blockquote>
+<p>主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174818725.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174818725.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174818725.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174818725.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003174818725.png"
+        title="image-20211003174818725" /></p>
+<blockquote>
+<p>写Controller</p>
+</blockquote>
+<blockquote>
+<p>测试localhost:8004/payment/zk</p>
+</blockquote>
+<p>​	<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003180251839.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003180251839.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003180251839.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003180251839.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003180251839.png"
+        title="image-20211003180251839" /></p>
+<hr>
+<h3 id="创建order">创建order</h3>
+<p>&hellip;省略</p>
+<hr>
+<h2 id="consul">Consul</h2>
+<p>&hellip;</p>
+<hr>
+<h2 id="ribbon">Ribbon</h2>
+<p>Ribbon是一套实现负载均衡的工具</p>
+<p><code>spring-cloud-starter-netflix-eureka-client</code>已经集成了Ribbon</p>
+<blockquote>
+<p>如何替换负载均衡策略</p>
+</blockquote>
+<p>该配置类不能放在@CompomentScan可以扫到的位置</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202754227.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202754227.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202754227.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202754227.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202754227.png"
+        title="image-20211003202754227" /></p>
+<p>主启动类增加注解</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202904121.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202904121.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202904121.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202904121.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211003202904121.png"
+        title="image-20211003202904121" /></p>
+<hr>
+<h2 id="openfeign">OpenFeign</h2>
+<p>用在消费端</p>
+<blockquote>
+<p>创建模块cloud-consumer-feign-order9000</p>
+</blockquote>
+<blockquote>
+<p>改pom</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>pro.risingsun.springcloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>cloud-api-commons<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="c">&lt;!--eureka-client--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="c">&lt;!--openfeign客户端--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-openfeign<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改配置文件</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9000</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-order-service</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">fetch-registry</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001:7001/eureka,http://eureka7002:7002/eureka</span><span class="w"> </span><span class="c">#EurekeServer的地址(集群版)</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注册不注册都可以，消费端本来就不用注册</strong></p>
+<blockquote>
+<p>写主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004110205347.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004110205347.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004110205347.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004110205347.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004110205347.png"
+        title="image-20211004110205347" /></p>
+<blockquote>
+<p>写服务调用接口</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004111251813.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004111251813.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004111251813.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004111251813.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004111251813.png"
+        title="image-20211004111251813" /></p>
+<p><strong>要点：</strong></p>
+<ul>
+<li>这里相当于是直接根据服务名和路径去服务端找相应的controller的方法，所以这里的服务名、路径、请求类型要一致才能在服务端找到方法</li>
+<li>参数也要保证一致，而且需要打上相应的注解，没有SpringMVC帮忙封装了</li>
+</ul>
+<blockquote>
+<p>负载均衡</p>
+</blockquote>
+<p>自带负载均衡，使用Ribbon</p>
+<h3 id="openfeign超时控制">OpenFeign超时控制</h3>
+<p>OpenFeign默认等待一秒钟</p>
+<p>如果超过1秒种，Feign客户端直接报错</p>
+<blockquote>
+<p>修改超时时间(OpenFeign自带Ribbon)</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004114857219.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004114857219.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004114857219.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004114857219.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004114857219.png"
+        title="image-20211004114857219" /></p>
+<hr>
+<h3 id="openfeign日志">OpenFeign日志</h3>
+<p>日志级别:</p>
+<ul>
+<li>NONE：默认的，不显示任何日志</li>
+<li>BASIC：仅记录请求方法、URL、相应状态码及执行时间</li>
+<li>HEADERS：除了记录BASIC中定义的信息外，还有请求和相应的头信息</li>
+<li>FULL：除了HEADERS中定义的信息外，还有请求和相应的正文及元数据</li>
+</ul>
+<h4 id="开启日志">开启日志</h4>
+<blockquote>
+<p>创建日志配置类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115533042.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115533042.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115533042.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115533042.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115533042.png"
+        title="image-20211004115533042" /></p>
+<blockquote>
+<p>配置文件中配置日志</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115757543.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115757543.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115757543.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115757543.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004115757543.png"
+        title="image-20211004115757543" /></p>
+<hr>
+<h2 id="hystix">Hystix</h2>
+<h3 id="重要概念">重要概念</h3>
+<blockquote>
+<p>服务 降级</p>
+</blockquote>
+<p><strong>fallback</strong></p>
+<p>出现情况</p>
+<ul>
+<li>程序运行异常</li>
+<li>超时</li>
+<li>服务熔断出发服务降级</li>
+<li>线程池/常量池打满</li>
+</ul>
+<blockquote>
+<p>服务熔断</p>
+</blockquote>
+<p>当达到最大服务访问时，直接拒绝访问，然后调用服务降级</p>
+<blockquote>
+<p>服务限流</p>
+</blockquote>
+<p>限制服务访问</p>
+<h3 id="实践">实践</h3>
+<h4 id="创建生产者">创建生产者</h4>
+<blockquote>
+<p>新建模块cloud-provider-hystrix-payment8005</p>
+</blockquote>
+<blockquote>
+<p>pom文件</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--hystrix依赖--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-hystrix<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写配置文件</p>
+</blockquote>
+<blockquote>
+<p>写主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004140300990.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004140300990.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004140300990.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004140300990.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004140300990.png"
+        title="image-20211004140300990" /></p>
+<blockquote>
+<p>写Service</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141602440.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141602440.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141602440.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141602440.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141602440.png"
+        title="image-20211004141602440" /></p>
+<blockquote>
+<p>写Controller</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141621307.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141621307.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141621307.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141621307.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004141621307.png"
+        title="image-20211004141621307" /></p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<hr>
+<h4 id="创建消费者">创建消费者</h4>
+<p>&hellip;</p>
+<blockquote>
+<p>service，远程调用</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150654220.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150654220.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150654220.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150654220.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150654220.png"
+        title="image-20211004150654220" /></p>
+<blockquote>
+<p>controller</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150718627.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150718627.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150718627.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150718627.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004150718627.png"
+        title="image-20211004150718627" /></p>
+<hr>
+<h4 id="服务降级">服务降级</h4>
+<h5 id="服务提供方降级">服务提供方降级</h5>
+<blockquote>
+<p>激活服务降级功能</p>
+</blockquote>
+<p>在主启动类上加上注解<code>@EnbaleCircuitBeaker</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155305943.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155305943.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155305943.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155305943.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155305943.png"
+        title="image-20211004155305943" /></p>
+<p>使用注解<code>@HystrixComman</code>在业务方法上标记</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155318910.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155318910.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155318910.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155318910.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004155318910.png"
+        title="image-20211004155318910" /></p>
+<hr>
+<h5 id="服务消费方降级">服务消费方降级</h5>
+<blockquote>
+<p>改yml</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004164102888.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004164102888.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004164102888.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004164102888.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004164102888.png"
+        title="image-20211004164102888" /></p>
+<blockquote>
+<p>改启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170031979.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170031979.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170031979.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170031979.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170031979.png"
+        title="image-20211004170031979" /></p>
+<blockquote>
+<p>业务上处理</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170313796.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170313796.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170313796.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170313796.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004170313796.png"
+        title="image-20211004170313796" /></p>
+<hr>
+<h3 id="全局服务降级">全局服务降级</h3>
+<p>现在的降级方式和业务代码耦合严重，而且重复冗余。那么需要进行全局的一个服务降级配置</p>
+<blockquote>
+<p>@DefaultProerties(defaultFallback = &ldquo;xxx&rdquo;)设置默认的服务降级配置</p>
+</blockquote>
+<p><strong>如果某个方法有自己的配置，就用自己的，没有就用默认的</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004171425533.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004171425533.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004171425533.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004171425533.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004171425533.png"
+        title="image-20211004171425533" /></p>
+<blockquote>
+<p>在Feign接口进行统一处理</p>
+</blockquote>
+<blockquote>
+<p>写一个类实现PaymentFeignService接口，对方法进行重写</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175255974.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175255974.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175255974.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175255974.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175255974.png"
+        title="image-20211004175255974" /></p>
+<blockquote>
+<p>配置fallback</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175318614.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175318614.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175318614.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175318614.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004175318614.png"
+        title="image-20211004175318614" /></p>
+<hr>
+<h3 id="服务熔断">服务熔断</h3>
+<blockquote>
+<p>生产方Service代码如下</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004184946223.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004184946223.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004184946223.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004184946223.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004184946223.png"
+        title="image-20211004184946223" /></p>
+<blockquote>
+<p>在错误了一定次数内失败率达到了设定值，那么进入熔断状态，然后在一定时间后(默认是5秒)会放出几个请求进去，如果还是错误降级了，那么就保持熔断状态，刷新休眠窗口期。如果请求正确了，那么熔断取消，正常运行。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004185531341.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004185531341.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004185531341.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004185531341.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004185531341.png"
+        title="image-20211004185531341" /></p>
+<blockquote>
+<p>参考链接</p>
+</blockquote>
+<ul>
+<li><a href="https://blog.csdn.net/loushuiyifan/article/details/82702522" target="_blank" rel="noopener noreffer">https://blog.csdn.net/loushuiyifan/article/details/82702522</a></li>
+</ul>
+<blockquote>
+<p>参数说明</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004190613982.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004190613982.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004190613982.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004190613982.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004190613982.png"
+        title="image-20211004190613982" /></p>
+<ol>
+<li>请求总数阈值：在快照时间窗内，必须满足请求总数阈值才有资格熔断。</li>
+<li>快照时间窗：断路器通过在统计一定时间内的请求和错误等数据决定是否开启熔断，而统计的时间范围就是快照时间窗，默认就是最近10秒</li>
+<li>错误百分比阈值，当请求总数在快照时间窗内超过了阈值，而且错误请求的次数占的百分比超过了该错误百分比阈值，那么就会将断路器打开</li>
+</ol>
+<hr>
+<h3 id="监控页面">监控页面</h3>
+<blockquote>
+<p>建模块</p>
+</blockquote>
+<blockquote>
+<p>改pom</p>
+</blockquote>
+<p>增加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--hystrix仪表盘图形化页面--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-hystrix-dashboard<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改yml</p>
+</blockquote>
+<blockquote>
+<p>写主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004194235802.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004194235802.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004194235802.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004194235802.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004194235802.png"
+        title="image-20211004194235802" /></p>
+<blockquote>
+<p>启动，访问localhost:9001/hystrix</p>
+</blockquote>
+<blockquote>
+<p>修改8005</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004200922650.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004200922650.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004200922650.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004200922650.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004200922650.png"
+        title="image-20211004200922650" /></p>
+<blockquote>
+<p>监控8005</p>
+</blockquote>
+<blockquote>
+<p>访问监控网址，测试</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004201520979.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004201520979.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004201520979.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004201520979.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004201520979.png"
+        title="image-20211004201520979" /></p>
+<hr>
+<h2 id="gateway">GateWay</h2>
+<h3 id="入门配置">入门配置</h3>
+<blockquote>
+<p>创建模块</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004205413699.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004205413699.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004205413699.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004205413699.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004205413699.png"
+        title="image-20211004205413699" /></p>
+<blockquote>
+<p>改pom</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--gateway网关--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-gateway<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写yml</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9527</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-gateway</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">instance</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-gateway-service</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">fetch-registry</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w"> 
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001:7001/eureka,http://eureka7002:7002/eureka</span><span class="w"> </span><span class="c">#EurekeServer的地址(集群版)</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004210219955.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004210219955.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004210219955.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004210219955.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004210219955.png"
+        title="image-20211004210219955" /></p>
+<blockquote>
+<p>写配置</p>
+</blockquote>
+<hr>
+<h3 id="动态路由">动态路由</h3>
+<blockquote>
+<p>配置文件配置</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9527</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-gateway</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">gateway</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">discovery</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">locator</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c">#开启从服务注册中心中动态创建路由的功能,利用微服务名进行路由</span><span class="w">
+</span><span class="w">      </span><span class="nt">routes</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">payment_routh</span><span class="w"> </span><span class="c">#配置路由的id,没有固定规则,但是要求唯一</span><span class="w">
+</span><span class="w">          </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l">lb://cloud-payment-service</span><span class="w"> </span><span class="c">#匹配后提供的服务地址</span><span class="w">
+</span><span class="w">          </span><span class="nt">predicates</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span>- <span class="l">Path=/payment/**</span><span class="w"> </span><span class="c">#断言,根据路径进行路由</span><span class="w">
+</span><span class="w">          </span><span class="c">##################</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">payment_routh2</span><span class="w">
+</span><span class="w">          </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l">lb://cloud-payment-service</span><span class="w"> </span><span class="c">#匹配后提供服务的地址</span><span class="w">
+</span><span class="w">          </span><span class="nt">predicates</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span>- <span class="l">Path=/service</span><span class="w"> </span><span class="c">#断言,根据路径进行路由</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">instance</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-gateway-service</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c">#表示自己注册进EurekaServer</span><span class="w">
+</span><span class="w">    </span><span class="nt">register-with-eureka</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="c">#是否从EurekaServer抓取已有的配置信息,默认为true(单节点无所谓,集群必须设置为true才可以配置ribbon使用负载均衡)</span><span class="w">
+</span><span class="w">    </span><span class="nt">fetch-registry</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001:7001/eureka,http://eureka7002:7002/eureka</span><span class="w"> </span><span class="c">#EurekeServer的地址(集群版)</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>访问localhost:9527/payment/1测试</p>
+</blockquote>
+<hr>
+<h3 id="常用predicate">常用Predicate</h3>
+<p>也就是常用的断言配置</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215344211.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215344211.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215344211.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215344211.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215344211.png"
+        title="image-20211004215344211" /></p>
+<h4 id="after-route-predicate">After Route Predicate</h4>
+<p>请求时间在该时间之后可以匹配</p>
+<blockquote>
+<p>在配置文件中配置</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220110267.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220110267.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220110267.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220110267.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220110267.png"
+        title="image-20211004220110267" /></p>
+<p><strong>可以通过如下Api进行获得该格式的日期:</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215711880.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215711880.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215711880.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215711880.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215711880.png"
+        title="image-20211004215711880" /></p>
+<blockquote>
+<p>在该日期之前无法访问</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215837978.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215837978.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215837978.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215837978.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004215837978.png"
+        title="image-20211004215837978" /></p>
+<blockquote>
+<p>该日期之后可以访问</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220120328.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220120328.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220120328.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220120328.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220120328.png"
+        title="image-20211004220120328" /></p>
+<hr>
+<h4 id="before-route-predicate">Before Route Predicate</h4>
+<p>请求的时间在这个时间之前可以匹配</p>
+<h4 id="between-route-predicate">Between Route Predicate</h4>
+<p>请求时间在两个时间内，可以匹配</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220344077.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220344077.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220344077.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220344077.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211004220344077.png"
+        title="image-20211004220344077" /></p>
+<h4 id="cookie-route-predicate">Cookie Route Predicate</h4>
+<p>匹配Cookie断言</p>
+<p>需要两个参数，第一个是Cookie name，第二个是政策表达式</p>
+<p>Gateway会去检验对应的Cookie的value是否符合正则表达式</p>
+<blockquote>
+<p>配置Predicate</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112725758.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112725758.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112725758.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112725758.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112725758.png"
+        title="image-20211005112725758" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112702695.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112702695.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112702695.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112702695.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005112702695.png"
+        title="image-20211005112702695" /></p>
+<hr>
+<h4 id="header-route-predicate">Header Route Predicate</h4>
+<p>请求头中进行匹配</p>
+<p>两个参数，一个是请求头名，一个是值</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120128556.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120128556.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120128556.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120128556.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120128556.png"
+        title="image-20211005120128556" /></p>
+<blockquote>
+<p>测试不匹配</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120212339.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120212339.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120212339.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120212339.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120212339.png"
+        title="image-20211005120212339" /></p>
+<blockquote>
+<p>测试匹配</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120232923.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120232923.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120232923.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120232923.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005120232923.png"
+        title="image-20211005120232923" /></p>
+<hr>
+<h4 id="method-route-predicate">Method Route Predicate</h4>
+<h4 id="path-route-predicate">Path Route Predicate</h4>
+<h4 id="query-route-predicate">Query Route Predicate</h4>
+<hr>
+<h3 id="filter">Filter</h3>
+<h4 id="自定义全局日志过滤器">自定义全局日志过滤器</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005122258670.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005122258670.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005122258670.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005122258670.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005122258670.png"
+        title="image-20211005122258670" /></p>
+<hr>
+<h2 id="config">Config</h2>
+<h3 id="服务端连接github">服务端(连接github)</h3>
+<p>微服务统一配置</p>
+<blockquote>
+<p>建模块cloud-config-center-3344</p>
+</blockquote>
+<blockquote>
+<p>写pom</p>
+</blockquote>
+<p>增加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--配置中心--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-config-server<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写配置文件</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130747400.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130747400.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130747400.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130747400.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130747400.png"
+        title="image-20211005130747400" /></p>
+<blockquote>
+<p>主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130442556.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130442556.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130442556.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130442556.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005130442556.png"
+        title="image-20211005130442556" /></p>
+<blockquote>
+<p>测试localhost:3344/master/config-dev.yml</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005134056447.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005134056447.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005134056447.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005134056447.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005134056447.png"
+        title="image-20211005134056447" /></p>
+<blockquote>
+<p>如果连接失败，使用ssh方式连接，使用旧方法创建私匙，在github中添加，然后配置文件中改成ssh的地址</p>
+</blockquote>
+<hr>
+<h3 id="客户端连接服务端">客户端(连接服务端)</h3>
+<blockquote>
+<p>创建模块cloud-config-client-3355</p>
+</blockquote>
+<blockquote>
+<p>改pom</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--配置中心客户端--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-config<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写bootstrap.yml</p>
+</blockquote>
+<ul>
+<li>application.yml是用户级的资源配置</li>
+<li>bootstrap.yml是系统级，<strong>优先级更高</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141218298.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141218298.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141218298.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141218298.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141218298.png"
+        title="image-20211005141218298" /></p>
+<blockquote>
+<p>写主启动类</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005135833611.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005135833611.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005135833611.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005135833611.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005135833611.png"
+        title="image-20211005135833611" /></p>
+<hr>
+<h3 id="客户端动态更新">客户端动态更新</h3>
+<p>服务端可以实时更新，但是客户端不能实时更新</p>
+<blockquote>
+<p>引入监控依赖</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>配置文件暴露监控端点</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141604377.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141604377.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141604377.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141604377.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141604377.png"
+        title="image-20211005141604377" /></p>
+<blockquote>
+<p>在controller添加注解<code>@RefreshScope</code></p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141656387.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141656387.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141656387.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141656387.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005141656387.png"
+        title="image-20211005141656387" /></p>
+<hr>
+<h2 id="bus">Bus</h2>
+<blockquote>
+<p>什么是总线？</p>
+</blockquote>
+<p>在微服务架构的系统总，通常用使用轻量级的消息代理来构建一个公用的消息主题，并让系统中所有微服务的实例都连接上来，由于该主题中产生的消息会被所有实例监听和消费，所以称它为消费总线。在总线上的各个实例，都可以方便的广播一些需要其他连接到该主题上的实例都知道的消息</p>
+<blockquote>
+<p>基本原理</p>
+</blockquote>
+<p>ConfigClient实例都监听MQ中同一个topic(默认是SpringCloudBus)。当一个服务刷新数据的时候，它会把这个消息放入到Topic中，这样其他监听同一Topic的服务就能得到通知，然后去更新自身的配置</p>
+<h3 id="实践-1">实践</h3>
+<p>再创建一个cloud-config-client-3366，步骤略</p>
+<blockquote>
+<p>设计</p>
+</blockquote>
+<ul>
+<li>利用消息总线触发一个客户端/bus/refresh，而刷新所有客户端配置</li>
+<li>利用消息总线触发一个服务端ConfigServer的/bus/refresh端点，而刷新所有客户端的配置</li>
+</ul>
+<p><strong>方法二更适合</strong></p>
+<blockquote>
+<p>服务端添加Rabbitmq</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--整合rabbitmq的bus消息总线--&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-bus-amqp<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>增加rabbitmq的配置</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152750355.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152750355.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152750355.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152750355.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152750355.png"
+        title="image-20211005152750355" /></p>
+<blockquote>
+<p>增加暴露刷新配置的端点</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152849009.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152849009.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152849009.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152849009.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005152849009.png"
+        title="image-20211005152849009" /></p>
+<blockquote>
+<p>3344和3355添加消息总线的支持</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-bus-amqp<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">rabbitmq</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="m">49.234.111.177</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">5672</span><span class="w">
+</span><span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">lcy</span><span class="w">
+</span><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">lcy021030</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>发送请求POST: localhost:3344/actuator/bus-refresh完成自动更新</p>
+</blockquote>
+<hr>
+<h2 id="stream">Stream</h2>
+<p>驱动，屏蔽底层消息中间件的差异</p>
+<p>应用程序通过inputs或者outputs来与SpringCloudStream中的binder对象交互</p>
+<p>通过配置来绑定(binding)，而SpringCloudStream的binder对象负责与消息中间件交互</p>
+<h3 id="实践-2">实践</h3>
+<h4 id="生产者">生产者</h4>
+<blockquote>
+<p>创建模块cloud-stream-rabbitmq-provider8801</p>
+</blockquote>
+<blockquote>
+<p>写pom</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-stream-rabbit<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写yml</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8801</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cloud-stream-provider</span><span class="w">
+</span><span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">stream</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">bindings</span><span class="p">:</span><span class="w"> </span><span class="c"># 服务的整合处理</span><span class="w">
+</span><span class="w">        </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="c"># 这个名字是一个通道的名称</span><span class="w">
+</span><span class="w">          </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l">studyExchange</span><span class="w"> </span><span class="c"># 表示要使用的Exchange名称定义</span><span class="w">
+</span><span class="w">          </span><span class="nt">content-type</span><span class="p">:</span><span class="w"> </span><span class="l">application/json</span><span class="w"> </span><span class="c"># 设置消息类型，本次为json，文本则设置“text/plain”</span><span class="w">
+</span><span class="w">          </span><span class="nt">binder</span><span class="p">:</span><span class="w"> </span><span class="l">rabbit1</span><span class="w"> </span><span class="c"># 设置要绑定的消息服务的具体设置</span><span class="w">
+</span><span class="w">      </span><span class="c">#可以配置多个底层MQ的配置</span><span class="w">
+</span><span class="w">      </span><span class="nt">binders</span><span class="p">:</span><span class="w"> </span><span class="c"># 在此处配置要绑定的rabbitmq的服务信息；</span><span class="w">
+</span><span class="w">        </span><span class="nt">rabbit1</span><span class="p">:</span><span class="w"> </span><span class="c"># 表示定义的名称，用于于binding整合</span><span class="w">
+</span><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">rabbit</span><span class="w"> </span><span class="c"># 消息组件类型</span><span class="w">
+</span><span class="w">          </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="c"># 设置rabbitmq的相关的环境配置</span><span class="w">
+</span><span class="w">            </span><span class="nt">spring</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">rabbitmq</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="m">49.234.111.177</span><span class="w">
+</span><span class="w">                </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">5672</span><span class="w">
+</span><span class="w">                </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">lcy</span><span class="w">
+</span><span class="w">                </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">lcy021030</span><span class="w">
+</span><span class="w">  </span><span class="nt">rabbitmq</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="m">49.234.111.177</span><span class="w">
+</span><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">5672</span><span class="w">
+</span><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">lcy</span><span class="w">
+</span><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">lcy021030</span><span class="w">
+</span><span class="w"></span><span class="nt">eureka</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">client</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">service-url</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultZone</span><span class="p">:</span><span class="w"> </span><span class="l">http://eureka7001:7001/eureka,http://eureka7002:7002/eureka</span><span class="w"> </span><span class="c">#EurekeServer的地址(集群版)</span><span class="w">
+</span><span class="w">  </span><span class="nt">instance</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">instance-id</span><span class="p">:</span><span class="w"> </span><span class="l">send-8801.com</span><span class="w"> </span><span class="c">#在信息列表显示的主机名称</span><span class="w">
+</span><span class="w">    </span><span class="nt">lease-renewal-interval-in-seconds</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c">#设置心跳的时间(默认是30秒)</span><span class="w">
+</span><span class="w">    </span><span class="nt">lease-expiration-duration-in-seconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span><span class="w">    </span><span class="nt">prefer-ip-address</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>写主启动类</p>
+</blockquote>
+<blockquote>
+<p>写业务接口</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173105499.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173105499.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173105499.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173105499.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173105499.png"
+        title="image-20211005173105499" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173115598.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173115598.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173115598.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173115598.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173115598.png"
+        title="image-20211005173115598" /></p>
+<hr>
+<h4 id="消费者">消费者</h4>
+<blockquote>
+<p>新建模块cloud-stream-rabbitmq-consumer8802</p>
+</blockquote>
+<blockquote>
+<p>写pom</p>
+</blockquote>
+<blockquote>
+<p>写yml</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173534691.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173534691.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173534691.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173534691.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211005173534691.png"
+        title="image-20211005173534691" /></p>
+<blockquote>
+<p>写业务</p>
+</blockquote>
+<hr>
+<h3 id="重复消费">重复消费</h3>
+<p>此时两个消费者是不同组的，都监听一个交换机，所以都会收到消息，因此我们需要将两个消费者放到同一个组中</p>
+<blockquote>
+<p>自定义分组</p>
+</blockquote>
+<p>如果我们不自定义分组，那么默认使用的是不同的分组，因此可以自定义选择分组</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006154102316.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006154102316.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006154102316.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006154102316.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006154102316.png"
+        title="image-20211006154102316" /></p>
+<p>在8802和8803中加入分组，那么收到的就是将两个消费者监听在同一个组中，消息则只能被消费一次</p>
+<p>此时两个消费者就轮询接受消息。</p>
+<blockquote>
+<p>原理</p>
+</blockquote>
+<p>其实就是rabbitmq中的fandout和direct，默认情况两个消费者是不同的队列，然后绑定到同一个交换机，那么我们生产者生产一个消息到交换机，就会被两个队列都拿到。</p>
+<p>当我们配置了组名时，其实就是变成了同一个队列，那么生产的消息发送到交换机时，交换机只发了一条消息给队列，那么监听同一个队列的消费者，只有一个能消费到消息，默认是轮询消费</p>
+<hr>
+<h2 id="sleuth">Sleuth</h2>
+<p><strong>SpringCloudSleuth提供了分布式追踪的解决方案</strong></p>
+<h3 id="搭建zipkin">搭建zipkin</h3>
+<blockquote>
+<p>下载jar包后直接启动</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006160619640.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006160619640.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006160619640.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006160619640.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006160619640.png"
+        title="image-20211006160619640" /></p>
+<blockquote>
+<p>访问<code>localhost:9411</code>查看面板</p>
+</blockquote>
+<h3 id="实践-3">实践</h3>
+<blockquote>
+<p>cloud-provider8001添加依赖</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-zipkin<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改配置</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006161043960.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006161043960.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006161043960.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006161043960.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211006161043960.png"
+        title="image-20211006161043960" /></p>
+<blockquote>
+<p>在consumer做一样的依赖和配置</p>
+</blockquote>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-12-09</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/springcloud/">SpringCloud</a>,&nbsp;<a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/tmux%E5%AD%A6%E4%B9%A0/" class="prev" rel="prev" title="Tmux学习"><i class="fas fa-angle-left fa-fw"></i>Tmux学习</a>
+            <a href="/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E6%8B%9B%E6%BB%91%E9%93%81%E5%8D%A2%E5%AE%9E%E5%BD%95/" class="next" rel="next" title="大二&#34;秋招&#34;滑铁卢实录">大二&#34;秋招&#34;滑铁卢实录<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

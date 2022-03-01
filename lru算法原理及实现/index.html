@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>LRU算法原理及实现 - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="LRU算法原理及实现" />
+<meta property="og:description" content="LRU算法原理及实现 前言 什么是LRU算法？ LRU（Least recently used，最近最少使用）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-30T10:40:18+08:00" />
+<meta property="article:modified_time" content="2021-12-30T10:40:18+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="LRU算法原理及实现"/>
+<meta name="twitter:description" content="LRU算法原理及实现 前言 什么是LRU算法？ LRU（Least recently used，最近最少使用）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/" /><link rel="prev" href="https://ther1sing3un.github.io/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E6%8B%9B%E6%BB%91%E9%93%81%E5%8D%A2%E5%AE%9E%E5%BD%95/" /><link rel="next" href="https://ther1sing3un.github.io/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "LRU算法原理及实现",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "算法, Java, 面试, GoLang","wordcount":  5457 ,
+        "url": "https:\/\/ther1sing3un.github.io\/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0\/","datePublished": "2021-12-30T10:40:18+08:00","dateModified": "2021-12-30T10:40:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">LRU算法原理及实现</h1><h2 class="single-subtitle">简易的LRU算法的多种实现</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw"></i>算法</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-30">2021-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5457 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png"
+        title="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#原理">原理</a></li>
+    <li><a href="#实现">实现</a></li>
+    <li><a href="#测试">测试</a></li>
+    <li><a href="#lru使用linkedhashmap">LRU(使用LinkedHashMap)</a></li>
+    <li><a href="#lrugolang实现">LRU(GoLang实现)</a></li>
+    <li><a href="#优化">优化</a>
+      <ul>
+        <li><a href="#优化后代码">优化后代码</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="lru算法原理及实现">LRU算法原理及实现</h1>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>什么是LRU算法？</p>
+</blockquote>
+<p>LRU（Least recently used，最近最少使用）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”。</p>
+<p>那么该数据结构就是当存储队列到达上限时，清除的是最久未被访问的节点，该节点一般认为是最可能无用的节点，保留下来的是最近都有使用过的节点，因此可以实现对&quot;有用&quot;数据的最大程度保留。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-71b21233c615b1ce899cd4bd3122cbab_720w.jpg"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-71b21233c615b1ce899cd4bd3122cbab_720w.jpg, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-71b21233c615b1ce899cd4bd3122cbab_720w.jpg 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-71b21233c615b1ce899cd4bd3122cbab_720w.jpg 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-71b21233c615b1ce899cd4bd3122cbab_720w.jpg"
+        title="img" /></p>
+<blockquote>
+<p>LRU算法应用场景？</p>
+</blockquote>
+<p>LRU算法有许多的应用场景。</p>
+<ol>
+<li>Redis中使用LRU来进行淘汰</li>
+<li>操作系统底层的内存管理，比如说页面置换算法中的LRU算法</li>
+<li>业务处理，比如说做一个用户最近10个浏览记录，那么就可以使用LRU算法来维护一个大小为10的LRU队列</li>
+</ol>
+<hr>
+<h2 id="原理">原理</h2>
+<blockquote>
+<p>LRU算法需要实现如下特性</p>
+</blockquote>
+<ol>
+<li>实现get/put方法(都为O(1)的时间复杂度)</li>
+<li>每次get时需要将访问的节点提前至队首</li>
+<li>每次put需要判断队列是否已满，满了则将最后的节点删除，并且将该节点放至队首，不满则直接放队首</li>
+</ol>
+<blockquote>
+<p>基于上述特性需要实现如下数据结构</p>
+</blockquote>
+<ol>
+<li>首先需要实现队列，如果使用单向链表，当我们需要使用删除操作时，需要获得前置节点的指针，单向链表则不能做到直接获取。因此使用双向链表。</li>
+<li>又我们需要get方法达到O(1)的时间复杂度，因此需要一个Hashmap，可以根据key定位到我们双向链表的Node节点。</li>
+<li>由于我们HashMap中有key，所以我们可不可以Node中只存value，其实是不可以的，后续会提到这个原因。</li>
+</ol>
+<p><strong>因此我们实现了如下数据结构</strong></p>
+<p><figure><a class="lightgallery" href="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg" title="HashLinkedList" data-thumbnail="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg" data-sub-html="<h2>双向链表&#43;HashMap的数据结构</h2><p>HashLinkedList</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg"
+            data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg 2x"
+            data-sizes="auto"
+            alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/4.jpg" />
+    </a><figcaption class="image-caption">双向链表+HashMap的数据结构</figcaption>
+    </figure></p>
+<p><strong>缓存淘汰过程如下</strong></p>
+<p><figure><a class="lightgallery" href="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png" title="LRU算法缓存淘汰策略- Mr.Ming2 - 博客园" data-thumbnail="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png" data-sub-html="<h2>LRU缓存淘汰过程</h2><p>LRU算法缓存淘汰策略- Mr.Ming2 - 博客园</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png"
+            data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png 2x"
+            data-sizes="auto"
+            alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png" />
+    </a><figcaption class="image-caption">LRU缓存淘汰过程</figcaption>
+    </figure></p>
+<h2 id="实现">实现</h2>
+<p>那么现在我们就开始实现一个简易的LRU算法</p>
+<blockquote>
+<p>首先需要实现一个Node节点</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+
+    <span class="c1">//Node中存键值对
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">;</span>
+
+    <span class="c1">//前置节点和后置节点
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="n">next</span><span class="o">,</span><span class="n">pre</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Node</span> <span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>接下来实现一个关于Node节点的双向链表以及相关方法</p>
+</blockquote>
+<ol>
+<li>需要有头尾节点</li>
+<li>有大小size</li>
+<li>实现addFirst()/removeLast()/remove()/size()方法</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @author TheR1sing3un
+</span><span class="cm"> * @date 2021/12/30 11:14
+</span><span class="cm"> * @description 双向链表数据结构实现
+</span><span class="cm"> */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoubleList</span> <span class="o">{</span>
+
+    <span class="c1">//头节点和尾节点
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="n">head</span><span class="o">,</span><span class="n">tail</span><span class="o">;</span>
+
+    <span class="c1">//大小
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 构造方法并且完成首尾节点初始化
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">DoubleList</span> <span class="o">(){</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">);</span>
+        <span class="n">tail</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">);</span>
+        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
+        <span class="n">tail</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 添加一个节点到队首
+</span><span class="cm">     * @param node
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">){</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+        <span class="n">size</span><span class="o">++;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 删除最后一个节点
+</span><span class="cm">     * @return 返回被删除的节点
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">removeLast</span><span class="o">(){</span>
+        <span class="c1">//没有节点时候,返回null
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="n">tail</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">Node</span> <span class="n">last</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
+        <span class="n">last</span><span class="o">.</span><span class="na">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
+        <span class="n">tail</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
+        <span class="n">size</span><span class="o">--;</span>
+        <span class="k">return</span> <span class="n">last</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 删除某个节点
+</span><span class="cm">     * @param node
+</span><span class="cm">     * @return 返回被删除的节点
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">){</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
+        <span class="n">size</span><span class="o">--;</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 获取当前链表大小
+</span><span class="cm">     * @return 链表大小
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">size</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 打印该链表
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+        <span class="n">Node</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="n">tail</span><span class="o">){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span> <span class="n">cur</span><span class="o">.</span><span class="na">val</span><span class="o">+</span><span class="s">&#34; &#34;</span><span class="o">);</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>接下来实现LRU队列</p>
+</blockquote>
+<ol>
+<li>需要有一个HashMap完成key-&gt;Node的映射</li>
+<li>需要有一个DoubleList来存放Node节点</li>
+<li>有容量上限cap</li>
+<li>使用私有的delete()/removeLast()/makeFirst()/addFirst()来辅助put()和get()方法，避免直接操作node</li>
+<li>有put()/get()/size()方法</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @author TheR1sing3un
+</span><span class="cm"> * @date 2021/12/30 11:49
+</span><span class="cm"> * @description LRU队列实现
+</span><span class="cm"> */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRUCache</span> <span class="o">{</span>
+
+    <span class="c1">//key-&gt;node的映射
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">;</span>
+
+    <span class="c1">//双向链表作为缓存队列
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">DoubleList</span> <span class="n">cache</span><span class="o">;</span>
+
+    <span class="c1">//最大容量
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
+
+    <span class="c1">//构造方法,并且完成map和list的初始化
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="nf">LRUCache</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
+        <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Node</span> <span class="o">&gt;();</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DoubleList</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 删除某个key对于的键值对
+</span><span class="cm">     * @param key
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//从map中获取该节点
+</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="c1">//从链表删除该节点
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+        <span class="c1">//从map中删除该key
+</span><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 删除缓存队列中最后一个节点,也就是最久未被使用的节点
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">removeLast</span><span class="o">(){</span>
+        <span class="c1">//从链表中删除该节点
+</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">removeLast</span><span class="o">();</span>
+        <span class="c1">//根据该节点的key来删除map中对应的键值对
+</span><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+        <span class="c1">//此处也就是为什么我们需要Node中存key的原因,因为需要根据key来删除map中的键值对
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 将某个键提前到队首,也就是变成最近使用的节点
+</span><span class="cm">     * @param key
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeFirst</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//从map中获取该节点
+</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="c1">//删除该节点
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+        <span class="c1">//将该节点重新插入到队首
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 添加一个键值对到队首,也就是到最近使用的位置
+</span><span class="cm">     * @param key
+</span><span class="cm">     * @param val
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+        <span class="c1">//添加到队首
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+        <span class="c1">//添加映射
+</span><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">node</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 暴露出来的put()方法,向LRUCache中插入一个键值对,若key已存在则更新
+</span><span class="cm">     * @param key
+</span><span class="cm">     * @param val
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+            <span class="c1">//若key已存在,那么需要先删除旧数据
+</span><span class="c1"></span>            <span class="n">delete</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+            <span class="c1">//插入到队首
+</span><span class="c1"></span>            <span class="n">addFirst</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//当达到容量上限时
+</span><span class="c1"></span>        <span class="k">if</span><span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">cap</span><span class="o">){</span>
+            <span class="c1">//删除最久未被使用的节点
+</span><span class="c1"></span>            <span class="n">removeLast</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="c1">//添加到队首
+</span><span class="c1"></span>        <span class="n">addFirst</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 暴露出来的get()方法,根据key获取到val,若不存在,则返回-1(假定val都为正整数)
+</span><span class="cm">     * @param key
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+            <span class="c1">//key不存在
+</span><span class="c1"></span>            <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//将该key移动到队首,也就是最近使用的第一个
+</span><span class="c1"></span>        <span class="n">makeFirst</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="c1">//返回值　
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">).</span><span class="na">val</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 暴露出来的size()方法,返回当前的大小
+</span><span class="cm">     * @return 返回当前队列大小
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 打印缓存队列
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+        <span class="n">cache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="测试">测试</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LRUCache</span> <span class="n">lruCache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LRUCache</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
+        <span class="n">Scanner</span> <span class="n">sc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">;</span>
+        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;请输入插入的key和val(以空格隔开,输入-1则结束)&#34;</span><span class="o">);</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="n">lruCache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+            <span class="n">lruCache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;请输入需要获取的key(输入-1则结束)&#34;</span><span class="o">);</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;key-&gt;val: &#34;</span><span class="o">+</span><span class="n">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span><span class="n">lruCache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">));</span>
+            <span class="n">lruCache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><a class="lightgallery" href="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png" title="image-20211230132907832" data-thumbnail="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png" data-sub-html="<h2>自行输入测试</h2><p>image-20211230132907832</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png"
+            data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png 2x"
+            data-sizes="auto"
+            alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png" />
+    </a><figcaption class="image-caption">自行输入测试</figcaption>
+    </figure></p>
+<p><strong>至此，我们就完成了一个简易的LRU算法，除此之外，我们还可以使用Java中自带的api来简化LRU实现</strong></p>
+<hr>
+<h2 id="lru使用linkedhashmap">LRU(使用LinkedHashMap)</h2>
+<p>LinkedHashMap内部数据结构就是一条双向链表+HashMap，因此我们可以不用自己定义这些数据结构，具体实现交给LinkedHashMap，我们只需要处理put()/get()方法即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @author TheR1sing3un
+</span><span class="cm"> * @date 2021/12/30 13:35
+</span><span class="cm"> * @description 使用LinkedHashMap实现的LRU
+</span><span class="cm"> */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRUCacheSimple</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="nf">LRUCacheSimple</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 将某个键改成最近使用的
+</span><span class="cm">     * @param key
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeRecently</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+        <span class="c1">//先获取值
+</span><span class="c1"></span>        <span class="n">Integer</span> <span class="n">val</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="c1">//删除该键
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="c1">//重新插入
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 插入key,val
+</span><span class="cm">     * @param key
+</span><span class="cm">     * @param val
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+            <span class="c1">//如果已存在,那么覆盖
+</span><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+            <span class="c1">//将key变成最近使用
+</span><span class="c1"></span>            <span class="n">makeRecently</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cap</span> <span class="o">&lt;=</span> <span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">()){</span>
+            <span class="c1">//当满了之后
+</span><span class="c1"></span>            <span class="c1">//获取第一个key(也就是LinkedHashMap中最久未被访问的节点)
+</span><span class="c1"></span>            <span class="n">Integer</span> <span class="n">first</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">().</span><span class="na">next</span><span class="o">();</span>
+            <span class="c1">//删除该节点
+</span><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">first</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">//将新的key,val插入
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 根据key获取value(假定value都是正整数)
+</span><span class="cm">     * @param key
+</span><span class="cm">     * @return value(-1表示不存在)
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//将该key变成最近使用的
+</span><span class="c1"></span>        <span class="n">makeRecently</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 打印该缓存
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">();</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()){</span>
+            <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">)+</span><span class="s">&#34; &#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="lrugolang实现">LRU(GoLang实现)</h2>
+<p>上述是Java版本的LRU实现，下述我使用Golang语言进行实现，大致思路和逻辑是相同的。</p>
+<blockquote>
+<p>代码如下</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">LRU</span>
+
+<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+
+<span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="nx">key</span>  <span class="kt">int</span>
+   <span class="nx">val</span>  <span class="kt">int</span>
+   <span class="nx">pre</span>  <span class="o">*</span><span class="nx">Node</span>
+   <span class="nx">next</span> <span class="o">*</span><span class="nx">Node</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">LRUCache</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="nx">Cap</span>    <span class="kt">int</span>           <span class="c1">//最大容量
+</span><span class="c1"></span>   <span class="nx">bucket</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="o">*</span><span class="nx">Node</span> <span class="c1">//HashMap
+</span><span class="c1"></span>   <span class="nx">head</span>   <span class="o">*</span><span class="nx">Node</span>
+   <span class="nx">tail</span>   <span class="o">*</span><span class="nx">Node</span>
+   <span class="nx">Size</span>   <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="c1">//LRUCache的构造
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">New</span><span class="p">(</span><span class="nx">cap</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">LRUCache</span> <span class="p">{</span>
+   <span class="nx">cache</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">LRUCache</span><span class="p">{</span>
+      <span class="nx">Cap</span><span class="p">:</span>    <span class="nx">cap</span><span class="p">,</span>
+      <span class="nx">bucket</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="o">*</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">cap</span><span class="p">),</span>
+      <span class="nx">head</span><span class="p">:</span>   <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">},</span>
+      <span class="nx">tail</span><span class="p">:</span>   <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">},</span>
+      <span class="nx">Size</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span>
+   <span class="p">}</span>
+   <span class="nx">cache</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">tail</span>
+   <span class="nx">cache</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">head</span>
+   <span class="k">return</span> <span class="nx">cache</span>
+<span class="p">}</span>
+
+<span class="c1">//添加一个节点到首位(也就是最近一个访问的)
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//判断是否到容量上限
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span> <span class="o">==</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Cap</span> <span class="p">{</span>
+      <span class="c1">//到达上限之后,删除最后一个节点
+</span><span class="c1"></span>      <span class="nx">this</span><span class="p">.</span><span class="nf">deleteNode</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">pre</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="c1">//添加节点到首位
+</span><span class="c1"></span>   <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span>
+   <span class="nx">node</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span>
+   <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">node</span>
+   <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">node</span>
+   <span class="c1">//添加该映射
+</span><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">node</span><span class="p">.</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span>
+   <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span><span class="o">++</span>
+<span class="p">}</span>
+
+<span class="c1">//将某个key变成最近使用的(假定该key一定存在)
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//根据key获取该节点
+</span><span class="c1"></span>   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+   <span class="c1">//先删除该节点
+</span><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nf">deleteNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
+   <span class="c1">//再加入该节点到首位
+</span><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//删除某个节点
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">deleteNode</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//先删除映射
+</span><span class="c1"></span>   <span class="nb">delete</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
+   <span class="c1">//从双向链表中删除该节点
+</span><span class="c1"></span>   <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">next</span>
+   <span class="nx">node</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span>
+   <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span><span class="o">--</span>
+<span class="p">}</span>
+
+<span class="c1">//put方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//先判断是否已有该节点,有则更新
+</span><span class="c1"></span>   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+   <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="c1">//当没有该节点时,直接加入到首位
+</span><span class="c1"></span>      <span class="nx">node</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">}</span>
+      <span class="nx">this</span><span class="p">.</span><span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">//如果已经有该节点,那么先直接更新该节点的值并且提前至首位
+</span><span class="c1"></span>      <span class="nx">node</span><span class="p">.</span><span class="nx">val</span> <span class="p">=</span> <span class="nx">val</span>
+      <span class="nx">this</span><span class="p">.</span><span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//get方法,如果不存在则返回-1(假设值都是正数)
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+   <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="c1">//不存在则返回-1
+</span><span class="c1"></span>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">//将节点提前到首位
+</span><span class="c1"></span>      <span class="nx">this</span><span class="p">.</span><span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+      <span class="c1">//返回值
+</span><span class="c1"></span>      <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">val</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span>
+   <span class="k">for</span> <span class="p">;</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">;</span> <span class="nx">cur</span> <span class="p">=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">next</span> <span class="p">{</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d-&gt;%d &#34;</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">val</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>测试代码如下</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">LRU</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+   <span class="s">&#34;fmt&#34;</span>
+   <span class="s">&#34;testing&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">TestLRUCache_New</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">cache</span> <span class="o">:=</span> <span class="nf">New</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+   <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;加入节点%d\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+      <span class="nx">cache</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">11</span><span class="o">*</span><span class="nx">i</span><span class="p">)</span>
+      <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+   <span class="p">}</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220101151943479.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220101151943479.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220101151943479.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220101151943479.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220101151943479.png"
+        title="image-20220101151943479" /></p>
+<hr>
+<h2 id="优化">优化</h2>
+<p>上述的LRU容器还是一个根本不能投入生产使用的玩具级实现，可以在进一步进行优化。</p>
+<blockquote>
+<p>值的类型</p>
+</blockquote>
+<p>上述的实现我们都是默认value是int，而且是正整数的int，然而生产中，不应该使用固定的value值。Java中应该使用泛型，GoLang中可以使用interface。</p>
+<blockquote>
+<p>最大容量</p>
+</blockquote>
+<p>上述我们的容器最大容量的单位是键值对的个数，这是不太合理的，因为实际中我们应该限制的是缓存占用大小，因此可以将最大限制改成byte为单位，而且需要对淘汰算法进行优化，这时候我们可能超出容量后，需要淘汰的不止是一个缓存，可以是多个，直到当前已用内存小于最大内存。</p>
+<blockquote>
+<p>并发安全</p>
+</blockquote>
+<p>上述我们写的只能在单线程下使用，没有考虑到并发问题，那么其实只需要对每次链表和队列的写查进行相应的加锁即可。Java可以使用synchronized关键字也可以使用ReentrantLock/ReentrantReadWriteLock来对其加锁。GoLang可以使用标准库的sync.Mutex来加锁。</p>
+<blockquote>
+<p>其他</p>
+</blockquote>
+<p>我们这次写的是每次都更新到首位的LRU，称为lru-1，也有lru-k的方式，这个需要根据情况进行优化。</p>
+<h3 id="优化后代码">优化后代码</h3>
+<p>针对上述的几个问题，我写了一个GoLang的优化后的LRU算法(仍然是lru-1)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">lru</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+   <span class="s">&#34;container/list&#34;</span>
+   <span class="s">&#34;fmt&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">Cache</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="c1">//缓存队列最大缓存大小
+</span><span class="c1"></span>   <span class="nx">maxBytes</span> <span class="kt">int64</span>
+   <span class="c1">//缓存队列目前已经使用大小
+</span><span class="c1"></span>   <span class="nx">usedBytes</span> <span class="kt">int64</span>
+   <span class="c1">//链表
+</span><span class="c1"></span>   <span class="nx">cacheList</span> <span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">List</span>
+   <span class="c1">//map映射key-&gt;Element
+</span><span class="c1"></span>   <span class="nx">cacheMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">Element</span>
+   <span class="c1">//删除记录时的回调函数
+</span><span class="c1"></span>   <span class="nx">OnEvicted</span> <span class="kd">func</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//键值对类型
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">entry</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="nx">key</span>   <span class="kt">string</span>
+   <span class="nx">value</span> <span class="nx">Value</span>
+<span class="p">}</span>
+
+<span class="c1">//缓存的值的类型
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Value</span> <span class="kd">interface</span> <span class="p">{</span>
+   <span class="c1">//返回Value的内存大小
+</span><span class="c1"></span>   <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="c1">//实例化函数
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">New</span><span class="p">(</span><span class="nx">maxBytes</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">onEvicted</span> <span class="kd">func</span><span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="nx">Value</span><span class="p">))</span> <span class="o">*</span><span class="nx">Cache</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="o">&amp;</span><span class="nx">Cache</span><span class="p">{</span>
+      <span class="nx">maxBytes</span><span class="p">:</span>  <span class="nx">maxBytes</span><span class="p">,</span>
+      <span class="nx">usedBytes</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nx">cacheList</span><span class="p">:</span> <span class="nx">list</span><span class="p">.</span><span class="nf">New</span><span class="p">(),</span>
+      <span class="nx">cacheMap</span><span class="p">:</span>  <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">Element</span><span class="p">),</span>
+      <span class="nx">OnEvicted</span><span class="p">:</span> <span class="nx">onEvicted</span><span class="p">,</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//查找
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">Value</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//先从map里查找是否有该值
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+      <span class="c1">//若有则将该提至最近使用的
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+      <span class="c1">//返回(将element的value强转成自定义的Value类型
+</span><span class="c1"></span>      <span class="nx">e</span> <span class="o">:=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="c1">//删除最久未被使用的节点
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">RemoveOldest</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">//获取最后一个节点
+</span><span class="c1"></span>   <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Back</span><span class="p">()</span>
+   <span class="k">if</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="c1">//从list中删除
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="nx">cur</span><span class="p">)</span>
+      <span class="c1">//从map中删除
+</span><span class="c1"></span>      <span class="nx">entry</span> <span class="o">:=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+      <span class="nb">delete</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
+      <span class="c1">//更新当前已用内存
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">-=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+      <span class="c1">//运行回调函数
+</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">OnEvicted</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+         <span class="nx">c</span><span class="p">.</span><span class="nf">OnEvicted</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//添加缓存
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Put</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//判断当前是否已经有该key
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+      <span class="c1">//已经有该节点,则将该节点更新并移至队首(最近访问)
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+      <span class="nx">entry</span> <span class="o">:=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+      <span class="c1">//更新当前已用内存(加上当前新增的value大小再减去原本的value大小)
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span> <span class="o">-</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+      <span class="c1">//更新值
+</span><span class="c1"></span>      <span class="nx">entry</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">value</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">//若不存在,则添加至队首,并更新map
+</span><span class="c1"></span>      <span class="nx">element</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">PushFront</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">entry</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">})</span>
+      <span class="c1">//添加至map
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">element</span>
+      <span class="c1">//更新已用内存
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+   <span class="p">}</span>
+   <span class="c1">//添加之后判断是否已经超过最大内存(当最大内存不为0时而且已用内存超过最大内存时删除最近未使用的节点)
+</span><span class="c1"></span>   <span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="p">&lt;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="p">{</span>
+      <span class="nx">c</span><span class="p">.</span><span class="nf">RemoveOldest</span><span class="p">()</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//获取当前缓存的数据条数
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">for</span> <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Front</span><span class="p">();</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">;</span> <span class="nx">cur</span> <span class="p">=</span> <span class="nx">cur</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">kv</span> <span class="o">:=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s-&gt;%s &#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">gocache</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+   <span class="s">&#34;github.com/TheR1sing3un/gocache/gocache/lru&#34;</span>
+   <span class="s">&#34;sync&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">cache</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="c1">//互斥锁
+</span><span class="c1"></span>   <span class="nx">lock</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+   <span class="c1">//lru缓存队列
+</span><span class="c1"></span>   <span class="nx">lru</span> <span class="o">*</span><span class="nx">lru</span><span class="p">.</span><span class="nx">Cache</span>
+   <span class="c1">//最大缓存大小
+</span><span class="c1"></span>   <span class="nx">cacheBytes</span> <span class="kt">int64</span>
+<span class="p">}</span>
+
+<span class="c1">//缓存put方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">put</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">ByteView</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="c1">//懒加载lru
+</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="p">=</span> <span class="nx">lru</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheBytes</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//缓存get方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">value</span> <span class="nx">ByteView</span><span class="p">,</span> <span class="nx">ok</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="c1">//还未初始化(当前肯定没有数据)
+</span><span class="c1"></span>      <span class="k">return</span>
+   <span class="p">}</span>
+   <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">value</span><span class="p">.(</span><span class="nx">ByteView</span><span class="p">),</span> <span class="kc">true</span>
+   <span class="p">}</span>
+   <span class="k">return</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
+<p>至此，我们就完成了三种手写LRU算法，不需要过多练习，只需要记住核心思想就是每次get时候我就提前，每次put也要提前，并且需要判断是否满载，若满则删除最后的(最久未被访问的节点)。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-12-30</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>,&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>,&nbsp;<a href="/tags/golang/">GoLang</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E6%8B%9B%E6%BB%91%E9%93%81%E5%8D%A2%E5%AE%9E%E5%BD%95/" class="prev" rel="prev" title="大二&#34;秋招&#34;滑铁卢实录"><i class="fas fa-angle-left fa-fw"></i>大二&#34;秋招&#34;滑铁卢实录</a>
+            <a href="/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" class="next" rel="next" title="Java实现生产者消费者模型">Java实现生产者消费者模型<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

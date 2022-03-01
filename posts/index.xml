@@ -1,0 +1,53 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>所有文章 - trs的个人博客</title>
+        <link>https://ther1sing3un.github.io/posts/</link>
+        <description>所有文章 | trs的个人博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Sun, 09 Jan 2022 20:06:46 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Java实现生产者消费者模型</title>
+    <link>https://ther1sing3un.github.io/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</link>
+    <pubDate>Sun, 09 Jan 2022 20:06:46 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/007S8ZIlgy1gippgnh88tj31de0d0786.jpg" referrerpolicy="no-referrer">
+            </div>Java实现生产者消费者模型 前言 什么是生产者消费者模型？ 简单来讲就是有两种线程，分别称为生产者线程和消费者线程。生产者线程生产出&quot;]]></description>
+</item><item>
+    <title>LRU算法原理及实现</title>
+    <link>https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/</link>
+    <pubDate>Thu, 30 Dec 2021 10:40:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png" referrerpolicy="no-referrer">
+            </div>LRU算法原理及实现 前言 什么是LRU算法？ LRU（Least recently used，最近最少使用）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是]]></description>
+</item><item>
+    <title>大二&#34;秋招&#34;滑铁卢实录</title>
+    <link>https://ther1sing3un.github.io/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E6%8B%9B%E6%BB%91%E9%93%81%E5%8D%A2%E5%AE%9E%E5%BD%95/</link>
+    <pubDate>Thu, 09 Dec 2021 21:29:58 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/%E5%A4%A7%E4%BA%8C%E7%A7%8B%E6%8B%9B%E6%BB%91%E9%93%81%E5%8D%A2%E5%AE%9E%E5%BD%95/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/1639057081800.jpeg" referrerpolicy="no-referrer">
+            </div>我的大二&quot;秋招&quot;之旅 前言 昨天看到了室友(友链中第一个，很强的大佬)写了一篇《我的大二&quot;秋招&quot;总结》,]]></description>
+</item><item>
+    <title>SpringCloud基础学习</title>
+    <link>https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 09 Dec 2021 20:58:13 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png" referrerpolicy="no-referrer">
+            </div>SpringCould学习 前言 版本选择 1 2 3 4 5 6 SpringCloud:Hoxtom.SR1SpringBoot:2.2.2RELEASE]]></description>
+</item><item>
+    <title>Tmux学习</title>
+    <link>https://ther1sing3un.github.io/tmux%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 09 Dec 2021 02:45:32 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/tmux%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/tmux-logo-medium.png" referrerpolicy="no-referrer">
+            </div>Tmux学习 一.什么是Tmux 1.1传统命令行 命令行的典型使用方式是，打开一个终端窗口（terminal window，以下简称&quot;窗]]></description>
+</item></channel>
+</rss>

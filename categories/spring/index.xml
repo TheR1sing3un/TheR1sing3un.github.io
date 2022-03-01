@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Spring - 分类 - trs的个人博客</title>
+        <link>https://ther1sing3un.github.io/categories/spring/</link>
+        <description>Spring - 分类 - trs的个人博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Thu, 09 Dec 2021 20:58:13 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/categories/spring/" rel="self" type="application/rss+xml" /><item>
+    <title>SpringCloud基础学习</title>
+    <link>https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 09 Dec 2021 20:58:13 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png" referrerpolicy="no-referrer">
+            </div>SpringCould学习 前言 版本选择 1 2 3 4 5 6 SpringCloud:Hoxtom.SR1SpringBoot:2.2.2RELEASE]]></description>
+</item></channel>
+</rss>

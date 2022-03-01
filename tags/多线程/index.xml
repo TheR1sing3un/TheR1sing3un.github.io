@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>多线程 - 标签 - trs的个人博客</title>
+        <link>https://ther1sing3un.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
+        <description>多线程 - 标签 - trs的个人博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Sun, 09 Jan 2022 20:06:46 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
+    <title>Java实现生产者消费者模型</title>
+    <link>https://ther1sing3un.github.io/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</link>
+    <pubDate>Sun, 09 Jan 2022 20:06:46 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/007S8ZIlgy1gippgnh88tj31de0d0786.jpg" referrerpolicy="no-referrer">
+            </div>Java实现生产者消费者模型 前言 什么是生产者消费者模型？ 简单来讲就是有两种线程，分别称为生产者线程和消费者线程。生产者线程生产出&quot;]]></description>
+</item></channel>
+</rss>

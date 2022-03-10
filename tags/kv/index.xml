@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>KV - 标签 - trs的个人博客</title>
+        <link>https://ther1sing3un.github.io/tags/kv/</link>
+        <description>KV - 标签 - trs的个人博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Thu, 10 Mar 2022 13:47:35 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/tags/kv/" rel="self" type="application/rss+xml" /><item>
+    <title>KV层的Read请求优化</title>
+    <link>https://ther1sing3un.github.io/kv%E5%B1%82%E7%9A%84read%E8%AF%B7%E6%B1%82%E4%BC%98%E5%8C%96/</link>
+    <pubDate>Thu, 10 Mar 2022 13:47:35 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/kv%E5%B1%82%E7%9A%84read%E8%AF%B7%E6%B1%82%E4%BC%98%E5%8C%96/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg" referrerpolicy="no-referrer">
+            </div>KV层的Read请求优化 问题 之前我们为了实现线性化的读写，我们将每一个读写操作都封装成Log打入到Raft中，因为Raft可以保证我们的lo]]></description>
+</item></channel>
+</rss>

@@ -11,7 +11,7 @@
 
 [lab2官方指导](http://nil.csail.mit.edu/6.824/2021/labs/lab-raft.html)
 
-[个人翻译后的官方指导](blog.risingsun.pro/mit-6.824-lab指导翻译/)
+[个人翻译后的官方指导](/mit-6.824-lab指导翻译/)
 
 > 强烈建议把Raft论文多看几遍，并且可以自己做一些总结。
 

@@ -4,7 +4,16 @@
         <link>https://ther1sing3un.github.io/tags/mit-6.824/</link>
         <description>MIT-6.824 - 标签 - trs的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
-            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Fri, 18 Mar 2022 11:40:37 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/tags/mit-6.824/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Sun, 20 Mar 2022 10:05:30 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/tags/mit-6.824/" rel="self" type="application/rss+xml" /><item>
+    <title>MIT 6.824 Lab指导翻译</title>
+    <link>https://ther1sing3un.github.io/mit-6.824-lab%E6%8C%87%E5%AF%BC%E7%BF%BB%E8%AF%91/</link>
+    <pubDate>Sun, 20 Mar 2022 10:05:30 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/mit-6.824-lab%E6%8C%87%E5%AF%BC%E7%BF%BB%E8%AF%91/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg" referrerpolicy="no-referrer">
+            </div>MIT6.824 Lab1 Rules 最后文件需要输出nReduce个，文件名格式为mr-out-X 输出到文件的格式在mrsequential.go中 只用写worker.g]]></description>
+</item><item>
     <title>MIT 6.824 Lab2</title>
     <link>https://ther1sing3un.github.io/mit-6.824-lab2/</link>
     <pubDate>Fri, 18 Mar 2022 11:40:37 &#43;0800</pubDate>
@@ -12,7 +21,7 @@
     <guid>https://ther1sing3un.github.io/mit-6.824-lab2/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg" referrerpolicy="no-referrer">
-            </div>MIT-6.824-Lab2 前言 这个Lab我们主要是为了实现Raft论文中的功能，包括：选举、日志、持久化以及快照。 强烈建议把Raft论文多看几遍，并且可以自己做一些]]></description>
+            </div>MIT-6.824-Lab2 前言 这个Lab我们主要是为了实现Raft论文中的功能，包括：选举、日志、持久化以及快照。 在开始实现lab之前，需要看一下课程官方提供的la]]></description>
 </item><item>
     <title>KV层的Read请求优化</title>
     <link>https://ther1sing3un.github.io/kv%E5%B1%82%E7%9A%84read%E8%AF%B7%E6%B1%82%E4%BC%98%E5%8C%96/</link>

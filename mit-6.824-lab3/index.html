@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MIT 6.824 Lab3 - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="MIT 6.824 Lab3" />
+<meta property="og:description" content="MIT-6.824-Lab3 前言 这个Lab，我们需要实现一个基于Raft库实现的容错性分布式KV存储服务。 实现之前，先仔细阅读官方Lab指导 官方Lab指导 个人翻译后的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/mit-6.824-lab3/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-21T12:20:43+08:00" />
+<meta property="article:modified_time" content="2022-03-21T12:20:43+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="MIT 6.824 Lab3"/>
+<meta name="twitter:description" content="MIT-6.824-Lab3 前言 这个Lab，我们需要实现一个基于Raft库实现的容错性分布式KV存储服务。 实现之前，先仔细阅读官方Lab指导 官方Lab指导 个人翻译后的"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/mit-6.824-lab3/" /><link rel="prev" href="https://ther1sing3un.github.io/mit-6.824-lab%E6%8C%87%E5%AF%BC%E7%BF%BB%E8%AF%91/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MIT 6.824 Lab3",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/mit-6.824-lab3\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "分布式系统, Raft, Golang, MIT-6.824","wordcount":  5922 ,
+        "url": "https:\/\/ther1sing3un.github.io\/mit-6.824-lab3\/","datePublished": "2022-03-21T12:20:43+08:00","dateModified": "2022-03-21T12:20:43+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">MIT 6.824 Lab3</h1><h2 class="single-subtitle">基于Raft库实现一个kv容错分布式存储服务</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>分布式系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-21">2022-03-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5922 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg"
+        title="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a>
+      <ul>
+        <li><a href="#clientrequest-rpc">ClientRequest RPC</a>
+          <ul>
+            <li><a href="#lab实现版本">lab实现版本</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#客户端实现">客户端实现</a></li>
+    <li><a href="#kv服务层数据结构">kv服务层数据结构</a></li>
+    <li><a href="#接收raft提交的日志">接收Raft提交的日志</a></li>
+    <li><a href="#发送getputappend请求">发送Get/PutAppend请求</a></li>
+    <li><a href="#应用日志中的命令">应用日志中的命令</a></li>
+    <li><a href="#主动进行快照">主动进行快照</a></li>
+    <li><a href="#被动进行快照">被动进行快照</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="mit-6824-lab3">MIT-6.824-Lab3</h1>
+<h2 id="前言">前言</h2>
+<p>这个Lab，我们需要实现一个基于Raft库实现的容错性分布式KV存储服务。</p>
+<blockquote>
+<p>实现之前，先仔细阅读官方Lab指导</p>
+</blockquote>
+<p><a href="http://nil.csail.mit.edu/6.824/2021/labs/lab-kvraft.html" target="_blank" rel="noopener noreffer">官方Lab指导</a></p>
+<p><a href="/mit-6.824-lab%e6%8c%87%e5%af%bc%e7%bf%bb%e8%af%91/" rel="">个人翻译后的官方Lab指导</a></p>
+<blockquote>
+<p>再去了解一下线性一致性读</p>
+</blockquote>
+<p><a href="https://segmentfault.com/a/1190000022248118" target="_blank" rel="noopener noreffer">关于一致性</a></p>
+<blockquote>
+<p>以及官方提供给的一个交互图</p>
+</blockquote>
+<p><a href="https://pdos.csail.mit.edu/6.824/notes/raft_diagram.pdf" target="_blank" rel="noopener noreffer">官方交互图</a></p>
+<p><figure><a class="lightgallery" href="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png" title="image-20220320152754046" data-thumbnail="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png" data-sub-html="<h2>各个模块交互流程</h2><p>image-20220320152754046</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png"
+            data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png 2x"
+            data-sizes="auto"
+            alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320152754046.png" />
+    </a><figcaption class="image-caption">各个模块交互流程</figcaption>
+    </figure></p>
+<blockquote>
+<p>并且阅读Raft博士论文中的Figure6.1</p>
+</blockquote>
+<p><a href="https://github.com/ongardie/dissertation/blob/master/stanford.pdf" target="_blank" rel="noopener noreffer">Raft博士论文</a></p>
+<h3 id="clientrequest-rpc">ClientRequest RPC</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320155254485.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320155254485.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320155254485.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320155254485.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220320155254485.png"
+        title="image-20220320155254485" /></p>
+<p><strong>参数：</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>clientId</strong></td>
+<td><strong>调用请求的客户端id</strong></td>
+</tr>
+<tr>
+<td><strong>sequenceNum</strong></td>
+<td><strong>用于消除重复请求</strong></td>
+</tr>
+<tr>
+<td><strong>command</strong></td>
+<td><strong>请求状态机的命令，可能会影响状态</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>status</strong></td>
+<td><strong>如果状态机成功应用命令则返回OK</strong></td>
+</tr>
+<tr>
+<td><strong>response</strong></td>
+<td><strong>如果请求成功，则为状态机的输出</strong></td>
+</tr>
+<tr>
+<td><strong>leaderHint</strong></td>
+<td><strong>最近的领袖的地址，如果服务器知道。(用于不为领袖的服务器接收到之后将正确的领袖地址返回让客户端请求)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>接收者实现：</strong></p>
+<ol>
+<li>如果接收者不为领袖，回复<code>NOT_LEADER</code>，必要时提供提示。(也就是当该接收者知道最近的领袖是谁的时候，将领袖地址回复给客户端)</li>
+<li>追加命令到日志，复制并提交它。</li>
+<li>如果没有该客户端id的记录或者该客户端的<code>sequenceNum</code>的响应内容已经被丢弃了。</li>
+<li>如果客户端请求的序列号<code>sequenceNum</code>已经被处理了，那么回复OK并且携带存储的响应。</li>
+<li>按照顺序应用日志。</li>
+<li>保存状态机的输出和该客户端的序列号，丢弃任何先前的回复。</li>
+<li>携带状态机的输出并返回OK。</li>
+</ol>
+<h4 id="lab实现版本">lab实现版本</h4>
+<p>上述论文提及的<code>ClientRequest RPC</code>较为复杂，我们采用简化的版本，即只保存当前最大请求的序列号，而且不提供重定向到领袖的功能。</p>
+<hr>
+<hr>
+<h2 id="客户端实现">客户端实现</h2>
+<p>根据论文以及分析，我们需要实现一个含有id以及还有自增的请求序列号的客户端，当请求失败的时候，不断重试该请求。</p>
+<blockquote>
+<p>客户端数据结构</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Clerk</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="nx">servers</span> <span class="p">[]</span><span class="o">*</span><span class="nx">labrpc</span><span class="p">.</span><span class="nx">ClientEnd</span>
+   <span class="c1">// You will have to modify this struct.
+</span><span class="c1"></span>   <span class="nx">lastLeader</span>           <span class="kt">int</span>        <span class="c1">//上一次RPC发现的主机id
+</span><span class="c1"></span>   <span class="nx">mu</span>                   <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span> <span class="c1">//锁
+</span><span class="c1"></span>   <span class="nx">clientId</span>             <span class="kt">int64</span>      <span class="c1">//client唯一id
+</span><span class="c1"></span>   <span class="nx">lastAppliedCommandId</span> <span class="kt">int</span>        <span class="c1">//Command的唯一id
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>初始化</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">MakeClerk</span><span class="p">(</span><span class="nx">servers</span> <span class="p">[]</span><span class="o">*</span><span class="nx">labrpc</span><span class="p">.</span><span class="nx">ClientEnd</span><span class="p">)</span> <span class="o">*</span><span class="nx">Clerk</span> <span class="p">{</span>
+   <span class="nx">ck</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Clerk</span><span class="p">)</span>
+   <span class="nx">ck</span><span class="p">.</span><span class="nx">servers</span> <span class="p">=</span> <span class="nx">servers</span>
+   <span class="c1">// You&#39;ll have to add code here.
+</span><span class="c1"></span>   <span class="nx">ck</span><span class="p">.</span><span class="nx">lastLeader</span> <span class="p">=</span> <span class="mi">0</span>
+   <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span> <span class="p">=</span> <span class="nf">nrand</span><span class="p">()</span>
+   <span class="nx">ck</span><span class="p">.</span><span class="nx">lastAppliedCommandId</span> <span class="p">=</span> <span class="mi">0</span>
+   <span class="k">return</span> <span class="nx">ck</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Get方法</p>
+</blockquote>
+<p><strong>当正常查询到结果(即使不存在)才会结束该次Get方法，否则继续在该序列号上重试</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">ck</span> <span class="o">*</span><span class="nx">Clerk</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+
+   <span class="c1">// You will have to modify this function.
+</span><span class="c1"></span>   <span class="nx">commandId</span> <span class="o">:=</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">lastAppliedCommandId</span> <span class="o">+</span> <span class="mi">1</span>
+   <span class="nx">args</span> <span class="o">:=</span> <span class="nx">GetArgs</span><span class="p">{</span>
+      <span class="nx">Key</span><span class="p">:</span>       <span class="nx">key</span><span class="p">,</span>
+      <span class="nx">ClientId</span><span class="p">:</span>  <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span>
+      <span class="nx">CommandId</span><span class="p">:</span> <span class="nx">commandId</span><span class="p">,</span>
+   <span class="p">}</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 开始发送Get RPC;args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+   <span class="c1">//第一个发送的目标server是上一次RPC发现的leader
+</span><span class="c1"></span>   <span class="nx">serverId</span> <span class="o">:=</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">lastLeader</span>
+   <span class="nx">serverNum</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ck</span><span class="p">.</span><span class="nx">servers</span><span class="p">)</span>
+   <span class="k">for</span> <span class="p">;</span> <span class="p">;</span> <span class="nx">serverId</span> <span class="p">=</span> <span class="p">(</span><span class="nx">serverId</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">serverNum</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">reply</span> <span class="nx">GetReply</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 开始发送Get RPC;args=[%v]到server[%d]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">serverId</span><span class="p">)</span>
+      <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">servers</span><span class="p">[</span><span class="nx">serverId</span><span class="p">].</span><span class="nf">Call</span><span class="p">(</span><span class="s">&#34;KVServer.Get&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">reply</span><span class="p">)</span>
+      <span class="c1">//当发送失败或者返回不是leader时,则继续到下一个server进行尝试
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="o">||</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="o">==</span> <span class="nx">ErrTimeout</span> <span class="o">||</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="o">==</span> <span class="nx">ErrWrongLeader</span> <span class="p">{</span>
+         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 发送Get RPC;args=[%v]到server[%d]失败,ok = %v,Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">serverId</span><span class="p">,</span> <span class="nx">ok</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+         <span class="k">continue</span>
+      <span class="p">}</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 发送Get RPC;args=[%v]到server[%d]成功,Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">serverId</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+      <span class="c1">//若发送成功,则更新最近发现的leader
+</span><span class="c1"></span>      <span class="nx">ck</span><span class="p">.</span><span class="nx">lastLeader</span> <span class="p">=</span> <span class="nx">serverId</span>
+      <span class="nx">ck</span><span class="p">.</span><span class="nx">lastAppliedCommandId</span> <span class="p">=</span> <span class="nx">commandId</span>
+      <span class="k">if</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="o">==</span> <span class="nx">ErrNoKey</span> <span class="p">{</span>
+         <span class="k">return</span> <span class="s">&#34;&#34;</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>PutAppend方法</p>
+</blockquote>
+<p><strong>和Get方法同理</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">ck</span> <span class="o">*</span><span class="nx">Clerk</span><span class="p">)</span> <span class="nf">PutAppend</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">op</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">//fmt.Println(&#34;key=&#34;, key, &#34;value=&#34;, value, &#34;op=&#34;, op)
+</span><span class="c1"></span>   <span class="c1">// You will have to modify this function.
+</span><span class="c1"></span>   <span class="nx">commandId</span> <span class="o">:=</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">lastAppliedCommandId</span> <span class="o">+</span> <span class="mi">1</span>
+   <span class="nx">args</span> <span class="o">:=</span> <span class="nx">PutAppendArgs</span><span class="p">{</span>
+      <span class="nx">Key</span><span class="p">:</span>       <span class="nx">key</span><span class="p">,</span>
+      <span class="nx">Value</span><span class="p">:</span>     <span class="nx">value</span><span class="p">,</span>
+      <span class="nx">Op</span><span class="p">:</span>        <span class="nx">op</span><span class="p">,</span>
+      <span class="nx">ClientId</span><span class="p">:</span>  <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span>
+      <span class="nx">CommandId</span><span class="p">:</span> <span class="nx">commandId</span><span class="p">,</span>
+   <span class="p">}</span>
+   <span class="c1">//第一个发送的目标server是上一次RPC发现的leader
+</span><span class="c1"></span>   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 开始发送PutAppend RPC;args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+   <span class="nx">serverId</span> <span class="o">:=</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">lastLeader</span>
+   <span class="nx">serverNum</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ck</span><span class="p">.</span><span class="nx">servers</span><span class="p">)</span>
+   <span class="k">for</span> <span class="p">;</span> <span class="p">;</span> <span class="nx">serverId</span> <span class="p">=</span> <span class="p">(</span><span class="nx">serverId</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">serverNum</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">reply</span> <span class="nx">PutAppendReply</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 开始发送PutAppend RPC;args=[%v]到server[%d]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">serverId</span><span class="p">)</span>
+      <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">servers</span><span class="p">[</span><span class="nx">serverId</span><span class="p">].</span><span class="nf">Call</span><span class="p">(</span><span class="s">&#34;KVServer.PutAppend&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">reply</span><span class="p">)</span>
+      <span class="c1">//当发送失败或者返回不是leader时,则继续到下一个server进行尝试
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="o">||</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="o">==</span> <span class="nx">ErrTimeout</span> <span class="o">||</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="o">==</span> <span class="nx">ErrWrongLeader</span> <span class="p">{</span>
+         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 发送PutAppend RPC;args=[%v]到server[%d]失败,ok = %v,Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">serverId</span><span class="p">,</span> <span class="nx">ok</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+         <span class="k">continue</span>
+      <span class="p">}</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;client[%d]: 发送PutAppend RPC;args=[%v]到server[%d]成功,Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">ck</span><span class="p">.</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">serverId</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+      <span class="c1">//若发送成功,则更新最近发现的leader以及commandId
+</span><span class="c1"></span>      <span class="nx">ck</span><span class="p">.</span><span class="nx">lastLeader</span> <span class="p">=</span> <span class="nx">serverId</span>
+      <span class="nx">ck</span><span class="p">.</span><span class="nx">lastAppliedCommandId</span> <span class="p">=</span> <span class="nx">commandId</span>
+      <span class="k">return</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<hr>
+<h2 id="kv服务层数据结构">kv服务层数据结构</h2>
+<p>接下来需要实现本lab最重要的模块，也就是一个kv存储服务，我们暂时不用管真正的持久化操作，只需要写入到内存即可。</p>
+<p>首先，我们需要一个用来存放kv数据的结构，那么就使用哈希表来存放。</p>
+<p>接下来根据上述提到的客户端交互方法，我们还需要一个数据机构来存放客户端的id和客户端请求序列号，那么也可以采用哈希表，以客户端id为key，以请求的序列号和响应为value。</p>
+<p>还需要记录当前状态机最后应用的日志索引。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">KVServer</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="nx">mu</span>      <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+   <span class="nx">me</span>      <span class="kt">int</span>
+   <span class="nx">rf</span>      <span class="o">*</span><span class="nx">raft</span><span class="p">.</span><span class="nx">Raft</span>
+   <span class="nx">applyCh</span> <span class="kd">chan</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span>
+   <span class="nx">dead</span>    <span class="kt">int32</span> <span class="c1">// set by Kill()
+</span><span class="c1"></span>
+   <span class="nx">maxraftstate</span> <span class="kt">int</span> <span class="c1">// snapshot if log grows this big
+</span><span class="c1"></span>
+   <span class="c1">// Your definitions here.
+</span><span class="c1"></span>   <span class="nx">clientReply</span>    <span class="kd">map</span><span class="p">[</span><span class="kt">int64</span><span class="p">]</span><span class="nx">CommandContext</span>    <span class="c1">//客户端的唯一指令和响应的对应map
+</span><span class="c1"></span>   <span class="nx">kvDataBase</span>     <span class="nx">KvDataBase</span>                  <span class="c1">//数据库,可自行定义和更换
+</span><span class="c1"></span>   <span class="nx">storeInterface</span> <span class="nx">store</span>                       <span class="c1">//数据库接口
+</span><span class="c1"></span>   <span class="nx">replyChMap</span>     <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kd">chan</span> <span class="nx">ApplyNotifyMsg</span> <span class="c1">//某index的响应的chan
+</span><span class="c1"></span>   <span class="nx">lastApplied</span>    <span class="kt">int</span>                         <span class="c1">//上一条应用的log的index,防止快照导致回退
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="c1">// ApplyNotifyMsg 可表示GetReply和PutAppendReply
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">ApplyNotifyMsg</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Err</span>   <span class="nx">Err</span>
+	<span class="nx">Value</span> <span class="kt">string</span> <span class="c1">//当Put/Append请求时此处为空
+</span><span class="c1"></span>	<span class="c1">//该被应用的command的term,便于RPC handler判断是否为过期请求(之前为leader并且start了,但是后来没有成功commit就变成了follower,导致一开始Start()得到的index处的命令不一定是之前的那个,所以需要拒绝掉;
+</span><span class="c1"></span>	<span class="c1">//或者是处于少部分分区的leader接收到命令,后来恢复分区之后,index处的log可能换成了新的leader的commit的log了
+</span><span class="c1"></span>	<span class="nx">Term</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">CommandContext</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Command</span> <span class="kt">int</span>            <span class="c1">//该client的目前的commandId
+</span><span class="c1"></span>	<span class="nx">Reply</span>   <span class="nx">ApplyNotifyMsg</span> <span class="c1">//该command的响应
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<hr>
+<h2 id="接收raft提交的日志">接收Raft提交的日志</h2>
+<p>Raft会通过<code>applyCh</code>提交日志到状态机中，让状态机应用命令，因此我们需要一个不断接收<code>applyCh</code>中日志的协程，并应用命令。</p>
+<p>代码实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">ReceiveApplyMsg</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">for</span> <span class="p">!</span><span class="nx">kv</span><span class="p">.</span><span class="nf">killed</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">select</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nx">applyMsg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">kv</span><span class="p">.</span><span class="nx">applyCh</span><span class="p">:</span>
+         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 获取到applyCh中新的applyMsg=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">)</span>
+         <span class="c1">//当为合法命令时
+</span><span class="c1"></span>         <span class="k">if</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandValid</span> <span class="p">{</span>
+            <span class="nx">kv</span><span class="p">.</span><span class="nf">ApplyCommand</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">)</span>
+         <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">SnapshotValid</span> <span class="p">{</span>
+            <span class="c1">//当为合法快照时
+</span><span class="c1"></span>            <span class="nx">kv</span><span class="p">.</span><span class="nf">ApplySnapshot</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">)</span>
+         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">//非法消息
+</span><span class="c1"></span>            <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: error applyMsg from applyCh: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">)</span>
+         <span class="p">}</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>由于从Raft中接收到的日志不仅有命令日志还有快照日志，因此需要也把快照日志接收了</strong></p>
+<hr>
+<hr>
+<h2 id="发送getputappend请求">发送Get/PutAppend请求</h2>
+<p>根据上述规则，我们可以总结出以下步骤：</p>
+<ol>
+<li>当接收到Get/PutAppend请求时，先判断该客户端的该序列号的请求是否已经被正确处理并响应过了，如果有则返回之前响应的结果。</li>
+<li>判断当前是否为领袖。(这里的是否为领袖只是自己认为自己是否是领袖，有可能因为网络分区等原因导致了自己认为自己仍然是领袖，但是实际上已经不为领袖了)。若不为领袖，则返回并告诉客户端自己不为领袖，需要去别的服务器那里请求。</li>
+<li>将该命令传递给Raft库去进行一致性复制。</li>
+<li>由该命令生成的日志的索引为key，创建一个value为<code>chan</code>的通知通道，用于接收该命令被应用过的响应消息。</li>
+<li>在该通道上等待，并且设定超时时间，若超时则让客户端重试。</li>
+<li>若成功接收到该命令被应用后的响应，则判断此时的响应传来的日志任期和之前传给Raft的时候生成的日志的任期是否相同。(有可能该日志并没有被commit就掉线了，之后别的服务器当选领袖，然后在该索引上提交了一条日志，后来这条日志被应用，但是这个日志就不是我们之前传给Raft的日志，也就是任期肯定不相同)若不相同，则丢弃不处理，否则正常响应给客户端。</li>
+</ol>
+<blockquote>
+<p>Get请求代码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">GetArgs</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="nx">GetReply</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// Your code here.
+</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="c1">//defer kv.mu.Unlock()
+</span><span class="c1"></span>   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 返回Get RPC请求,args=[%v];Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+   <span class="p">}()</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收Get RPC请求,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+   <span class="c1">//1.先判断该命令是否已经被执行过了
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">&gt;=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+         <span class="c1">//若当前的请求已经被执行过了,那么直接返回结果
+</span><span class="c1"></span>         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Err</span>
+         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Value</span>
+         <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+         <span class="k">return</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="c1">//2.若命令未被执行,那么开始生成Op并传递给raft
+</span><span class="c1"></span>   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">Op</span><span class="p">{</span>
+      <span class="nx">CommandType</span><span class="p">:</span> <span class="nx">GetMethod</span><span class="p">,</span>
+      <span class="nx">Key</span><span class="p">:</span>         <span class="nx">args</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span>
+      <span class="nx">ClientId</span><span class="p">:</span>    <span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span>
+      <span class="nx">CommandId</span><span class="p">:</span>   <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span>
+   <span class="p">}</span>
+   <span class="nx">index</span><span class="p">,</span> <span class="nx">term</span><span class="p">,</span> <span class="nx">isLeader</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">op</span><span class="p">)</span>
+   <span class="c1">//3.若不为leader则直接返回Err
+</span><span class="c1"></span>   <span class="k">if</span> <span class="p">!</span><span class="nx">isLeader</span> <span class="p">{</span>
+      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+      <span class="c1">//kv.mu.Unlock()
+</span><span class="c1"></span>      <span class="k">return</span>
+   <span class="p">}</span>
+   <span class="nx">replyCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="nx">ApplyNotifyMsg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">=</span> <span class="nx">replyCh</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 创建reply通道:index=[%d]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="c1">//4.等待应用后返回消息
+</span><span class="c1"></span>   <span class="k">select</span> <span class="p">{</span>
+   <span class="k">case</span> <span class="nx">replyMsg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">replyCh</span><span class="p">:</span>
+      <span class="c1">//当被通知时,返回结果
+</span><span class="c1"></span>      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 获取到通知结果,index=[%d],replyMsg: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">replyMsg</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">term</span> <span class="o">==</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Term</span> <span class="p">{</span>
+         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Err</span>
+         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Value</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+      <span class="p">}</span>
+   <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">500</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">):</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 处理请求超时: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">)</span>
+      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrTimeout</span>
+   <span class="p">}</span>
+   <span class="c1">//5.清除chan
+</span><span class="c1"></span>   <span class="k">go</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">CloseChan</span><span class="p">(</span><span class="nx">index</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>PutAppend请求</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">PutAppend</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">PutAppendArgs</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="nx">PutAppendReply</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// Your code here.
+</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="c1">//defer kv.mu.Unlock()
+</span><span class="c1"></span>   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 返回PutAppend RPC请求,args=[%v];Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+   <span class="p">}()</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收PutAppend RPC请求,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+   <span class="c1">//1.先判断该命令是否已经被执行过了
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+      <span class="c1">//若该命令已被执行了,直接返回刚刚返回的结果
+</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">==</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+         <span class="c1">//若当前的请求已经被执行过了,那么直接返回结果
+</span><span class="c1"></span>         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Err</span>
+         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: CommandId=[%d]==CommandContext.CommandId=[%d] ,直接返回: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+         <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+         <span class="k">return</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="c1">//2.若命令未被执行,那么开始生成Op并传递给raft
+</span><span class="c1"></span>   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">Op</span><span class="p">{</span>
+      <span class="nx">CommandType</span><span class="p">:</span> <span class="nf">CommandType</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">Op</span><span class="p">),</span>
+      <span class="nx">Key</span><span class="p">:</span>         <span class="nx">args</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span>
+      <span class="nx">Value</span><span class="p">:</span>       <span class="nx">args</span><span class="p">.</span><span class="nx">Value</span><span class="p">,</span>
+      <span class="nx">ClientId</span><span class="p">:</span>    <span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span>
+      <span class="nx">CommandId</span><span class="p">:</span>   <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span>
+   <span class="p">}</span>
+   <span class="nx">index</span><span class="p">,</span> <span class="nx">term</span><span class="p">,</span> <span class="nx">isLeader</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">op</span><span class="p">)</span>
+   <span class="c1">//3.若不为leader则直接返回Err
+</span><span class="c1"></span>   <span class="k">if</span> <span class="p">!</span><span class="nx">isLeader</span> <span class="p">{</span>
+      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+      <span class="k">return</span>
+   <span class="p">}</span>
+   <span class="nx">replyCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="nx">ApplyNotifyMsg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">=</span> <span class="nx">replyCh</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 创建reply通道:index=[%d]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="c1">//4.等待应用后返回消息
+</span><span class="c1"></span>   <span class="k">select</span> <span class="p">{</span>
+   <span class="k">case</span> <span class="nx">replyMsg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">replyCh</span><span class="p">:</span>
+      <span class="c1">//当被通知时,返回结果
+</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">term</span> <span class="o">==</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Term</span> <span class="p">{</span>
+         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Err</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+      <span class="p">}</span>
+   <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">500</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">):</span>
+      <span class="c1">//超时,返回结果,但是不更新Command -&gt; Reply
+</span><span class="c1"></span>      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrTimeout</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 处理请求超时: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="k">go</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">CloseChan</span><span class="p">(</span><span class="nx">index</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<hr>
+<h2 id="应用日志中的命令">应用日志中的命令</h2>
+<p>我们之前开启了一个协程不断从<code>applyCh</code>中接收提交的日志以及快照，那么我们需要对这些日志和快照进行处理。首先，我们需要处理命令，由于这时候有<code>Get</code>/<code>Put</code>/<code>Append</code>三种命令，因此我们需要分别处理。我们可以对其的实际存储操作就行封装，就留三个操作接口即可。</p>
+<p>应用流程如下：</p>
+<ol>
+<li>接收到日志，先判断是否已经应用过了。应用过则不处理，等待处理请求的协程超时返回。</li>
+<li>判断命令类型，做相应处理。</li>
+<li>若需要通知，则通知处理请求的协程。</li>
+<li>更新<code>clientReply</code>，用于去重。</li>
+<li>判断是否需要快照。(后续会提到这个流程)</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">ApplyCommand</span><span class="p">(</span><span class="nx">applyMsg</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="kd">var</span> <span class="nx">commonReply</span> <span class="nx">ApplyNotifyMsg</span>
+   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span><span class="p">.(</span><span class="nx">Op</span><span class="p">)</span>
+   <span class="nx">index</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
+   <span class="c1">//当命令已经被应用过了
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">&gt;=</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该命令已被应用过,applyMsg: %v, commandContext: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">commandContext</span><span class="p">)</span>
+      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span>
+      <span class="k">return</span>
+   <span class="p">}</span>
+   <span class="c1">//当命令未被应用过
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">GetMethod</span> <span class="p">{</span>
+      <span class="c1">//Get请求时
+</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+         <span class="c1">//有该数据时
+</span><span class="c1"></span>         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+         <span class="c1">//当没有数据时
+</span><span class="c1"></span>         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">ErrNoKey</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+      <span class="p">}</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">PutMethod</span> <span class="p">{</span>
+      <span class="c1">//Put请求时
+</span><span class="c1"></span>      <span class="nx">value</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">AppendMethod</span> <span class="p">{</span>
+      <span class="c1">//Append请求时
+</span><span class="c1"></span>      <span class="nx">newValue</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+   <span class="p">}</span>
+   <span class="c1">//通知handler去响应请求
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">replyCh</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: applyMsg: %v处理完成,通知index = [%d]的channel\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
+      <span class="nx">replyCh</span> <span class="o">&lt;-</span> <span class="nx">commonReply</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: applyMsg: %v处理完成,通知完成index = [%d]的channel\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="nx">value</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">)</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 此时key=[%v],value=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+   <span class="c1">//更新clientReply
+</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">CommandContext</span><span class="p">{</span><span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">}</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 更新ClientId=[%d],CommandId=[%d],Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">)</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
+   <span class="c1">//判断是否需要快照
+</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">needSnapshot</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">kv</span><span class="p">.</span><span class="nf">startSnapshot</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<hr>
+<h2 id="主动进行快照">主动进行快照</h2>
+<p>上述我们已经实现了一个没有快照的kv服务层，但是我们的日志和数据不能无限制的增长下去，而且为了快速同步落后很多的节点，我们在之前在Raft层已经实现了部分快照的功能，在当前模块，我们需要对是否进行快照进行判断，并且通知Raft去执行快照操作。</p>
+<p>我们首先需要完成的是主动进行快照，也就是当状态机接收到新的提交的日志之后，可以判断一下当前Raft必须状态的大小，如果接近于我们设定的阈值或者超过该阈值，则可以主动进行快照。</p>
+<p>主动进行快照，就是先将自己的状态机必要状态(必须要同步的数据)编码并生成状态机快照数据，然后通知Raft进行快照，并且将状态机快照数据传递给它。</p>
+<blockquote>
+<p>判断是否需要快照</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//判断当前是否需要进行snapshot(90%则需要快照)
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">needSnapshot</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">maxraftstate</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">false</span>
+   <span class="p">}</span>
+   <span class="kd">var</span> <span class="nx">proportion</span> <span class="kt">float32</span>
+   <span class="nx">proportion</span> <span class="p">=</span> <span class="nb">float32</span><span class="p">(</span><span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">GetRaftStateSize</span><span class="p">()</span> <span class="o">/</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">maxraftstate</span><span class="p">)</span>
+   <span class="k">return</span> <span class="nx">proportion</span> <span class="p">&gt;</span> <span class="mf">0.9</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>创建快照</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//生成server的状态的snapshot
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">createSnapshot</span><span class="p">()</span> <span class="p">[]</span><span class="kt">byte</span> <span class="p">{</span>
+   <span class="nx">w</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span>
+   <span class="nx">e</span> <span class="o">:=</span> <span class="nx">labgob</span><span class="p">.</span><span class="nf">NewEncoder</span><span class="p">(</span><span class="nx">w</span><span class="p">)</span>
+   <span class="c1">//编码kv数据
+</span><span class="c1"></span>   <span class="nx">err</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">kv</span><span class="p">.</span><span class="nx">kvDataBase</span><span class="p">)</span>
+   <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: encode kvData error: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="c1">//编码clientReply(为了去重)
+</span><span class="c1"></span>   <span class="nx">err</span> <span class="p">=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">)</span>
+   <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: encode clientReply error: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="nx">snapshotData</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.</span><span class="nf">Bytes</span><span class="p">()</span>
+   <span class="k">return</span> <span class="nx">snapshotData</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>状态机进行快照</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//主动开始snapshot(由leader在maxRaftState不为-1,而且目前接近阈值的时候调用)
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">startSnapshot</span><span class="p">(</span><span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 容量接近阈值,进行快照,rateStateSize=[%d],maxRaftState=[%d]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">GetRaftStateSize</span><span class="p">(),</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">maxraftstate</span><span class="p">)</span>
+   <span class="nx">snapshot</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">createSnapshot</span><span class="p">()</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 完成service层快照\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">)</span>
+   <span class="c1">//通知Raft进行快照
+</span><span class="c1"></span>   <span class="k">go</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">Snapshot</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">snapshot</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>调用Raft的<code>Snapshot</code>方法来通知Raft进行快照</strong></p>
+<hr>
+<hr>
+<h2 id="被动进行快照">被动进行快照</h2>
+<p>当Raft接收到领袖的<code>InstallSnapshot RPC</code>时，会先将快照命令通过<code>applyCh</code>传递给状态机，然后由状态机来处理，它会对旧的快照进行丢弃，避免回退，然后通知Raft去进行快照，如果Raft快照成功，则状态机再应用该快照的数据到状态机中。</p>
+<p>代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// ApplySnapshot 被动应用snapshot
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">ApplySnapshot</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收到leader的快照\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">)</span>
+   <span class="k">if</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">SnapshotIndex</span> <span class="p">&lt;</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">{</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收到旧的日志,snapshotIndex=[%d],状态机的lastApplied=[%d]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">SnapshotIndex</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span><span class="p">)</span>
+      <span class="k">return</span>
+   <span class="p">}</span>
+   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">CondInstallSnapshot</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">SnapshotTerm</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">SnapshotIndex</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">SnapshotIndex</span>
+      <span class="c1">//将快照中的service层数据进行加载
+</span><span class="c1"></span>      <span class="nx">kv</span><span class="p">.</span><span class="nf">readSnapshot</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">)</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 完成service层快照\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果是被动进行快照，那么还需要对领袖传来的快照数据进行读取。</p>
+<p>读取快照代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">readSnapshot</span><span class="p">(</span><span class="nx">snapshot</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="nx">snapshot</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">snapshot</span><span class="p">)</span> <span class="p">&lt;</span> <span class="mi">1</span> <span class="p">{</span>
+      <span class="k">return</span>
+   <span class="p">}</span>
+   <span class="nx">r</span> <span class="o">:=</span> <span class="nx">bytes</span><span class="p">.</span><span class="nf">NewBuffer</span><span class="p">(</span><span class="nx">snapshot</span><span class="p">)</span>
+   <span class="nx">d</span> <span class="o">:=</span> <span class="nx">labgob</span><span class="p">.</span><span class="nf">NewDecoder</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+   <span class="kd">var</span> <span class="nx">kvDataBase</span> <span class="nx">KvDataBase</span>
+   <span class="kd">var</span> <span class="nx">clientReply</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int64</span><span class="p">]</span><span class="nx">CommandContext</span>
+   <span class="k">if</span> <span class="nx">d</span><span class="p">.</span><span class="nf">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">kvDataBase</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nf">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">clientReply</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: decode error\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">)</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">kv</span><span class="p">.</span><span class="nx">kvDataBase</span> <span class="p">=</span> <span class="nx">kvDataBase</span>
+      <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span> <span class="p">=</span> <span class="nx">clientReply</span>
+      <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">kvDataBase</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<hr>
+<h2 id="总结">总结</h2>
+<p>这个lab是基于上一个lab的，其实做到这里，就可以改成一个分布式kv数据库并部署应用了。我自己稍微改一下做了个项目：<a href="https://github.com/TheR1sing3un/bluedis" target="_blank" rel="noopener noreffer">bluedis</a>(没有做很多功能，只是基本实现了一些读写操作，后续有时间会继续进行这个项目)。</p>
+<p>Lab4的文档后续有时间会继续写，若对于内容有问题的欢迎联系我一起交流讨论！</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-03-21</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/mit-6.824-lab3/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>,&nbsp;<a href="/tags/raft/">Raft</a>,&nbsp;<a href="/tags/golang/">Golang</a>,&nbsp;<a href="/tags/mit-6.824/">MIT-6.824</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mit-6.824-lab%E6%8C%87%E5%AF%BC%E7%BF%BB%E8%AF%91/" class="prev" rel="prev" title="MIT 6.824 Lab指导翻译"><i class="fas fa-angle-left fa-fw"></i>MIT 6.824 Lab指导翻译</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

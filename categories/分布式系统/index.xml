@@ -4,7 +4,16 @@
         <link>https://ther1sing3un.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</link>
         <description>分布式系统 - 分类 - trs的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
-            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Sun, 20 Mar 2022 10:05:30 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Mon, 21 Mar 2022 12:20:43 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" rel="self" type="application/rss+xml" /><item>
+    <title>MIT 6.824 Lab3</title>
+    <link>https://ther1sing3un.github.io/mit-6.824-lab3/</link>
+    <pubDate>Mon, 21 Mar 2022 12:20:43 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/mit-6.824-lab3/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/v2-bb6e4db60499a1d5fd725a9d5e7bac30_1440w.jpg" referrerpolicy="no-referrer">
+            </div>MIT-6.824-Lab3 前言 这个Lab，我们需要实现一个基于Raft库实现的容错性分布式KV存储服务。 实现之前，先仔细阅读官方Lab指导 官方Lab指导 个人翻译后的]]></description>
+</item><item>
     <title>MIT 6.824 Lab指导翻译</title>
     <link>https://ther1sing3un.github.io/mit-6.824-lab%E6%8C%87%E5%AF%BC%E7%BF%BB%E8%AF%91/</link>
     <pubDate>Sun, 20 Mar 2022 10:05:30 &#43;0800</pubDate>

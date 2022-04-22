@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Distributed Txn Lab翻译 - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="Distributed Txn Lab翻译" />
+<meta property="og:description" content="Distributed-txn Lab1 The Design 在lab1中，我们已经完成了Raft日志引擎以及存储引擎。使用Raft日志引擎，事务日志能够&quot;可靠的&quot;持久化，并" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/distributed-txn-lab%E7%BF%BB%E8%AF%91/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-22T11:41:35+08:00" />
+<meta property="article:modified_time" content="2022-04-22T11:41:35+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="Distributed Txn Lab翻译"/>
+<meta name="twitter:description" content="Distributed-txn Lab1 The Design 在lab1中，我们已经完成了Raft日志引擎以及存储引擎。使用Raft日志引擎，事务日志能够&quot;可靠的&quot;持久化，并"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/distributed-txn-lab%E7%BF%BB%E8%AF%91/" /><link rel="prev" href="https://ther1sing3un.github.io/mit-6.824-lab3/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Distributed Txn Lab翻译",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/distributed-txn-lab%E7%BF%BB%E8%AF%91\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "分布式系统, Golang, 事务, PingCAP","wordcount":  4445 ,
+        "url": "https:\/\/ther1sing3un.github.io\/distributed-txn-lab%E7%BF%BB%E8%AF%91\/","datePublished": "2022-04-22T11:41:35+08:00","dateModified": "2022-04-22T11:41:35+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Distributed Txn Lab翻译</h1><h2 class="single-subtitle">PingCAP-TalentPlan分布式事务学习营Lab翻译</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>分布式系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-22">2022-04-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4445 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/a3ea9b5d-1146-4388-a127-3e1784f7b8d1.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/a3ea9b5d-1146-4388-a127-3e1784f7b8d1.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/a3ea9b5d-1146-4388-a127-3e1784f7b8d1.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/a3ea9b5d-1146-4388-a127-3e1784f7b8d1.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/a3ea9b5d-1146-4388-a127-3e1784f7b8d1.png"
+        title="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/a3ea9b5d-1146-4388-a127-3e1784f7b8d1.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-design">The Design</a>
+      <ul>
+        <li><a href="#implement-the-core-interface-of--standalonestorage">Implement The Core Interface of  <code>StandAloneStorage</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#implement-percolator-in-tinykv">Implement Percolator In TinyKV</a>
+      <ul>
+        <li><a href="#prewrite-phase">Prewrite Phase</a></li>
+        <li><a href="#commit-phase">Commit Phase</a></li>
+        <li><a href="#rollback-record">Rollback Record</a></li>
+        <li><a href="#check-the-transaction-status">Check The Transaction Status</a></li>
+        <li><a href="#process-conflicts-and-do-recovery">Process Conflicts And Do Recovery</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#code">Code</a>
+      <ul>
+        <li><a href="#the-command-abstraction">The <code>Command</code> Abstraction</a></li>
+        <li><a href="#implement-the-get-command">Implement the <code>Get</code> Command</a></li>
+        <li><a href="#implement-the-prewrite-and-commit-commands">Implement the <code>Prewrite</code> and <code>Commit</code> Commands</a></li>
+        <li><a href="#implement-the-rollback-and-checktxnstatus-commands">Implement the <code>Rollback</code> and <code>CheckTxnStatus</code> Commands</a></li>
+        <li><a href="#implement-the-resolvelock-command">Implement the <code>ResolveLock</code> Command</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="distributed-txn">Distributed-txn</h1>
+<h1 id="lab1">Lab1</h1>
+<h2 id="the-design">The Design</h2>
+<p>在lab1中，我们已经完成了Raft日志引擎以及存储引擎。使用Raft日志引擎，事务日志能够&quot;可靠的&quot;持久化，并且可以在故障转移后恢复状态。在这个章节，我们将讨论<strong>分布式事务层</strong>的设计与实现。raft日志引擎已经提供了<strong>持久性(Durability)<strong>以及状态恢复保险，事务层需要保证</strong>原子性(Atomicity)<strong>以及并发正确或者称为</strong>隔离性(Isolation)</strong>。</p>
+<p>percolator协议被用于保证<strong>原子性(Atomicity)</strong>，以及使用全局时间戳来对并发事务的执行进行顺序排序。基于这些，可以为客户端提供一个强隔离级别，通常被成为<strong>快照隔离(Snapshot Isolation)<strong>或</strong>可重复读(Repeatable Read)</strong>。percolator协议在<code>tinysql</code>和<code>tinykv</code>的服务端都被实现了，以及全局事务时间戳分配由<code>tinyscheduler</code>服务端完成，以及所有逻辑时间戳都是单调递增的。在这个lab中，我们将要实现<code>tinykv</code>中的percolator部分，或者说是分布式事务的参与者部分。</p>
+<h3 id="implement-the-core-interface-of--standalonestorage">Implement The Core Interface of  <code>StandAloneStorage</code></h3>
+<p>尝试去实现<code>kv/storage/standalone_storage/standalone_storage.go</code>中的缺失代码，这些代码部分被使用如下注释标记：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
+</code></pre></td></tr></table>
+</div>
+</div><p>完成这些部分之后，运行<code>make lab1P0</code>命令来检查是否所有的测试用例都通过了。注意事项：</p>
+<ul>
+<li>由于<a href="https://github.com/dgraph-io/badger" target="_blank" rel="noopener noreffer">badger</a>被用于存储引擎，因此常见的用法可以在其文档和存储库中找到。</li>
+<li><code>badger</code>存储引擎不支持<a href="https://en.wikipedia.org/wiki/Standard_column_family" target="_blank" rel="noopener noreffer"><code>column family</code></a>。<code>percolator</code>事务模型需要列族，在<code>tinykv</code>中，列族相关功能已经被包装在<code>kv/util/engine_util/util.go</code>中，当处理<code>storage.Modify</code>时，被写入到存储引擎中的键应该使用<code>KeyWithCF</code>函数来编码，考虑到它所期望的列族。在<code>tinykv</code>中有两种<code>Modify</code>类型，检查<code>kv/storage/modify.go</code>来获取更多的信息。</li>
+<li><code>Scheduler_client.Client</code>在<code>standAloneServer</code>中不会被使用，因此它可以被跳过。</li>
+<li>考虑下<code>badger</code>提供的拥有<code>txn</code>特性的读写接口。去<code>BadgerReader</code>中获取更多消息。</li>
+<li>一些测试用例可能有助于理解存储接口的用法。</li>
+</ul>
+<hr>
+<h2 id="implement-percolator-in-tinykv">Implement Percolator In TinyKV</h2>
+<blockquote>
+<p>实现TinyKV中的percolator</p>
+</blockquote>
+<p>事务处理流程如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419180000791.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419180000791.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419180000791.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419180000791.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419180000791.png"
+        title="image-20220419180000791" /></p>
+<p>用户发送写请求比如说<code>Insert</code>到<code>tinysql</code>服务端，该请求被解析以及执行，然后用户数据被从行数据转变为键值对。然后事务模块将负责提交该键值对到存储引擎。由于不同的键可能分布在不同的区域，而这些区域可能又分布在不同的<code>tinykv</code>服务器上，因此事务引擎必须确保提交过程最终成功或者什么也不做，这就是percolator协议。</p>
+<p>考虑提交一个多键的分布式事务。首先，将被提交的键中有一个被选择作为<strong>主键(Primary Key)</strong>，然后事务状态仅取决于<strong>主键</strong>的状态。换句话说，事务将被认为成功提交只有当<strong>主键(Primary Key)<strong>被成功提交。提交过程被分成两阶段，第一阶段是</strong>Prewrite</strong>，第二阶段是<strong>Commit</strong>。</p>
+<h3 id="prewrite-phase">Prewrite Phase</h3>
+<blockquote>
+<p>预写阶段</p>
+</blockquote>
+<p>在键值对准备好之后，事务进入到<code>Prewrite</code>阶段，在该阶段所有的键将被预写到不同的<code>tinykv</code>服务器包含不同的区域领袖。每一个<code>Prewrite</code>请求将会被一个<code>tinykv</code>服务器处理，<code>预写锁(Prewrite Lock)</code>将会被放入存储引擎中的每个键的<code>锁列族(lock column family)</code>中。如果任何的预写处理失败那么提交处理将会立即失败，然后任何预写锁都会被清理。</p>
+<h3 id="commit-phase">Commit Phase</h3>
+<blockquote>
+<p>提交阶段</p>
+</blockquote>
+<p>如果所有的预写处理都成功了，事务将会进入<code>提交(Commit)</code>阶段，该阶段中<code>主键(Primary Key)</code>将会被第一个提交。<code>提交(Commit)</code>处理操作会在存储引擎中提交一个<code>写记录(Write Record)</code>到<code>写列族(Write cloumn family)</code></p>
+<p>并且解锁<code>锁列族(lock column family)</code>中的<code>预写锁(Prewrite Lock)</code>。如果主键的提交操作已经成功那么事务将被认为成功提交了并且将发送成功相应到客户端。所有被称为<code>副键(Secondary Keys)</code>将会在后台任务中被<strong>异步</strong></p>
+<p>提交。</p>
+<p>在一般的情况下，两阶段已经足够了，但是没有做<strong>故障恢复</strong>。在分布式环境下任何地方都有可能失败，比如说<code>tinysql</code>服务器可能在完成<code>两阶段提交(Two Phase Commit)</code>前发生了失败，<code>tinykv</code>服务器也一样。当一个新的区域领袖被选举出来然后开始处理请求，我们怎么<strong>恢复未完成的事务并且确保正确性</strong>？</p>
+<h3 id="rollback-record">Rollback Record</h3>
+<blockquote>
+<p>回滚记录</p>
+</blockquote>
+<p>一旦事务被决定为失败，它留下的锁应该被清理以及一条回滚记录应该被放入到存储引擎以防止将来可能的预写或者提交(考虑到网络延迟等)。因此如果将回滚记录放在事务的主键上，则事务状态被确定为回滚。它将永远不会被提交，并且必须失败。</p>
+<h3 id="check-the-transaction-status">Check The Transaction Status</h3>
+<blockquote>
+<p>检查事务状态</p>
+</blockquote>
+<p>如上所述，事务的最终状态只取决于<code>主键(Primary Key)</code>或者<code>主锁(Primary Lock)</code>的状态。如果一些事务状态没有被决定，它需要检查它的<code>主键(Primary Key)</code>或者<code>主锁(Primary Lock)</code>的状态。如果有主键的提交或者回滚记录，然后我们可以安全的认为事务已经被提交了或者回滚了。如果主锁仍然存在或者没有没有过期，那么事务提交仍是可能的，仍在进行。如果没有锁记录和提交/回滚记录，那么事务状态就是未确定的，我们可以选择等待或者写入一个回滚记录来防止之后的提交，然后该事务就决定回滚了。每一个在两阶段提交中的<code>预写锁(Prewrite Lock)</code>将拥有一个<code>存活时间(Time To Live)</code>字段，如果锁的ttl已经过期了那么该锁将会被并发命令比如说<code>CheckTxnSrtatus</code>来回滚，之后该事务最终一定会失败。</p>
+<h3 id="process-conflicts-and-do-recovery">Process Conflicts And Do Recovery</h3>
+<blockquote>
+<p>处理冲突以及恢复</p>
+</blockquote>
+<p>不同的事务协调者位于不同的<strong>tinysql</strong>服务端，读和写请求可能在它们之中发生冲突。考虑如下情况，一个事务<code>txn1</code>在键<code>k1</code>上有一个预写锁，另一个读事务<code>txn2</code>尝试读取键<code>k1</code>，那么<code>txn2</code>该如何处理呢？</p>
+<p>读和写请求无法继续因为锁记录阻塞了它们，有如下几种可能性：</p>
+<ul>
+<li>锁属于的事务已经提交了，同样也可以提交锁，接下来在该键上阻塞的请求可以继续。</li>
+<li>锁属于的事务已经回滚了，同样也可以回滚锁，接下来在该键上阻塞的请求可以继续。</li>
+<li>锁属于的事务仍在继续，阻塞的请求必须等待该事务完成。</li>
+</ul>
+<p>这些冲突处理在<code>tinysql/tinykv</code>集群中被称为<code>Resolve</code>。一旦请求被一个别的事务的预写锁阻塞的时候，resolve将用于帮助确定锁的状态然后帮助该锁提交或者回滚，以至于该请求可以继续。<code>Resolve</code>操作隐式的协助了<strong>事务恢复</strong>。假设一个情况，事务调度器完成了预写锁然后<code>tinysql</code>服务器宕机了以及那些留下来的锁将在别的<code>tinysql</code>服务器的并发事务请求中被解决。</p>
+<hr>
+<h1 id="lab2">Lab2</h1>
+<p>我们将会在tinykv服务端实现上述接口以及处理逻辑。</p>
+<h2 id="code">Code</h2>
+<h3 id="the-command-abstraction">The <code>Command</code> Abstraction</h3>
+<blockquote>
+<p>命令的抽象</p>
+</blockquote>
+<p>在<code>kv/transaction/commands/command.go</code>中，那里有所有事务命令的接口。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Command is an abstraction which covers the process from receiving a request from gRPC to returning a response.
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Command</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">Context</span><span class="p">()</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span>
+	<span class="nf">StartTs</span><span class="p">()</span> <span class="kt">uint64</span>
+	<span class="c1">// WillWrite returns a list of all keys that might be written by this command. Return nil if the command is readonly.
+</span><span class="c1"></span>	<span class="nf">WillWrite</span><span class="p">()</span> <span class="p">[][]</span><span class="kt">byte</span>
+	<span class="c1">// Read executes a readonly part of the command. Only called if WillWrite returns nil. If the command needs to write
+</span><span class="c1"></span>	<span class="c1">// to the DB it should return a non-nil set of keys that the command will write.
+</span><span class="c1"></span>	<span class="nf">Read</span><span class="p">(</span><span class="nx">txn</span> <span class="o">*</span><span class="nx">mvcc</span><span class="p">.</span><span class="nx">RoTxn</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+	<span class="c1">// PrepareWrites is for building writes in an mvcc transaction. Commands can also make non-transactional
+</span><span class="c1"></span>	<span class="c1">// reads and writes using txn. Returning without modifying txn means that no transaction will be executed.
+</span><span class="c1"></span>	<span class="nf">PrepareWrites</span><span class="p">(</span><span class="nx">txn</span> <span class="o">*</span><span class="nx">mvcc</span><span class="p">.</span><span class="nx">MvccTxn</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>WillWrite</code>创建该请求所需写入的内容，<code>Read</code>将执行该命令所需的读取请求。<code>PrepareWrites</code>用来为这个命令构建实际的写内容，它是写命令处理的核心部分。由于每个事务都有它唯一的标识符，即<code>start_ts</code>也就是分配的全局时间戳，因此可以使用<code>StartTs</code>来返回当前命令的值。</p>
+<p>尝试理解整个客户端请求处理的过程(事务命令处理和<code>raftstore</code>日志提交/应用)。事务命令导致一些写突变，这些突变将会被转为raft命令请求，然后发送到<code>raftstore</code>，处理之后，在<code>raftstore</code>中提交并应用处理，事务命令被认为时成功的，结果发回给客户端。</p>
+<p>这个lab忽略了<code>raftstore</code>，对于该兴趣的同学，可以去<a href="https://github.com/tidb-incubator/tinykv" target="_blank" rel="noopener noreffer">TinyKV</a>看看。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419205656278.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419205656278.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419205656278.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419205656278.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220419205656278.png"
+        title="image-20220419205656278" /></p>
+<hr>
+<h3 id="implement-the-get-command">Implement the <code>Get</code> Command</h3>
+<blockquote>
+<p>实现Get命令</p>
+</blockquote>
+<p><code>KvGet</code>用来执行来获取特定键的值，尝试实现<code>kv/transaction/commands/get.go</code>中缺失的代码，这些代码部分被使用如下标记：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="implement-the-prewrite-and-commit-commands">Implement the <code>Prewrite</code> and <code>Commit</code> Commands</h3>
+<blockquote>
+<p>实现<code>预写(Prewrite)</code>以及<code>提交(Commit)</code>命令</p>
+</blockquote>
+<p>关于我们的事务引擎有两个最重要的接口，尝试去实现<code>kv/transaction/commands/prewrite.go</code>和<code>kv/transaction/commands/commit.go</code>中缺失的代码。这些代码部分被使用如下标记：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
+</code></pre></td></tr></table>
+</div>
+</div><p>注意事项：</p>
+<ul>
+<li>可能会有重复的请求，因为这些请求是由tinysql服务端发送的RPC请求。</li>
+<li><code>StartTS</code>只是一个事务开始的标识。</li>
+<li><code>CommitTS</code>是一个记录的预期提交的时间戳。</li>
+<li>考虑读写处理冲突。</li>
+</ul>
+<p>完成这两部分，运行<code>make lab2P1</code>来检查是否所有的测试都通过了。</p>
+<h3 id="implement-the-rollback-and-checktxnstatus-commands">Implement the <code>Rollback</code> and <code>CheckTxnStatus</code> Commands</h3>
+<blockquote>
+<p>实现<code>回滚(Rollback)</code>和<code>检查事务状态(CheckTxnStatus)</code>两个命令</p>
+</blockquote>
+<p><code>回滚(Rollback)</code>用于解锁键，以及添加一个键的<code>回滚记录(Rollback Record)</code>。<code>检查事务状态(CheckTxnStatus)</code>用于查询指定事务的主键锁的状态。尝试实现<code>kv/transaction/commands/rollback.go</code>和<code>kv/transaction/commands/checkTxn.go</code>中缺失的代码。这些代码部分被使用如下标记：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
+</code></pre></td></tr></table>
+</div>
+</div><p>完成这些部分，运行<code>make lab2P2</code>来检查是否所有的测试都已经通过。注意事项如下：</p>
+<ul>
+<li>考虑到查询的锁不存在的情况。</li>
+<li>可能会有重复的请求，因为这些请求是由tinysql服务端发送的RPC请求。</li>
+<li>在<code>CheckTxnStatusResponse</code>中有三种不同的响应操作。<code>Action_TTLExpireRollback</code>意味着目标锁已经被回滚了因为锁已经过期了，以及<code>Action_LockNotExistRollback</code>意味着目标锁不存在以及回滚记录已经被写入了。</li>
+</ul>
+<h3 id="implement-the-resolvelock-command">Implement the <code>ResolveLock</code> Command</h3>
+<blockquote>
+<p>实现<code>ResolveLock</code>命令</p>
+</blockquote>
+<p><code>Resolve</code>用于提交或者回滚锁当它关联的事务的状态已经被确定了。尝试实现<code>kv/transaction/commands/resolve.go</code>中缺失的代码。这些代码部分被使用如下标记：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
+</code></pre></td></tr></table>
+</div>
+</div><p>当完成这些部分时，运行<code>make lab2P3</code>来检查是否所有测试都已经被通过了。注意事项如下：</p>
+<ul>
+<li>事务状态已经在输入请求参数中确定。</li>
+<li><code>rollbackKey</code>和<code>commitKey</code>是有用的。</li>
+</ul>
+<p>当所有的命令和测试都完成了，运行<code>make lab2P4</code>来检查是否别的情况测试也能通过。在下一个lab我们尝试实现<code>tinysql</code>服务端中<code>percolator</code>协议中的事务协调者部分，以及将被使用的所有命令。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-04-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/distributed-txn-lab%E7%BF%BB%E8%AF%91/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>,&nbsp;<a href="/tags/golang/">Golang</a>,&nbsp;<a href="/tags/%E4%BA%8B%E5%8A%A1/">事务</a>,&nbsp;<a href="/tags/pingcap/">PingCAP</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mit-6.824-lab3/" class="prev" rel="prev" title="MIT 6.824 Lab3"><i class="fas fa-angle-left fa-fw"></i>MIT 6.824 Lab3</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

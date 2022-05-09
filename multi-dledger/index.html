@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Multi DLedger - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="Multi DLedger" />
+<meta property="og:description" content="Multi-DLedger DLedger的Multi-Raft架构 整体结构如下 DLedgerProxy具体架构如下 针对上图的几大组件，做如下详细解释。 DLedgerProxy 我们之前在D" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/multi-dledger/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-09T17:40:32+08:00" />
+<meta property="article:modified_time" content="2022-05-09T17:40:32+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="Multi DLedger"/>
+<meta name="twitter:description" content="Multi-DLedger DLedger的Multi-Raft架构 整体结构如下 DLedgerProxy具体架构如下 针对上图的几大组件，做如下详细解释。 DLedgerProxy 我们之前在D"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/multi-dledger/" /><link rel="prev" href="https://ther1sing3un.github.io/distributed-txn-lab%E7%BF%BB%E8%AF%91/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Multi DLedger",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/multi-dledger\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "分布式系统, Raft, Java, DLedger","wordcount":  3543 ,
+        "url": "https:\/\/ther1sing3un.github.io\/multi-dledger\/","datePublished": "2022-05-09T17:40:32+08:00","dateModified": "2022-05-09T17:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Multi DLedger</h1><h2 class="single-subtitle">Multi-DLedger设计文档</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>分布式系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-09">2022-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3543 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#dledger的multi-raft架构">DLedger的Multi-Raft架构</a>
+      <ul>
+        <li><a href="#dledgerproxy">DLedgerProxy</a></li>
+        <li><a href="#configmanager">ConfigManager</a></li>
+        <li><a href="#dledgermanager">DLedgerManager</a></li>
+        <li><a href="#load-balance">Load balance</a></li>
+        <li><a href="#multistorage">MultiStorage</a></li>
+        <li><a href="#开发任务">开发任务</a></li>
+        <li><a href="#优化任务">优化任务</a></li>
+      </ul>
+    </li>
+    <li><a href="#如何以multi-dledger启动">如何以Multi-DLedger启动</a>
+      <ul>
+        <li><a href="#需要完成的要点">需要完成的要点</a></li>
+      </ul>
+    </li>
+    <li><a href="#接收请求和响应的流程">接收请求和响应的流程</a>
+      <ul>
+        <li><a href="#之前的请求响应流程">之前的请求响应流程</a></li>
+        <li><a href="#现在的请求响应流程">现在的请求响应流程</a></li>
+        <li><a href="#需要完成的要点-1">需要完成的要点</a></li>
+      </ul>
+    </li>
+    <li><a href="#在线增删dledger节点">在线增删DLedger节点</a>
+      <ul>
+        <li><a href="#增加dledger请求流程">增加DLedger请求流程</a></li>
+        <li><a href="#删除dledger请求流程">删除DLedger请求流程</a></li>
+        <li><a href="#需要完成的点">需要完成的点</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="multi-dledger">Multi-DLedger</h1>
+<h2 id="dledger的multi-raft架构">DLedger的Multi-Raft架构</h2>
+<blockquote>
+<p>整体结构如下</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502152826885.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502152826885.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502152826885.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502152826885.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502152826885.png"
+        title="image-20220502152826885" /></p>
+<blockquote>
+<p>DLedgerProxy具体架构如下</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502165732144.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502165732144.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502165732144.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502165732144.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220502165732144.png"
+        title="image-20220502165732144" /></p>
+<p>针对上图的几大组件，做如下详细解释。</p>
+<h3 id="dledgerproxy">DLedgerProxy</h3>
+<p>我们之前在DLedger中，是直接使用了DLedgerServer作为接收处理请求的载体。若需要升级为Multi-Raft架构，则需要将对于收发请求的部分和处理请求的部分进行解耦。也就是我们可以使用一个类似容器的思想，使用一层代理来代理下层的Raft节点，我们可以多个DLedgerServer公用一个RPCService来进行请求处理，那么这个DLedgerProxy就是将之前实现的handle请求等方法进行包装，并且可以根据配置进行路由。也就是我们ip+port不能唯一标识一个Raft节点了，因为ip+port也可以表现为一个Multi-Raft结构对外服务，那么这时候，我们就需要一个<code>selfID</code>来对该Multi-Raft中的不同的Raft进行区分。此时我们的所有DLedger通信都需要带上<code>selfID</code>来进行定位。并且我们在DLedgerProxy中加入多个模块，分别是ConfigManager和DLedgerManager。这两个模块分别用来管理Raft-Group的配置和本机DLedgerServer实例的配置以及处理逻辑。</p>
+<blockquote>
+<p>为什么使用ip:port+<code>selfID</code>来区分？</p>
+</blockquote>
+<p>我们之前是一个ip+port就可以定位一个Raft实例，但是现在我们ip+port定位到的进程是一个Multi-Raft，因此需要根据<code>selfID</code>来进行在进程中的定位。</p>
+<blockquote>
+<p>为什么要合用一个RPCService？</p>
+</blockquote>
+<p>如果我们给一个DLedger就实例化一个RPCService来进行请求响应的话。</p>
+<p>首先对于实例化RPCService是有一定的开销，如果开多个RPCService就需要绑定多个端口，对于程序和系统都是一定的消耗。</p>
+<p>其次，我们不仅处理DLedgerServer的请求响应，同样的对于后续若需要进行配置更改等操作，我们可以统一在一个RPCService处接收处理。而且可以将请求响应与实际逻辑处理解耦合，有更强的拓展性。</p>
+<p>最后，我们使用同一个RPCService进行网络请求处理，可以做许多优化，比如说对于发往同一个DLedger的请求进行合并，减少网络io消耗；对于同一个DLedger，共享一个心跳计时器，减少网络io。</p>
+<h3 id="configmanager">ConfigManager</h3>
+<p>ConfigManager是DLedger的配置管理模块。后续如果使用配置中心等方案，可以动态的对于Raft-Group负责的Region进行在线更改。此时ConfigManager就可以进行相应的请求和响应。因为我们多个DLedgerServer当然是可以公用一个RegionConfig的，因为RegionConfig是对于所有该集群中的Raft都是一样的。</p>
+<p>同时可以管理和配置本机的DLedger实例的配置，可以在启动时根据启动参数进行DLedger实例化，也可以实时的根据网络请求来对本机的DLedger实例的配置文件进行更改，从而管理本机的DLedger实例。</p>
+<h3 id="dledgermanager">DLedgerManager</h3>
+<p>DLedgerManager是对DLedgerServer进行管理的模块，功能包括，对于针对DLedgerServer的网络请求，可以根据配置来进行路由到某个DLedgerServer；对于后续的优化，比如上述提到的请求合并，可以在此模块统一处理。</p>
+<h3 id="load-balance">Load balance</h3>
+<p>我们需要Multi-Raft架构来进行集群的负载均衡。通过使用Multi-Raft，让一个进程中开启多个DLedgerServer，并且这个DLedgerServer处于不同的RaftGroup，而且各个Group的Leader在集群中是均衡分配的。也就是若为三RaftGroup三物理节点，每个节点开启一个Multi-Raft DLedger，并且分别配置三个Raft节点，那么就是每个物理节点上实际上是有一个RaftGroup的Leader的，那么可以一定程度上让各个物理节点的负载均衡。</p>
+<blockquote>
+<p>怎么实现Leader均匀分配？</p>
+</blockquote>
+<p>使用perferLeader来在一开始的配置中分配好Leader即可。DLedger已经实现该功能。</p>
+<blockquote>
+<p>怎么知道是否均衡分配了？</p>
+</blockquote>
+<p>留一个查询本Multi-Raft进程中所有Raft的信息，根据信息可以知道哪些节点是否成为Leader。</p>
+<h3 id="multistorage">MultiStorage</h3>
+<p>我们同样也需要给每个DLedger一个存储空间，并且对不同的DLedger的存储之间进行隔离。这里我们只需要对多个Storage实例进行管理即可。</p>
+<h3 id="开发任务">开发任务</h3>
+<ol>
+<li>完成将DLedgerProxy和DLedgerServer的分离。兼容单DLedgerServer的初始化。</li>
+<li>增加Multi-Raft配置，可以根据配置进行多DLedgerServer实例化。</li>
+<li>增加ConfigManager模块。</li>
+<li>增加DLedgerManager模块。</li>
+<li>对MultiStorage进行适配。</li>
+<li>对PerferLeader的Multi-Raft结构进行适配。</li>
+</ol>
+<h3 id="优化任务">优化任务</h3>
+<ol>
+<li>动态监听更改进程的DLedger实例配置。</li>
+<li>ConfigManager的RegionConfig的在线更新。</li>
+<li>针对同一个DLedger的请求合并。</li>
+</ol>
+<hr>
+<h2 id="如何以multi-dledger启动">如何以Multi-DLedger启动</h2>
+<p>若需要以Multi-DLedger启动，需要使用配置文件启动</p>
+<p>简易配置包括：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">DLedgerConfigs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="w">
+</span><span class="w">   	  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g0</span><span class="w">
+</span><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">n0</span><span class="w">
+</span><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">n0-127.0.0.1:10000;n1-127.0.0.1:10001;n2-127.0.0.1:10002</span><span class="w">
+</span><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">n0</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">DLedgerConfig</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g1</span><span class="w">
+</span><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">a0</span><span class="w">
+</span><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">a0-127.0.0.1:10000;a1-127.0.0.1:10001;a2-127.0.0.1:10002</span><span class="w">
+</span><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">a1</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">DLedgerConfig</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g2</span><span class="w">
+</span><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">b0</span><span class="w">
+</span><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">b0-127.0.0.1:10000;b1-127.0.0.1:10001;b2-127.0.0.1:10002</span><span class="w">
+</span><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">b2</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>根据上述配置进行多个DLedgerConfig的实例化，然后根据DLedgerConfig来进行DLedgerServer来实例化。我们可以看到我们现在一个端口用来处理多个Raft节点的请求，使用<code>id</code>来进行表示。</p>
+<h3 id="需要完成的要点">需要完成的要点</h3>
+<ol>
+<li>对配置启动参数进行更新，添加yaml配置文件启动的方式，先对单Raft节点的进行启动适配。</li>
+<li>对多DLedgerServer的配置文件进行管理，使用上述提到的ConfigManager来进行管理。</li>
+</ol>
+<hr>
+<h2 id="接收请求和响应的流程">接收请求和响应的流程</h2>
+<h3 id="之前的请求响应流程">之前的请求响应流程</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172615624.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172615624.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172615624.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172615624.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172615624.png"
+        title="image-20220503172615624" /></p>
+<p>由于只有一个DLedgerServer，因此可以直接调用DLedgerServer的Handle等方法。</p>
+<h3 id="现在的请求响应流程">现在的请求响应流程</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172553882.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172553882.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172553882.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172553882.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503172553882.png"
+        title="image-20220503172553882" /></p>
+<p>现在由于我们有多个DLedgerServer实例，那么需要根据请求的id来具体路由到某个DLedgerServer上。因此我们需要让DLedgerProxy中的DLedgerManager来根据<code>selfID-&gt;DLedgerServer</code>来找到具体的DLedgerServer来处理该请求。</p>
+<h3 id="需要完成的要点-1">需要完成的要点</h3>
+<ol>
+<li>将原来的DLedgerRpcNettyService接收请求后直接调用DLedgerServer改成调用DLedgerProxy。</li>
+<li>现在的DLedgerRpcNettyService的注册是根据一个DLedgerServer来的。但是我们现在需要注册多个进去。并且对于同一个ip+port的remoteClient来进行合并，不需要创建多个，造成资源浪费。</li>
+</ol>
+<hr>
+<h2 id="在线增删dledger节点">在线增删DLedger节点</h2>
+<p>我们可以预留两种请求响应，称为<code>addDLedgerRequest</code>和<code>deleteDLedgerRequest</code>来让一个Multi-DLedger组来增删DLedgerServer。当然这些新增的不能是新加入某个Raft-Group的。该Raft可以是处于一个新的Raft-Group；也可以是该Raft之前被从该Multi-DLedger中删去了，后来又恢复了。这两种情况是允许的。由于目前没有做RaftGroup成员变更功能，所以只能支持上述两种情况。</p>
+<h3 id="增加dledger请求流程">增加DLedger请求流程</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503180827652.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503180827652.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503180827652.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503180827652.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503180827652.png"
+        title="image-20220503180827652" /></p>
+<p>我们在接收到增加DLedger的请求后，由DLedgerProxy来做处理，首先它会对该请求进行判断，是否符合要求（比如说是否已有该DLedger）。接下来它会让DLedgerManager来根据配置进行初始化新的DLedger并启动，同时注册进RPC，同时也让ConfigManager来更新管理的DLedgerConfig。</p>
+<h3 id="删除dledger请求流程">删除DLedger请求流程</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503181347439.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503181347439.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503181347439.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503181347439.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220503181347439.png"
+        title="image-20220503181347439" /></p>
+<p>删除DLedger请求，也是由DLedgerProxy来做处理，先对删除的DLedgerId进行判断（是否存在）。接下来让DLedgeManager来删除该DLedgerServer的配置，同时让DLedgerManager来关闭并移除DLedgerServer。也需要对RPC中不再需要的数据进行删除。</p>
+<h3 id="需要完成的点">需要完成的点</h3>
+<ol>
+<li>对于增删的接口的实现，以及RPC注册。</li>
+<li>完成DLedgerProxy的对DLedgerManager和ConfigManager以及DLedgerRpcNettyService的调度。</li>
+<li>完成DLedgerManager中增删节点的方法。</li>
+<li>完成ConfigManager中增删节点的方法。</li>
+<li>完成DLedgerRpcNettyService中增删节点的方法。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-09</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/multi-dledger/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>,&nbsp;<a href="/tags/raft/">Raft</a>,&nbsp;<a href="/tags/java/">Java</a>,&nbsp;<a href="/tags/dledger/">DLedger</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/distributed-txn-lab%E7%BF%BB%E8%AF%91/" class="prev" rel="prev" title="Distributed Txn Lab翻译"><i class="fas fa-angle-left fa-fw"></i>Distributed Txn Lab翻译</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

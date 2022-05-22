@@ -4,7 +4,16 @@
         <link>https://ther1sing3un.github.io/posts/</link>
         <description>所有文章 | trs的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
-            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Mon, 09 May 2022 17:40:32 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Sun, 22 May 2022 13:26:59 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>MIT 6.830 Lab翻译</title>
+    <link>https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/</link>
+    <pubDate>Sun, 22 May 2022 13:26:59 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png" referrerpolicy="no-referrer">
+            </div>MIT-6.830Lab翻译 Lab1 在6.830的实验作业中，您将编写一个名为 SimpleDB 的基本数据库管理系统。对于这个lab，您将专注于实现访问存储在磁盘]]></description>
+</item><item>
     <title>Multi DLedger</title>
     <link>https://ther1sing3un.github.io/multi-dledger/</link>
     <pubDate>Mon, 09 May 2022 17:40:32 &#43;0800</pubDate>
@@ -83,14 +92,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/1639057081800.jpeg" referrerpolicy="no-referrer">
             </div>我的大二&quot;秋招&quot;之旅 前言 昨天看到了室友(友链中第一个，很强的大佬)写了一篇《我的大二&quot;秋招&quot;总结》,]]></description>
-</item><item>
-    <title>SpringCloud基础学习</title>
-    <link>https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Thu, 09 Dec 2021 20:58:13 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ther1sing3un.github.io/springcloud%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/20211209210015.png" referrerpolicy="no-referrer">
-            </div>SpringCould学习 前言 版本选择 1 2 3 4 5 6 SpringCloud:Hoxtom.SR1SpringBoot:2.2.2RELEASE]]></description>
 </item></channel>
 </rss>

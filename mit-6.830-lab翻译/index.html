@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MIT 6.830 Lab翻译 - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="MIT 6.830 Lab翻译" />
+<meta property="og:description" content="MIT-6.830Lab翻译 Lab1 在6.830的实验作业中，您将编写一个名为 SimpleDB 的基本数据库管理系统。对于这个lab，您将专注于实现访问存储在磁盘" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-22T13:26:59+08:00" />
+<meta property="article:modified_time" content="2022-05-22T13:26:59+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="MIT 6.830 Lab翻译"/>
+<meta name="twitter:description" content="MIT-6.830Lab翻译 Lab1 在6.830的实验作业中，您将编写一个名为 SimpleDB 的基本数据库管理系统。对于这个lab，您将专注于实现访问存储在磁盘"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/" /><link rel="prev" href="https://ther1sing3un.github.io/multi-dledger/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MIT 6.830 Lab翻译",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  7473 ,
+        "url": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/","datePublished": "2022-05-22T13:26:59+08:00","dateModified": "2022-05-22T13:26:59+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">MIT 6.830 Lab翻译</h1><h2 class="single-subtitle">MIT-6.830-Lab翻译</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/database/"><i class="far fa-folder fa-fw"></i>Database</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7473 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 15 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png"
+        title="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220522132825555.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#lab1">Lab1</a>
+      <ul>
+        <li><a href="#0-环境设置">0. 环境设置</a></li>
+        <li><a href="#1-开始">1. 开始</a>
+          <ul>
+            <li><a href="#11运行端对端测试">1.1运行端对端测试</a>
+              <ul>
+                <li><a href="#111创建虚拟表">1.1.1创建虚拟表</a></li>
+              </ul>
+            </li>
+            <li><a href="#12使用ide">1.2使用IDE</a></li>
+            <li><a href="#13实现提示">1.3实现提示</a></li>
+            <li><a href="#14事务锁恢复">1.4事务，锁，恢复</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-simpledb架构以及实现指引">2. <code>SimpleDB</code>架构以及实现指引</a>
+          <ul>
+            <li><a href="#21-database类">2.1 Database类</a></li>
+            <li><a href="#22-字段和元组">2.2 字段和元组</a></li>
+            <li><a href="#exercise-1">Exercise 1</a></li>
+            <li><a href="#23-目录">2.3 目录</a></li>
+            <li><a href="#exercise-2">Exercise 2</a></li>
+            <li><a href="#24-缓冲池">2.4 缓冲池</a></li>
+            <li><a href="#exercise-3">Exercise 3</a></li>
+            <li><a href="#25-堆文件访问方法">2.5 堆文件访问方法</a></li>
+            <li><a href="#exercise-4">Exercise 4</a></li>
+            <li><a href="#exercise-5">Exercise 5</a></li>
+            <li><a href="#26-操作符">2.6 操作符</a></li>
+            <li><a href="#exercise-6">Exercise 6</a></li>
+            <li><a href="#27-一个简单的查询">2.7 一个简单的查询</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-后续工作">3. 后续工作</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="mit-6830lab翻译">MIT-6.830Lab翻译</h1>
+<h2 id="lab1">Lab1</h2>
+<p>在6.830的实验作业中，您将编写一个名为 <code>SimpleDB</code> 的基本数据库管理系统。对于这个lab，您将专注于实现访问存储在磁盘上的数据所需的核心模块; 在未来的lab中，您将添加对各种查询处理操作符以及事务、锁定和并发查询的支持。</p>
+<p><code>SimpleDB</code>使用Java语言写的。我们已经为您提供了一组大部分还未实现的类和接口。你将需要为这些类编写代码。我们将通过一组使用<code>JUnit</code>的系统测试来对代码进行打分。我们还提供了一些单元测试，我们不会将其用于评级，但是您可能发现再验证代码是否有效的时候十分有用。我们还鼓励你再我们的测试之外开发自己的测试的套件。</p>
+<p>本文的其余部分描述了<code>SimpleDB</code>的基本架构，提供了一些关于如何开始编码的建议，并讨论了如何上交lab。</p>
+<p>我们强烈建议你尽早开始写这个lab，它要求您编写大量的代码。</p>
+<h3 id="0-环境设置">0. 环境设置</h3>
+<p>根据<a href="https://github.com/MIT-DB-Class/simple-db-hw-2021" target="_blank" rel="noopener noreffer">指示</a>从GitHub上下载lab1的代码。</p>
+<p>这些指示是为Athena或者别的基于Unix的平台编写的(例如，Linux，MacOS等等)。因为代码是用Java写的，它在Windows下同样可以工作，即使文档中的指示可能不适用。</p>
+<p>我们包含了使用Eclipse和IntelliJ来使用项目的<a href="https://github.com/MIT-DB-Class/simple-db-hw-2021/blob/master/lab1.md#eclipse" target="_blank" rel="noopener noreffer">章节1.2</a>。</p>
+<h3 id="1-开始">1. 开始</h3>
+<p><code>SimpleDB</code>使用<a href="" rel="">Ant build tool</a>来编译代码和运行测试。Ant和<a href="" rel="">make</a>相似，但是构建文件使用XML写的以及更适合Java代码。大多数现代Linux发行版包括Ant。在Athena下，它被包含在<code>sipd</code>储物柜中，你可以在Athena提示符下输入<code>add sipd</code>来得到它。注意，对于Athena的某些版本，您还必须运行<code>add -f java</code>来设置正确的Java环境。详细信息请查询<a href="" rel="">Athena使用Java的文档</a>。</p>
+<p>为了在开发过程中帮助您，除了用于评分的端到端测试外，我们还提供了一组单元测试。这些都不是全面的，你不应该仅靠它们来验证项目的正确性。(使用6.170的技巧！)</p>
+<p>使用<code>test</code>来构建目标来运行单元测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">cd</span> <span class="o">[</span>project-directory<span class="o">]</span>
+$ <span class="c1"># run all unit tests</span>
+$ ant <span class="nb">test</span>
+$ <span class="c1"># run a specific unit test</span>
+$ ant runtest -Dtest<span class="o">=</span>TupleTest
+</code></pre></td></tr></table>
+</div>
+</div><p>你应该看到相似的输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> build output...
+
+test:
+    <span class="o">[</span>junit<span class="o">]</span> Running simpledb.CatalogTest
+    <span class="o">[</span>junit<span class="o">]</span> Testsuite: simpledb.CatalogTest
+    <span class="o">[</span>junit<span class="o">]</span> Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.037 sec
+    <span class="o">[</span>junit<span class="o">]</span> Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.037 sec
+
+ ... stack traces and error reports ...
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的输出表明在编译过程中出现了两个错误，这是因为我们给出的代码还不能工作。当您完成lab的各个部分时，您将努力的通过其他的单元测试。</p>
+<p>如果您希望在编写代码的过程中编写新的单元测试，那么你应该将他加入到<code>test/simpledb</code>文件下。</p>
+<p>对于更多实用Ant的细节，请看<a href="http://ant.apache.org/manual/" target="_blank" rel="noopener noreffer">说明手册</a>。<a href="http://ant.apache.org/manual/running.html" target="_blank" rel="noopener noreffer">运行Ant</a>章节提供更多的<code>ant</code>命令的细节。无论如何，下面快速参照表应该足以用于lab。</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ant</td>
+<td>Build the default target (for simpledb, this is dist).</td>
+</tr>
+<tr>
+<td>ant -projecthelp</td>
+<td>List all the targets in <code>build.xml</code> with descriptions.</td>
+</tr>
+<tr>
+<td>ant dist</td>
+<td>Compile the code in src and package it in <code>dist/simpledb.jar</code>.</td>
+</tr>
+<tr>
+<td>ant test</td>
+<td>Compile and run all the unit tests.</td>
+</tr>
+<tr>
+<td>ant runtest -Dtest=testname</td>
+<td>Run the unit test named <code>testname</code>.</td>
+</tr>
+<tr>
+<td>ant systemtest</td>
+<td>Compile and run all the system tests.</td>
+</tr>
+<tr>
+<td>ant runsystest -Dtest=testname</td>
+<td>Compile and run the system test named <code>testname</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>如果您在 windows 系统下，不想从命令行运行 ant 测试，也可以从 eclipse 中运行它们。右键单击 build.xml，在目标标签中，你可以看到“ runtest”“ runsyest”等。例如，选择 runtest 将等效于命令行中的“ ant runtest”。可以在“ Main”选项卡“ Arguments”文本框中指定“-Dtest = testname”等参数。请注意，您还可以通过从 build.xml 中复制、修改目标和参数并将其重命名为 runtest _ build.xml 来创建一个 runtest 快捷方式。</p>
+<h4 id="11运行端对端测试">1.1运行端对端测试</h4>
+<p>我们也提供了一系列端对端的测试以及最终会被使用来打分。这些测试以<code>test/simpledb/systemtest</code>文件下的Junit测试组成。使用<code>systemtest</code>来构建目标来运行所有的系统测试。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ ant systemtest
+
+ ... build output ...
+
+    <span class="o">[</span>junit<span class="o">]</span> Testcase: testSmall took 0.017 sec
+    <span class="o">[</span>junit<span class="o">]</span>     Caused an ERROR
+    <span class="o">[</span>junit<span class="o">]</span> expected to find the following tuples:
+    <span class="o">[</span>junit<span class="o">]</span>     <span class="m">19128</span>
+    <span class="o">[</span>junit<span class="o">]</span> 
+    <span class="o">[</span>junit<span class="o">]</span> java.lang.AssertionError: expected to find the following tuples:
+    <span class="o">[</span>junit<span class="o">]</span>     <span class="m">19128</span>
+    <span class="o">[</span>junit<span class="o">]</span> 
+    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:122<span class="o">)</span>
+    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:83<span class="o">)</span>
+    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:75<span class="o">)</span>
+    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.ScanTest.validateScan<span class="o">(</span>ScanTest.java:30<span class="o">)</span>
+    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.ScanTest.testSmall<span class="o">(</span>ScanTest.java:40<span class="o">)</span>
+
+ ... more error messages ...
+</code></pre></td></tr></table>
+</div>
+</div><p>这表示此测试失败，显示在何处检测到错误的堆栈跟踪。要进行调试，首先读取发生错误的源代码。当测试通过时，你会看到如下内容:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ ant systemtest
+
+ ... build output ...
+
+    <span class="o">[</span>junit<span class="o">]</span> Testsuite: simpledb.systemtest.ScanTest
+    <span class="o">[</span>junit<span class="o">]</span> Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 7.278 sec
+    <span class="o">[</span>junit<span class="o">]</span> Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 7.278 sec
+    <span class="o">[</span>junit<span class="o">]</span> 
+    <span class="o">[</span>junit<span class="o">]</span> Testcase: testSmall took 0.937 sec
+    <span class="o">[</span>junit<span class="o">]</span> Testcase: testLarge took 5.276 sec
+    <span class="o">[</span>junit<span class="o">]</span> Testcase: testRandom took 1.049 sec
+
+BUILD SUCCESSFUL
+Total time: <span class="m">52</span> seconds
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="111创建虚拟表">1.1.1创建虚拟表</h5>
+<p>您可能希望创建自己的测试和自己的数据表，以测试自己的 <code>SimpleDB</code> 实现。你可以创建任何<code>.txt</code>文件，并使用下列命令来将其转化为<code>SimpleDB</code>的<code>HeapFile</code>格式的<code>.dat</code>文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ java -jar dist/simpledb.jar convert file.txt N
+</code></pre></td></tr></table>
+</div>
+</div><p>当文件的名字为<code>file.txt</code>以及<code>N</code>时文件的列数。注意<code>file.txt</code>必须是以下的格式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt">int1,int2,...,intN
+int1,int2,...,intN
+int1,int2,...,intN
+int1,int2,...,intN
+</code></pre></td></tr></table>
+</div>
+</div><p>其中iniN是个非负整数。</p>
+<p>使用<code>print</code>命令来查看表的内容。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ java -jar dist/simpledb.jar print file.dat N
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的<code>file.dat</code>是使用<code>convert</code>命令创建出来的表的名字，以及<code>N</code>是文件中的列数。</p>
+<h4 id="12使用ide">1.2使用IDE</h4>
+<p>略</p>
+<h4 id="13实现提示">1.3实现提示</h4>
+<p>在开始写代码之前，我们强烈建议你先去阅读整个文档来了解对<code>SimpleDB</code>的顶层设计。</p>
+<p>您将需要填写任何未实现的代码。我们认为您应该在哪里编写代码，这是显而易见的。您可能需要添加私有方法和/或帮助器类。你可以改变 api，但是要确保我们的<a href="https://github.com/MIT-DB-Class/simple-db-hw-2021/blob/master/lab1.md#grading" target="_blank" rel="noopener noreffer">评分</a>测试仍然在运行，并且确保在你的记录中提到、解释和为你的决定辩护。</p>
+<p>除了您需要为这个实验室填写的方法之外，类接口还包含许多您在后续实验之前不需要实现的方法。这些要么按类别列出:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">// Not necessary for lab1.
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Insert</span> <span class="kd">implements</span> <span class="n">DbIterator</span> <span class="o">{</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>或者每个方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">deleteTuple</span><span class="o">(</span><span class="n">Tuple</span> <span class="n">t</span><span class="o">)</span><span class="kd">throws</span> <span class="n">DbException</span><span class="o">{</span>
+        <span class="c1">// some code goes here
+</span><span class="c1"></span>        <span class="c1">// not necessary for lab1
+</span><span class="c1"></span>        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>您提交的代码应该可以编译，而无需修改这些方法。</p>
+<p>我们建议使用本文档的练习来指导您的实现，但是您可能会发现不同的顺序对您更有意义。</p>
+<p><strong>下面是一个你可以继续使用 SimpleDB 实现的方法的大致轮廓:</strong></p>
+<hr>
+<ul>
+<li>实现管理元组的类，即Tuple，TupleDesc。我们已经为您实现了Field，IntField，StringField和Type。因此您只需要支持integer以及(定长)string字段以及定长的tuples，这些都很简单</li>
+<li>实现Catalog/目录(应该很简单)。</li>
+<li>实现BufferPool(缓存池)的构造以及<code>getPage()</code>方法。</li>
+<li>实现访问方法，HeapPage和HeapFile以及相关的ID类，这些文件中很大一部分已经为您编写了。</li>
+<li>实现操作符SeqScan。</li>
+<li>此时，您应该能够通过ScanTest系统测试，这是本lab的目标。</li>
+</ul>
+<hr>
+<p>下面第二章节将更详细地向您介绍这些实现步骤以及与每个步骤对应的单元测试。</p>
+<h4 id="14事务锁恢复">1.4事务，锁，恢复</h4>
+<p>当你通过我们给你提供的接口上锁时，你将看到许多关于锁定、事务和恢复的引用。你在lab中不需要支持这些特性，但是你应该保持这些参数在代码的接口中，因为你在将来的lab中将会实现事务和锁定。测试代码给你提供了一个伪造的事务id，该id被传递到它运行的查询操作符中，您将这些事务id传递给其他的操作和缓冲池。</p>
+<h3 id="2-simpledb架构以及实现指引">2. <code>SimpleDB</code>架构以及实现指引</h3>
+<p><code>SimpleDB包括</code>：</p>
+<ul>
+<li>表示字段、元组和元组模式的类。</li>
+<li>对元组的应用谓词和条件的类。</li>
+<li>一个或多个访问方法(例如，Heap files)在磁盘上的存储关系，并提供一个遍历这些关系的元组的方法。</li>
+<li>处理元组的操作符的集合(例如，select，join，insert，delete等)。</li>
+<li>一个缓冲池，在内存中缓存活跃的元组和页，并处理并发控制和事务(这两者在本lab中都不需要担心)。</li>
+<li>存储有关可用表以及其架构的信息的目录。</li>
+</ul>
+<p><code>SimpleDB</code>不包括许多您可能认为是“数据库”一部分的内容，特别是，<code>SimpleDB</code>没有：</p>
+<ul>
+<li>(在本lab)一个SQL前端或解析器，允许您将查询直接输入到<code>SimpleDB</code>中。相反，查询是通过一组运算符连接到一个手工构建的查询计划中来构建的(参考<a href="" rel="">章节2.7</a>)。我们将为以后的lab提供一个简单的解析器。</li>
+<li>视图。</li>
+<li>除了整数和定长字符串以外的数据类型。</li>
+<li>(本lab中)查询优化器。</li>
+<li>(本lab中)索引。</li>
+</ul>
+<p>在本节的其余部分中，我们将描述在这个lab中需要实现的<code>SimpleDB</code>的每一个主要组件。您应该使用本讨论中的练习来指导您的实现。本文档绝不是<code>SimpleDB</code>的完整规范，您需要决定如何设计和实现系统的各个部分。青丘狐注意，对于lab1，除了顺序扫描外，您不需要实现任何操作符(例如，select，join，project)。您在之后的Lab中会添加对其他操作的支持的。</p>
+<h4 id="21-database类">2.1 Database类</h4>
+<p>Database 类提供对作为数据库全局状态的静态对象集合的访问。特别是，这包括访问目录(数据库中所有表的列表)、缓冲池(当前驻留在内存中的数据库文件页的集合)和日志文件的方法。您不必担心本lab的日志文件。我们已经为您实现了 Database 类。您应该查看这个文件，因为您将需要访问这些对象。</p>
+<h4 id="22-字段和元组">2.2 字段和元组</h4>
+<p><code>SimpleDB</code>中的元组是十分基础的。它们由一组<code>Field</code>的对象组成，<code>Tuple</code>中每个字段一个对象。<code>Field</code>是不同数据类型(如，整数、字符串)实现的接口。元组对象是由底层访问方法(例如，heap files或b树)创建的，如下一节所述。元组还有一个类型(或者模式)，称为<code>_tuple</code>描述符<code>_</code>，由<code>TUpleDesc</code>对象表示。这个对象由一组<code>Type</code>对象组成，元组中每个字段一个，每个字段描述相应字段的类型。</p>
+<h4 id="exercise-1">Exercise 1</h4>
+<p><strong>在以下实现框架方法：</strong></p>
+<hr>
+<ul>
+<li>src/java/simpledb/storage/TupleDesc.java</li>
+<li>src/java/simpledb/storage/Tuple.java</li>
+</ul>
+<hr>
+<p>此时，您的代码应该通过了<code>TupleTest</code>和<code>TupleDescTest</code>的单元测试。此时，<code>modifyRecordId()</code>应该会失败，因为您还没有实现它。</p>
+<h4 id="23-目录">2.3 目录</h4>
+<p>目录(<code>SimpleDB</code>中的<code>Catalog</code>类)包括由当前数据库中的表和表的模式的列表组成。你需要支持新增表的能力，同时从指定表获取信息的能力。与每个表关联的是一个<code>TupleDesc</code>对象，该对象允许运算符确定表中的字段的类型和数量。</p>
+<p>全局的目录是为整个<code>SimpleDB</code>分配的一个<code>Catalog</code>的单例。可以通过<code>Database.getCatalog()</code>来检索全局目录，全局缓冲池也是如此。(使用<code>Database.getBufferPool()</code>)。</p>
+<h4 id="exercise-2">Exercise 2</h4>
+<p><strong>实现下述框架方法：</strong></p>
+<hr>
+<ul>
+<li>src/java/simpledb/common/Catalog.java</li>
+</ul>
+<hr>
+<p>此时，你的代码应该通过了<code>CatalogTest</code>的单元测试。</p>
+<h4 id="24-缓冲池">2.4 缓冲池</h4>
+<p>缓冲池(类<code>BufferPool</code>)负责缓存最近从磁盘读取的页到内存中。所有操作符在缓冲池中读写磁盘上不同的文件的页。它由固定数量的页组成，由<code>BufferPool</code>构造函数中的<code>numPages</code>参数定义。在以后的lab中，您将实现淘汰策略。对于该lab，您只需要实现SeqScan操作使用的构造函数和<code>BufferPool.getPage()</code>方法。缓冲池应该存储最多<code>numPages</code>个页面。对于这个lab，如果针对不同的页发出了超过<code>numPages</code>个请求，您可以抛出一个<code>DBExcaption</code>，而不是执行淘汰策略。后续的lab您会实现一个淘汰策略。</p>
+<p><code>Database</code>类提供一个静态方法，<code>Database.getBufferPool()</code>，它会返回对整个<code>SimpleDB</code>进程的缓冲池单例的引用。</p>
+<h4 id="exercise-3">Exercise 3</h4>
+<p><strong>实现下述框架方法：</strong></p>
+<hr>
+<ul>
+<li>src/java/simpledb/storage/BufferPool.java</li>
+</ul>
+<hr>
+<p>我们没有给缓冲池提供单元测试。你实现的功能将在下面的HeapFile实现中被测试。你应该使用<code>DbFile.readPage</code>方法来访问DbFile的页面。</p>
+<h4 id="25-堆文件访问方法">2.5 堆文件访问方法</h4>
+<p>访问方法提供了一种从特定方式排列的磁盘读写数据的方法。常见的访问方法包括了堆文件(未排序的元组文件)和b树；对于这个分配，您将只实现堆文件的访问方法，我们已经为您编写了一些代码。</p>
+<p>一个<code>HeapFile</code>对象被安排成一组页，每个页由固定数量的字节组成，用于存储元组(由常量<code>BufferPool.DEFAULT_PAGE_SIZE</code>定义)，包括了一个头结构。在<code>SimpleDB</code>中，数据库中的每个表都有一个<code>HeapFile</code>对象。<code>HeapFile</code>中的每一个页都被安排为一组插槽，每个插槽可以容纳一个元组(<code>SimpleDB</code>中给定表的元组都具有相同的大小)。除了这些插槽之外，每个页面还有一个头部，由位图组成。每个元组插槽由一个位。如果特定元组对应的位为1，代表元组有效；如果为0，代表元组无效(例如，已删除或者未初始化)。<code>HeapFile</code>对象的页类型为<code>HeapPage</code>。它实现了<code>Page</code>接口。页面存储在缓冲池中，但是由<code>HeapFile</code>类读写。</p>
+<p><code>SimpleDB</code>在磁盘上存储对文件的格式和他们在内存中存储对文件的格式大致相同。每个文件包含连续排列在磁盘上的页数据。每个页由一个或多个字节组成，这些字节表示头结构，后面跟着实际页面内容的_page_size_的字节。每个元组的内容需要_tuple size`_* 8 位，头部需要一位，因此一个页中可以容纳的元组数目是：</p>
+<p><em>tuples per page</em> = floor((<em>page size</em> * 8) / (<em>tuple size</em> * 8 + 1))</p>
+<p>其中，_tuple size_是页中tuple的大小(以字节为单位)。这里的想法是，每个元组都需要在页中增加一个存储位。我们计算一个页面中的位数(通过增加页面大小8)，然后用元组中的位数(包括这个额外的头部位)除以这个数量，会得到每页元组的数量。底层操作会舍入到最接近的元组的整数个数(我们不希望再页上存储部分元组)。</p>
+<p>一旦我们直到 了每个页面的元组数量，存储头部所需的字节数就很简单了：</p>
+<p><code>headerBytes = ceiling(tupsPerPage/8)</code></p>
+<p>ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整个字节的头信息)。每个字节的低位(最低有效位)表示文件中前面的插槽的状态。因此，第一个字节的最低位表示页中的第一个槽是否正在使用。第一个字节的第二个最低位表示页中的第二个槽是否正在使用，以此类推。另外，请注意，最后一个字节的高阶位可能不对应于文件中的实际插槽，因为插槽的数量的可能不是8的倍数。还要注意，所有的Java虚拟机都是<a href="" rel="">big-endian</a>。</p>
+<h4 id="exercise-4">Exercise 4</h4>
+<p><strong>实现下述的框架代码：</strong></p>
+<hr>
+<ul>
+<li>src/java/simpledb/storage/HeapPageId.java</li>
+<li>src/java/simpledb/storage/RecordId.java</li>
+<li>src/java/simpledb/storage/HeapPage.java</li>
+</ul>
+<hr>
+<p>即使你在lab1中不会直接使用它们，但是我们要求您在<code>HeapPage</code>中实现<code>getNumEmptySlots()</code>和<code>isSlotUsed()</code>方法。这需要在页头中推动位。你可能会发现查看<code>HeapPage</code>或者<code>src/simpledb/HeapFileEncoder.java</code>中提供的其他方法有助于理解页面的布局。</p>
+<p>你还需要在页面的元组上实现一个迭代器，这可能涉及到一个辅助类或者数据结构。</p>
+<p>此时，您的代码应该通过<code>HeapPageIdTest</code>、<code>RecordIDTest</code>和<code>HeapPageReadTest</code>中的单元测试。</p>
+<p>在实现了<code>HeapPage</code>之后，您将在这个lab中为<code>HeapFile</code>编写方法，以计算文件中的页数并从文件中读取页。然后，您能够从存储在磁盘上的文件中获取元组。</p>
+<h4 id="exercise-5">Exercise 5</h4>
+<p><strong>实现下述的框架代码：</strong></p>
+<hr>
+<ul>
+<li>src/java/simpledb/storage/HeapFile.java</li>
+</ul>
+<hr>
+<p>需要从磁盘中读取页，首先需要计算文件中的正确偏移量。提示：为了以任何偏移量读写页面，您需要对文件进行随机访问。从磁盘读取页面时，不应调用缓冲池的方法。</p>
+<p>您还需要实现<code>HeapFile.iterator()</code>方法，它应该遍历堆文件中每个页的元组。迭代器必须使用<code>BufferPool.getPage()</code>方法来访问<code>HeapFile</code>中的页。这种方法将页面加载到缓冲池，并最终用于(在之后的lab中)实现基于锁定的并发控制和恢复。不要在<code>open()</code>调用中将整个表加载到内存中&ndash;这会导致非常大的表出现内存不足的错误。</p>
+<p>此时，您的代码应该能够通过<code>HeapFileReadTest</code>单元测试。</p>
+<h4 id="26-操作符">2.6 操作符</h4>
+<p>操作符负责查询计划的实际执行。它们实现关系代数的操作。在<code>SimpleDB</code>中，操作符是基于迭代器的；每个操作符都实现<code>DbIterator</code>接口。</p>
+<p>操作符通过将低级别的操作符传递到较高级别的操作符的构造函数，将它们连接在一起，从而连接到一个计划中。计划叶上的特殊访问方法操作符负责从磁盘读取数据(因此它们下面没有任何操作符)。</p>
+<p>在计划的顶部，与<code>SimpleDB</code>交互的程序简单地在根操作符上调用<code>getNext</code>；该操作符然后在其子操作符上调用<code>getNext</code>，以此类推，直到调用这些叶操作符。他们从磁盘中获取元组并将其传递到树中(作为<code>getNext</code>地返回参数)；元组以这种方式传播计划，直到它们从根输出或被计划中另一个操作符合并或者拒绝。</p>
+<p>对于这个lab，您只需要实现一个<code>SimpleDB</code>操作符。</p>
+<h4 id="exercise-6">Exercise 6</h4>
+<p><strong>实现下述的框架代码：</strong></p>
+<hr>
+<ul>
+<li>src/java/simpledb/execution/SeqScan.java</li>
+</ul>
+<hr>
+<p>该操作符顺序的扫描构造函数中的由<code>tableid</code>指定的表页中的所有元组。该操作符应该通过<code>DbFile.iterator()</code>方法访问元组。</p>
+<p>此时，您应该能够完成了<code>ScanTest</code>系统测试了。</p>
+<p>你将在随后的lab中完善其他操作符。</p>
+<h4 id="27-一个简单的查询">2.7 一个简单的查询</h4>
+<p>本节的目的是演示如何将这些不同的组件连接在一起来处理一个简单的查询。</p>
+<p>假设您有一个数据文件“ some _ data _ file.txt”，其内容如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1,1,1
+2,2,2 
+3,4,4
+</code></pre></td></tr></table>
+</div>
+</div><p>你可以转化把它转化成一个<code>SimpleDB</code>可以查询的二进制文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -jar dist/simpledb.jar convert some_data_file.txt <span class="m">3</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的参数&quot;3&quot;意思是输入有三列。</p>
+<p>下面的代码实现了对该文件的简单选择查询。这段代码相当于SQL语句中的<code>SELECT * FROM some_data_fiel</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">simpledb</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">test</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">argv</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// construct a 3-column table schema
+</span><span class="c1"></span>        <span class="n">Type</span> <span class="n">types</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Type</span><span class="o">[]{</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span> <span class="o">};</span>
+        <span class="n">String</span> <span class="n">names</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span> <span class="s">&#34;field0&#34;</span><span class="o">,</span> <span class="s">&#34;field1&#34;</span><span class="o">,</span> <span class="s">&#34;field2&#34;</span> <span class="o">};</span>
+        <span class="n">TupleDesc</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TupleDesc</span><span class="o">(</span><span class="n">types</span><span class="o">,</span> <span class="n">names</span><span class="o">);</span>
+
+        <span class="c1">// create the table, associate it with some_data_file.dat
+</span><span class="c1"></span>        <span class="c1">// and tell the catalog about the schema of this table.
+</span><span class="c1"></span>        <span class="n">HeapFile</span> <span class="n">table1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file.dat&#34;</span><span class="o">),</span> <span class="n">descriptor</span><span class="o">);</span>
+        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">);</span>
+
+        <span class="c1">// construct the query: we use a simple SeqScan, which spoonfeeds
+</span><span class="c1"></span>        <span class="c1">// tuples via its iterator.
+</span><span class="c1"></span>        <span class="n">TransactionId</span> <span class="n">tid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TransactionId</span><span class="o">();</span>
+        <span class="n">SeqScan</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table1</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// and run it
+</span><span class="c1"></span>            <span class="n">f</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">Tuple</span> <span class="n">tup</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tup</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">f</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="n">Database</span><span class="o">.</span><span class="na">getBufferPool</span><span class="o">().</span><span class="na">transactionComplete</span><span class="o">(</span><span class="n">tid</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="s">&#34;Exception : &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该表有三个整数字段。为了表示出来，我们创建了一个<code>TupleDesc</code>的对象然后传递给它一个<code>Type</code>数组对象，以及一个<code>String</code>类型的字段名数组。一旦我们创建了这个<code>TupleDesc</code>，我们就初始化一个<code>HeapFile</code>对象来表示存储在<code>some_data_file.dat</code>中的表。一旦我们完成了表的创建，我们将其加入到目录中。如果这是一个已经在运行的数据库服务器，我们将加载这个目录信息。我们需要显式地加载它，以使这段代码被包含进去。</p>
+<p>初始化完数据库系统后，我们创建一个查询计划。我们的计划只包含从磁盘扫描元组的 <code>SeqScan</code> 操作符。一般来说，这些运算符通过引用适当的表(在 <code>SeqScan</code> 中)或子运算符(在 Filter 中)来实例化。然后测试程序在 <code>SeqScan</code> 操作符上反复调用 <code>hasNext</code> 和 <code>next</code>。由于元组是从 <code>SeqScan</code> 输出的，所以它们在命令行上被打印出来。</p>
+<p>我们<strong>强烈建议</strong>你尝试这个有趣的端到端测试。它将帮助你获得为<code>SimpleDB</code>编写测试程序的经验。您应该在src/java/simpledb目录创建文件&quot;test.java&quot;并写上代码，以及添加一些&quot;import&quot;语句并且在顶级目录下放置一些<code>some_data_file.dat</code>文件。然后运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ant
+java -classpath dist/simpledb.jar simpledb.test
+</code></pre></td></tr></table>
+</div>
+</div><p>注意<code>ant</code>编译<code>test.java</code>然后生成一个新的包含它的jar文件。</p>
+<h3 id="3-后续工作">3. 后续工作</h3>
+<p>略</p>
+<hr>
+<hr>
+<hr>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/mit-6.830-lab%E7%BF%BB%E8%AF%91/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/database/">Database</a>,&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/multi-dledger/" class="prev" rel="prev" title="Multi DLedger"><i class="fas fa-angle-left fa-fw"></i>Multi DLedger</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -13,7 +13,7 @@
 
 我们强烈建议你尽早开始写这个lab，它要求您编写大量的代码。
 
-### 0. 环境设置
+## 0. 环境设置
 
 根据[指示](https://github.com/MIT-DB-Class/simple-db-hw-2021)从GitHub上下载lab1的代码。
 
@@ -21,7 +21,7 @@
 
 我们包含了使用Eclipse和IntelliJ来使用项目的[章节1.2](https://github.com/MIT-DB-Class/simple-db-hw-2021/blob/master/lab1.md#eclipse)。
 
-### 1. 开始
+## 1. 开始
 
 `SimpleDB`使用[Ant build tool]()来编译代码和运行测试。Ant和[make]()相似，但是构建文件使用XML写的以及更适合Java代码。大多数现代Linux发行版包括Ant。在Athena下，它被包含在`sipd`储物柜中，你可以在Athena提示符下输入`add sipd`来得到它。注意，对于Athena的某些版本，您还必须运行`add -f java`来设置正确的Java环境。详细信息请查询[Athena使用Java的文档]()。
 
@@ -69,7 +69,7 @@ test:
 
 如果您在 windows 系统下，不想从命令行运行 ant 测试，也可以从 eclipse 中运行它们。右键单击 build.xml，在目标标签中，你可以看到“ runtest”“ runsyest”等。例如，选择 runtest 将等效于命令行中的“ ant runtest”。可以在“ Main”选项卡“ Arguments”文本框中指定“-Dtest = testname”等参数。请注意，您还可以通过从 build.xml 中复制、修改目标和参数并将其重命名为 runtest _ build.xml 来创建一个 runtest 快捷方式。
 
-#### 1.1运行端对端测试
+### 1.1运行端对端测试
 
 我们也提供了一系列端对端的测试以及最终会被使用来打分。这些测试以`test/simpledb/systemtest`文件下的Junit测试组成。使用`systemtest`来构建目标来运行所有的系统测试。
 
@@ -114,7 +114,7 @@ BUILD SUCCESSFUL
 Total time: 52 seconds
 ```
 
-##### 1.1.1创建虚拟表
+#### 1.1.1创建虚拟表
 
 您可能希望创建自己的测试和自己的数据表，以测试自己的 `SimpleDB` 实现。你可以创建任何`.txt`文件，并使用下列命令来将其转化为`SimpleDB`的`HeapFile`格式的`.dat`文件：
 
@@ -141,11 +141,11 @@ $ java -jar dist/simpledb.jar print file.dat N
 
 这里的`file.dat`是使用`convert`命令创建出来的表的名字，以及`N`是文件中的列数。
 
-#### 1.2使用IDE
+### 1.2使用IDE
 
 略
 
-#### 1.3实现提示
+### 1.3实现提示
 
 在开始写代码之前，我们强烈建议你先去阅读整个文档来了解对`SimpleDB`的顶层设计。
 
@@ -187,11 +187,11 @@ public boolean deleteTuple(Tuple t)throws DbException{
 
 下面第二章节将更详细地向您介绍这些实现步骤以及与每个步骤对应的单元测试。
 
-#### 1.4事务，锁，恢复
+### 1.4事务，锁，恢复
 
 当你通过我们给你提供的接口上锁时，你将看到许多关于锁定、事务和恢复的引用。你在lab中不需要支持这些特性，但是你应该保持这些参数在代码的接口中，因为你在将来的lab中将会实现事务和锁定。测试代码给你提供了一个伪造的事务id，该id被传递到它运行的查询操作符中，您将这些事务id传递给其他的操作和缓冲池。
 
-### 2. `SimpleDB`架构以及实现指引
+## 2. `SimpleDB`架构以及实现指引
 
 `SimpleDB包括`：
 
@@ -212,15 +212,15 @@ public boolean deleteTuple(Tuple t)throws DbException{
 
 在本节的其余部分中，我们将描述在这个lab中需要实现的`SimpleDB`的每一个主要组件。您应该使用本讨论中的练习来指导您的实现。本文档绝不是`SimpleDB`的完整规范，您需要决定如何设计和实现系统的各个部分。青丘狐注意，对于lab1，除了顺序扫描外，您不需要实现任何操作符(例如，select，join，project)。您在之后的Lab中会添加对其他操作的支持的。
 
-#### 2.1 Database类
+### 2.1 Database类
 
 Database 类提供对作为数据库全局状态的静态对象集合的访问。特别是，这包括访问目录(数据库中所有表的列表)、缓冲池(当前驻留在内存中的数据库文件页的集合)和日志文件的方法。您不必担心本lab的日志文件。我们已经为您实现了 Database 类。您应该查看这个文件，因为您将需要访问这些对象。
 
-#### 2.2 字段和元组
+### 2.2 字段和元组
 
 `SimpleDB`中的元组是十分基础的。它们由一组`Field`的对象组成，`Tuple`中每个字段一个对象。`Field`是不同数据类型(如，整数、字符串)实现的接口。元组对象是由底层访问方法(例如，heap files或b树)创建的，如下一节所述。元组还有一个类型(或者模式)，称为`_tuple`描述符`_`，由`TUpleDesc`对象表示。这个对象由一组`Type`对象组成，元组中每个字段一个，每个字段描述相应字段的类型。
 
-#### Exercise 1
+### Exercise 1
 
 **在以下实现框架方法：**
 
@@ -233,13 +233,13 @@ Database 类提供对作为数据库全局状态的静态对象集合的访问�
 
 此时，您的代码应该通过了`TupleTest`和`TupleDescTest`的单元测试。此时，`modifyRecordId()`应该会失败，因为您还没有实现它。
 
-#### 2.3 目录
+### 2.3 目录
 
 目录(`SimpleDB`中的`Catalog`类)包括由当前数据库中的表和表的模式的列表组成。你需要支持新增表的能力，同时从指定表获取信息的能力。与每个表关联的是一个`TupleDesc`对象，该对象允许运算符确定表中的字段的类型和数量。
 
 全局的目录是为整个`SimpleDB`分配的一个`Catalog`的单例。可以通过`Database.getCatalog()`来检索全局目录，全局缓冲池也是如此。(使用`Database.getBufferPool()`)。
 
-#### Exercise 2
+### Exercise 2
 
 **实现下述框架方法：**
 
@@ -251,13 +251,13 @@ Database 类提供对作为数据库全局状态的静态对象集合的访问�
 
 此时，你的代码应该通过了`CatalogTest`的单元测试。
 
-#### 2.4 缓冲池
+### 2.4 缓冲池
 
 缓冲池(类`BufferPool`)负责缓存最近从磁盘读取的页到内存中。所有操作符在缓冲池中读写磁盘上不同的文件的页。它由固定数量的页组成，由`BufferPool`构造函数中的`numPages`参数定义。在以后的lab中，您将实现淘汰策略。对于该lab，您只需要实现SeqScan操作使用的构造函数和`BufferPool.getPage()`方法。缓冲池应该存储最多`numPages`个页面。对于这个lab，如果针对不同的页发出了超过`numPages`个请求，您可以抛出一个`DBExcaption`，而不是执行淘汰策略。后续的lab您会实现一个淘汰策略。
 
 `Database`类提供一个静态方法，`Database.getBufferPool()`，它会返回对整个`SimpleDB`进程的缓冲池单例的引用。
 
-#### Exercise 3
+### Exercise 3
 
 **实现下述框架方法：**
 
@@ -269,7 +269,7 @@ Database 类提供对作为数据库全局状态的静态对象集合的访问�
 
 我们没有给缓冲池提供单元测试。你实现的功能将在下面的HeapFile实现中被测试。你应该使用`DbFile.readPage`方法来访问DbFile的页面。
 
-#### 2.5 堆文件访问方法
+### 2.5 堆文件访问方法
 
 访问方法提供了一种从特定方式排列的磁盘读写数据的方法。常见的访问方法包括了堆文件(未排序的元组文件)和b树；对于这个分配，您将只实现堆文件的访问方法，我们已经为您编写了一些代码。
 
@@ -287,7 +287,7 @@ _tuples per page_ = floor((_page size_ * 8) / (_tuple size_ * 8 + 1))
 
 ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整个字节的头信息)。每个字节的低位(最低有效位)表示文件中前面的插槽的状态。因此，第一个字节的最低位表示页中的第一个槽是否正在使用。第一个字节的第二个最低位表示页中的第二个槽是否正在使用，以此类推。另外，请注意，最后一个字节的高阶位可能不对应于文件中的实际插槽，因为插槽的数量的可能不是8的倍数。还要注意，所有的Java虚拟机都是[big-endian]()。
 
-#### Exercise 4
+### Exercise 4
 
 **实现下述的框架代码：**
 
@@ -307,7 +307,7 @@ ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整
 
 在实现了`HeapPage`之后，您将在这个lab中为`HeapFile`编写方法，以计算文件中的页数并从文件中读取页。然后，您能够从存储在磁盘上的文件中获取元组。
 
-#### Exercise 5
+### Exercise 5
 
 **实现下述的框架代码：**
 
@@ -323,7 +323,7 @@ ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整
 
 此时，您的代码应该能够通过`HeapFileReadTest`单元测试。
 
-#### 2.6 操作符
+### 2.6 操作符
 
 操作符负责查询计划的实际执行。它们实现关系代数的操作。在`SimpleDB`中，操作符是基于迭代器的；每个操作符都实现`DbIterator`接口。
 
@@ -333,7 +333,7 @@ ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整
 
 对于这个lab，您只需要实现一个`SimpleDB`操作符。
 
-#### Exercise 6
+### Exercise 6
 
 **实现下述的框架代码：**
 
@@ -349,7 +349,7 @@ ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整
 
 你将在随后的lab中完善其他操作符。
 
-#### 2.7 一个简单的查询
+### 2.7 一个简单的查询
 
 本节的目的是演示如何将这些不同的组件连接在一起来处理一个简单的查询。
 
@@ -424,7 +424,340 @@ java -classpath dist/simpledb.jar simpledb.test
 
 注意`ant`编译`test.java`然后生成一个新的包含它的jar文件。
 
-### 3. 后续工作
+## 3. 后续工作
+
+略
+
+---
+
+---
+
+---
+
+## Lab 2:SImpleDB Operators
+
+> SimpleDB 操作符
+
+在这个lab任务中，您将为 SimpleDB 编写一组操作符来实现表修改(例如，插入和删除记录)、选择、连接和聚合。它们将建立在您在实验1中编写的基础之上，为您提供一个可以对多个表执行简单查询的数据库系统。
+
+此外，我们忽略了lab1中的缓冲池管理问题: 我们没有处理在数据库生存期中引用超出内存容量的页面时出现的问题。在 Lab 2中，您将设计一个回收策略来清空缓冲池中的陈旧页面。
+
+您不需要在这个lab中实现事务或锁定。
+
+本文的其余部分给出了一些关于如何开始编码的建议，描述了一组帮助您完成实验的练习，并讨论了如何交代码。这个实验室要求您编写大量的代码，所以我们鼓励您尽早开始！
+
+## 1. 开始
+
+### 1.1 开始Lab 2
+
+略
+
+### 1.2 实现提示
+
+开始之前，我们**强烈鼓励**你去阅读完整的文档来对SImpleDB的顶层设计有一个感知。
+
+我们建议您通过使用本文档的练习来指导您的实现，但是您可能会发现不同的顺序对您更你有意义。和以前一样，我们将通过查看代码并验证您已经通过了ant的目标`test`和`systemtest`。注意，代码只需要通过我们在这个lab中指定的测试，而不是所有的单元和系统测试。请查阅章节3.4来了解关于打分的完整讨论以及您需要通过的测试列表。
+
+下面是一个关于你可以继续您的SimpleDB实现的粗略大纲，关于这个大纲中步骤的更多细节以及练习，将在下面的第二节给出。
+
+- 实现操作符`Filter`和`Join`，并验证它们的测试是否有效。这些操作符的Javadoc注释中包含了有关它们如何工作的详细信息。我们已经给出了`Project`和`OrderBy`的实现了，它们可以帮助您理解其他操作符是如何工作的。
+- 实现`IntegerAggregator`和`StringAggregator`。在这里，您将编写在一个输入元组序列中对跨多个组的特定字段实际计算聚合的逻辑。使用整数除法计算平均值，因为 SimpleDB 只支持整数。`StringAggegator` 只需要支持 COUNT 聚合，因为其他操作对字符串没有意义。
+- 实现`Aggregate`操作符。和其他操作符一样，总计操作实现了`OpIterator`接口因此它们可以被放入到SimpleDB的执行计划中。注意`Aggregate`操作符的输出是每次调用`next()`时整个组的聚合值，聚合构造函数接收聚合和分组等字段。
+- 实现关于元组的插入，删除以及`BufferPool`中的页面回收算法。你在这里不需要担心事务。
+- 实现`Insert`和`Delete`操作符。就像所有的操作符一样，`Insert`和`Delete`实现了`OpIterator`，接收一个元组流来插入或者删除以及输出带有整数字段的单个元组，该元组表示插入或删除的元组数量。
+
+注意SimpleDB没有实现任何一种的一致性或者完整性检查，因此可以将重复的记录插入到文件中，而且没有办法强制执行主键或者外键约束。
+
+此时你应该确保你可以通过ant的目标`systemtest`。
+
+你也可以使用提供的SQL解析器来运行以来你的数据库的SQL查询。查看[章节2.7]()的简单教程。
+
+最后，您可能会注意到这个实验室中的迭代器继承自 `Operator` 类，而不是实现 `OpIterator` 接口。因为 `next`/`hasNext` 的实现经常是重复的、烦人的和容易出错的，所以 `Operator` 通用地实现了这个逻辑，只需要您实现一个更简单的 `readNext`。请随意使用这种类型的实现，或者只是实现 `OpIterator` 接口(如果您愿意的话)。为了实现 `OpIterator` 接口，从迭代器类中删除 `extends Operator`，代之以 `implements OpIterator`.
+
+## 2. SimpleDB架构以及实现指导
+
+### 2.1 Filter和Join操作符
+
+回想一下SimpleDB的`OpIterator`类实现了关系代数的操作。现在，您将实现两个操作符，这两个操作符比简单的表扫描稍微有趣一点。
+
+- _Filter_：这个操作符只返回满足`Predicate`的元组，`Predicate`被指定为其构造函数的一部分。因此，它会过滤掉任何和谓词不匹配的元组。
+- _Join_：这个操作符根据`JoinPredicate`将其两个子元组连接起来，`JoinPredicate`作为其构造函数的一部分传入。我们只需要一个简单嵌套循环连接，但是您可以探索更有趣的连接实现。描述您在lab中的实现。
+
+### Exercise 1
+
+实现如下的框架方法：
+
+---
+
+- src/java/simpledb/execution/Predicate.java
+- src/java/simpledb/execution/JoinPredicate.java
+- src/java/simpledb/execution/Filter.java
+- src/java/simpledb/execution/Join.java
+
+---
+
+此时，您的代码应该可以通过`PredicateTest`，`JoinPredicateTest`，`FilterTest`以及`JoinTest`。更多的，你应该确保你可以通过`FilterTest`和`JoinTest`系统测试。
+
+### 2.2 Aggregates操作符
+
+另一个 SimpleDB 操作符使用 `GROUP BY`子句实现基本 SQL 聚合。您应该实现五个 SQL 聚合(`COUNT`、 `SUM`、 `AVG`、 `MIN`、 `MAX`)并支持分组。您只需要在单个字段上支持聚合，并按单个字段进行分组。
+
+为了计算聚合，我们使用了一个 `Aggregator` 接口，它将一个新的元组合并到一个聚合的现有计算中。聚合器在构造过程中被告知应该使用什么操作进行聚合。随后，客户端代码应该为子迭代器中的每个元组调用 `Aggregator.mergeTupleIntoGroup()`。合并所有元组后，客户端可以检索聚合结果的 `OpIterator`。结果中的每个元组都是一对表单(`groupValue`、 `aggregateValue`) ，除非按字段分组的值是 `Aggregator.NO_GROUPING`，在这种情况下，结果是表单的单个元组`(aggregateValue)`。
+
+注意，这种实现需要不同组的空间时线性的。对于本实验，你不需要担心组数量超过可用内存的情况。
+
+### Exercise 2
+
+实现下述的框架代码：
+
+---
+
+- src/java/simpledb/execution/IntegerAggregator.java
+- src/java/simpledb/execution/StringAggregator.java
+- src/java/simpledb/execution/Aggregate.java
+
+---
+
+此时，您的代码应该可以通过`IntegerAggregatorTest`，`StringAggregatorTest`和`AggregateTest`。更多的，你应该可以通过`Aggregate`系统测试。
+
+### 2.3 堆文件可变性
+
+现在，我们将开始实现支持修改表的方法。我们从单个页面和文件的级别开始。有两组主要的操作: 添加元组和删除元组。
+
+删除元组: 要删除元组，您需要实现 `deletettuple`。元组包含 `recordid`，它允许您查找它们所驻留的页面，因此这应该很简单，只需查找元组所属的页面并适当地修改页面的标题即可。
+
+添加元组: `HeapFile.java` 中的 `insertTuple` 方法负责向堆文件添加元组。要向 `HeapFile` 添加新的 tuple，您必须找到一个带有空槽的页面。如果 `HeapFile` 中不存在这样的页，则需要创建一个新页并将其附加到磁盘上的物理文件。您需要确保元组中的 `RecordID` 被正确更新。
+
+### Exercise 3
+
+实现下述的框架代码：
+
+---
+
+- src/java/simpledb/storage/HeapPage.java
+- src/java/simpledb/storage/HeapFile.java
+  (注意你没有必要实现`writePage`方法)
+
+---
+
+为了实现HeapPage，你需要修改你的头部位图为了方法比如说`insertTuple()`和`deleteTuple()`。你可能发现lab 1中要求你实现的`getNumEmptySlots()`和`isSlotUsed()`方法可能会有用。注意，有一个`marySlotUsed()`方法作为一个抽象用来修改页头中的元组的填充或者清除状态。
+
+注意，一个重要的点是`HeapFile.insertTuple()`方法和`HeapFile.deleteTuple()`方法是使用`BufferPool.getPage()`来访问页的；另外，你下一个lab中的事务实现不能正常工作。
+
+实现`src/simpledb/BufferPool.java`中的框架方法：
+
+---
+
+- insertTuple()
+- deleteTuple()
+
+---
+
+这些方法应该调用HeapFile中属于正在修改的表的适当方法(这种额外的间接级别用于支持其他类型的文件(比如索引))。
+
+此时，你的代码应该可以通过`HeapPageWriteTest`和`HeapFileWriteTest`的单元测试，以及`BufferPoolWriteTest`。
+
+### 2.4 插入和删除
+
+现在你已经写了所有用于添加和删除元组的HeapFile机制，接下来将实现`Insert`和`Delete`操作符。对于实现了`insert`和`delete`查询的计划，最上面的操作符是一个特殊的`Insert`和`Delete`操作符，用于修改磁盘上的页。这些操作符返回受影响的元组的数量。这是返回带有一个整数字段的单个元组实现了，该字段包含计数。
+
+- _Insert_：这个操作符将其从子操作符中读取的元组添加到其构造函数中指定的`tableid`。它应该使用`BufferPool.insertTuple()`方法来完成。
+- _Delete_：这个操作符将其从构造函数中指定的表中删除从其自操作符中读取的元组。它应该使用`BufferPool.deleteTuple()`方法来完成。
+
+### Exercise 4
+
+实现下述的框架代码：
+
+---
+
+- src/java/simpledb/execution/Insert.java
+- src/java/simpledb/execution/Delete.java
+
+---
+
+此时，你的代码应该可以通过`InsertTest`。我们没有提供`Delete`的单元测试。更多的额，你应该可以通过`InsertTest`和`DeleteTest`的系统测试。
+
+### 2.5 页面回收
+
+在lab1中，在实验1中，我们没有正确地遵守由构造函数参数 `numPages` 定义的缓冲池中的最大页数限制。现在，您将选择一个页面收回策略，并检测以前读取或创建页面以实现策略的任何代码。
+
+当缓冲池中有超过 `numPages` 页面时，应该在加载下一个页面之前将其中一个页面从缓冲池中删除。驱逐政策的选择取决于你; 没有必要做一些复杂的事情。描述一下你在该lab中的策略。
+
+请注意，`BufferPool` 要求您实现一个 `flushAllPages()`方法。在实际的缓冲池实现中，这并不是您所需要的。但是，我们需要这个方法来进行测试。永远不要在任何实际代码中调用此方法。
+
+由于我们实现 `ScanTest.cacheTest` 的方式，您需要确保您的 `flushPage` 和 `flushhallpages` 方法不会从缓冲池中排除页面，以便正确地通过这个测试。
+
+`flushAllPages` 应该在 `BufferPool` 中的所有页面上调用 `flushPage`，而 `flushPage` 应该将任何脏页面写入磁盘并将其标记为非脏页面，同时将其保留在 `BufferPool` 中。
+
+唯一应该从缓冲池中删除页面的方法是 `evictPage`，它应该在它清除的任何脏页面上调用 `flushPage`。
+
+### Exercise 5
+
+填充方法`flushPage()`以及在以下方面实施页面驱逐的其他帮助方法：
+
+---
+
+- src/java/simpledb/storage/BufferPool.java
+
+---
+
+如果你在之前没有实现`HeapFile.java`中的`writePage()`，你将需要在此实现。最终，你应该也实现`discardPage()`来不刷新该页到磁盘就丢弃。我们将不会在本lab中测试`discardPage()`，但是这个在将来的lab中会很有必要。
+
+此时，你的代码应该通过`EvictionTest`系统测试。
+
+因为我们不会检查任何特定的收回策略，所以这个测试通过创建一个16页的 `BufferPool` 来工作(注意: `DEFAULT _ PAGES` 是50，而我们初始化 `BufferPool` 时会使用更少的页数)，扫描一个超过16页的文件，看看 JVM 的内存使用是否增加了超过5mb。如果您不能正确执行驱逐政策，您将无法驱逐足够的页面，并且将超过大小限制，因此无法通过测试。
+
+### 2.6 预查询
+
+接下来的代码实现了一个简单两个表之间的`join`查询，每一个包括三个整数列(`some_data_file1.dat`和`some_data_file2.dat`是这个文件中页面的二进制表示)。代码相当于如下SQL语句：
+
+```sql
+SELECT *
+FROM some_data_file1,
+     some_data_file2
+WHERE some_data_file1.field1 = some_data_file2.field1
+  AND some_data_file1.id > 1
+```
+
+对于更广泛的查询操作示例，您可能会发现浏览关于连接、筛选器和聚合的单元测试很有帮助。
+
+```java
+package simpledb;
+
+import java.io.*;
+
+public class jointest {
+
+    public static void main(String[] argv) {
+        // construct a 3-column table schema
+        Type types[] = new Type[]{Type.INT_TYPE, Type.INT_TYPE, Type.INT_TYPE};
+        String names[] = new String[]{"field0", "field1", "field2"};
+
+        TupleDesc td = new TupleDesc(types, names);
+
+        // create the tables, associate them with the data files
+        // and tell the catalog about the schema  the tables.
+        HeapFile table1 = new HeapFile(new File("some_data_file1.dat"), td);
+        Database.getCatalog().addTable(table1, "t1");
+
+        HeapFile table2 = new HeapFile(new File("some_data_file2.dat"), td);
+        Database.getCatalog().addTable(table2, "t2");
+
+        // construct the query: we use two SeqScans, which spoonfeed
+        // tuples via iterators into join
+        TransactionId tid = new TransactionId();
+
+        SeqScan ss1 = new SeqScan(tid, table1.getId(), "t1");
+        SeqScan ss2 = new SeqScan(tid, table2.getId(), "t2");
+
+        // create a filter for the where condition
+        Filter sf1 = new Filter(
+                new Predicate(0,
+                        Predicate.Op.GREATER_THAN, new IntField(1)), ss1);
+
+        JoinPredicate p = new JoinPredicate(1, Predicate.Op.EQUALS, 1);
+        Join j = new Join(p, sf1, ss2);
+
+        // and run it
+        try {
+            j.open();
+            while (j.hasNext()) {
+                Tuple tup = j.next();
+                System.out.println(tup);
+            }
+            j.close();
+            Database.getBufferPool().transactionComplete(tid);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}
+```
+
+两个表都有三个整数字段。为了表示这一点，我们创建一个 `TupleDesc` 对象，并向其传递一个 `Type` 对象数组，该数组指示字段类型和`String`对象，前者指示字段名称。一旦创建了这个 `TupleDesc`，我们就初始化两个表示表的 `HeapFile` 对象。创建表之后，将它们添加到 `Catalog` 中。(如果这是一个已经在运行的数据库服务器，我们将加载这个目录信息; 我们只需要为了这个测试的目的而加载这个目录信息)。
+
+初始化完数据库系统后，我们创建一个查询计划。我们的计划由两个 `SeqScan` 操作符组成，它们扫描磁盘上每个文件的元组，连接到第一个 `HeapFile` 上的 `Filter` 操作符，连接到一个 `Join` 操作符，该操作符根据 `JoinPredicate` 将表中的元组连接起来。通常，这些运算符通过引用适当的表(对于 `SeqScan`)或子运算符(对于` Join`)来实例化。然后，测试程序在 `Join` 操作符的下一个位置上重复调用，然后 `Join` 操作符从其子元组中提取元组。由于元组是 `Join` 的输出，所以它们在命令行上被打印出来。
+
+### 2.7 查询解析器
+
+我们为您提供了一个SimpleDB查询解析器，一旦您完成了本实验室的练习，您就可以使用该解析器对数据库编写和运行 SQL 查询。
+
+第一步是创建一些数据表和目录。假设您有一个文件 `data.txt`，其内容如下:
+
+```
+1,10
+2,20
+3,30
+4,40
+5,50
+5,50
+```
+
+您可以使用 `convert` 命令将其转换为SimpleDB的表(请确保首先输入 `ant`!) ：
+
+```shell
+java -jar dist/simpledb.jar convert data.txt 2 "int,int"
+```
+
+这会创建一个`data.dat`文件。除了表中的原始数据，这两个附加参数还指定了每个记录有两个字段，他们的类型是`int`和`int`。
+
+接下来，创建一个目录文件，`catalog.txt`，携带如下内容：
+
+```shell
+data(f1 int, f2 int)
+```
+
+这告诉SimpleDB有一个表，`data`(存储在`data.dat`)的两个整数字段名为`f1`和`f2`。
+
+最终，调用解析器。你必须从命令行运行java程序(ant对于交互式的目标不能正常工作)。从`simpledb/`文件下，输入：
+
+```shell
+java -jar dist/simpledb.jar parser catalog.txt
+```
+
+你应该看到如此输出：
+
+```shell
+Added table : data with schema INT(f1), INT(f2), 
+SimpleDB> 
+```
+
+最终，你可以运行一个查询：
+
+```shell
+SimpleDB> select d.f1, d.f2 from data d;
+Started a new transaction tid = 1221852405823
+ ADDING TABLE d(data) TO tableMap
+     TABLE HAS  tupleDesc INT(d.f1), INT(d.f2), 
+1       10
+2       20
+3       30
+4       40
+5       50
+5       50
+
+ 6 rows.
+----------------
+0.16 seconds
+
+SimpleDB> 
+```
+
+解析器的功能相对完整(包括对 `SELECT`、 `INSERT`、 `DELETE` 和事务的支持) ，但是确实存在一些问题，并且不一定报告完全信息化的错误消息。这里有一些需要记住的限制:
+
+- 即使字段名是唯一的，也必须在每个字段名前加上它的表名(如上面的例子所示，可以用表名的别名，但不能使用AS关键字)。
+- `WHERE`子句支持嵌套查询，但`FROM`子句不支持嵌套查询。
+- 不支持算数表达式(比如，你不可以拿到两个字段的合)。
+- 最多允许一个`GROUP BY`和一个聚合列。
+- 不支持面向集合的操作符比如说`IN`，`UNION`和`EXCEPT`。
+- 只允许`WHERE`子句中的`ANT`表达式。
+- 不支持`UPDATE`。
+- 字符串操作符`LIKE`是支持的，但是必须写全(也就是说，不允许使用[~]简写)。
+
+## 3. 后续工作
 
 略
 

@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/"
-        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  13206 ,
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  19107 ,
         "url": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/","datePublished": "2022-05-22T13:26:59+08:00","dateModified": "2022-05-22T13:26:59+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MIT 6.830 Lab翻译</h1><h2 class="single-subtitle">MIT-6.830-Lab翻译</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/database/"><i class="far fa-folder fa-fw"></i>Database</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13206 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 27 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 19107 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 39 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -134,62 +134,98 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#lab1">Lab1</a></li>
-    <li><a href="#0-环境设置">0. 环境设置</a></li>
-    <li><a href="#1-开始">1. 开始</a>
+    <li><a href="#lab1">Lab1</a>
       <ul>
-        <li><a href="#11运行端对端测试">1.1运行端对端测试</a>
+        <li><a href="#0-环境设置">0. 环境设置</a></li>
+        <li><a href="#1-开始">1. 开始</a>
           <ul>
-            <li><a href="#111创建虚拟表">1.1.1创建虚拟表</a></li>
+            <li><a href="#11运行端对端测试">1.1运行端对端测试</a>
+              <ul>
+                <li><a href="#111创建虚拟表">1.1.1创建虚拟表</a></li>
+              </ul>
+            </li>
+            <li><a href="#12使用ide">1.2使用IDE</a></li>
+            <li><a href="#13实现提示">1.3实现提示</a></li>
+            <li><a href="#14事务锁恢复">1.4事务，锁，恢复</a></li>
           </ul>
         </li>
-        <li><a href="#12使用ide">1.2使用IDE</a></li>
-        <li><a href="#13实现提示">1.3实现提示</a></li>
-        <li><a href="#14事务锁恢复">1.4事务，锁，恢复</a></li>
+        <li><a href="#2-simpledb架构以及实现指引">2. <code>SimpleDB</code>架构以及实现指引</a>
+          <ul>
+            <li><a href="#21-database类">2.1 Database类</a></li>
+            <li><a href="#22-字段和元组">2.2 字段和元组</a></li>
+            <li><a href="#exercise-1">Exercise 1</a></li>
+            <li><a href="#23-目录">2.3 目录</a></li>
+            <li><a href="#exercise-2">Exercise 2</a></li>
+            <li><a href="#24-缓冲池">2.4 缓冲池</a></li>
+            <li><a href="#exercise-3">Exercise 3</a></li>
+            <li><a href="#25-堆文件访问方法">2.5 堆文件访问方法</a></li>
+            <li><a href="#exercise-4">Exercise 4</a></li>
+            <li><a href="#exercise-5">Exercise 5</a></li>
+            <li><a href="#26-操作符">2.6 操作符</a></li>
+            <li><a href="#exercise-6">Exercise 6</a></li>
+            <li><a href="#27-一个简单的查询">2.7 一个简单的查询</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-后续工作">3. 后续工作</a></li>
       </ul>
     </li>
-    <li><a href="#2-simpledb架构以及实现指引">2. <code>SimpleDB</code>架构以及实现指引</a>
+    <li><a href="#lab-2simpledb-operators">Lab 2:SImpleDB Operators</a>
       <ul>
-        <li><a href="#21-database类">2.1 Database类</a></li>
-        <li><a href="#22-字段和元组">2.2 字段和元组</a></li>
-        <li><a href="#exercise-1">Exercise 1</a></li>
-        <li><a href="#23-目录">2.3 目录</a></li>
-        <li><a href="#exercise-2">Exercise 2</a></li>
-        <li><a href="#24-缓冲池">2.4 缓冲池</a></li>
-        <li><a href="#exercise-3">Exercise 3</a></li>
-        <li><a href="#25-堆文件访问方法">2.5 堆文件访问方法</a></li>
-        <li><a href="#exercise-4">Exercise 4</a></li>
-        <li><a href="#exercise-5">Exercise 5</a></li>
-        <li><a href="#26-操作符">2.6 操作符</a></li>
-        <li><a href="#exercise-6">Exercise 6</a></li>
-        <li><a href="#27-一个简单的查询">2.7 一个简单的查询</a></li>
+        <li><a href="#1-开始-1">1. 开始</a>
+          <ul>
+            <li><a href="#11-开始lab-2">1.1 开始Lab 2</a></li>
+            <li><a href="#12-实现提示">1.2 实现提示</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-simpledb架构以及实现指导">2. SimpleDB架构以及实现指导</a>
+          <ul>
+            <li><a href="#21-filter和join操作符">2.1 Filter和Join操作符</a></li>
+            <li><a href="#exercise-1-1">Exercise 1</a></li>
+            <li><a href="#22-aggregates操作符">2.2 Aggregates操作符</a></li>
+            <li><a href="#exercise-2-1">Exercise 2</a></li>
+            <li><a href="#23-堆文件可变性">2.3 堆文件可变性</a></li>
+            <li><a href="#exercise-3-1">Exercise 3</a></li>
+            <li><a href="#24-插入和删除">2.4 插入和删除</a></li>
+            <li><a href="#exercise-4-1">Exercise 4</a></li>
+            <li><a href="#25-页面回收">2.5 页面回收</a></li>
+            <li><a href="#exercise-5-1">Exercise 5</a></li>
+            <li><a href="#26-预查询">2.6 预查询</a></li>
+            <li><a href="#27-查询解析器">2.7 查询解析器</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-后续工作-1">3. 后续工作</a></li>
       </ul>
     </li>
-    <li><a href="#3-后续工作">3. 后续工作</a></li>
-    <li><a href="#lab-2simpledb-operators">Lab 2:SImpleDB Operators</a></li>
-    <li><a href="#1-开始-1">1. 开始</a>
+    <li><a href="#lab3-query-optimization">Lab3: Query Optimization</a>
       <ul>
-        <li><a href="#11-开始lab-2">1.1 开始Lab 2</a></li>
-        <li><a href="#12-实现提示">1.2 实现提示</a></li>
+        <li><a href="#1-开始-2">1. 开始</a>
+          <ul>
+            <li><a href="#11-实现提示">1.1 实现提示</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-优化器大纲">2. 优化器大纲</a>
+          <ul>
+            <li><a href="#21-总体优化器结构">2.1 总体优化器结构</a></li>
+            <li><a href="#22-统计估计">2.2 统计估计</a>
+              <ul>
+                <li><a href="#221-整体计划成本">2.2.1 整体计划成本</a></li>
+                <li><a href="#222-连接成本">2.2.2 连接成本</a></li>
+                <li><a href="#223-过滤器选择性">2.2.3 过滤器选择性</a></li>
+                <li><a href="#exercise-1inthistogramjava">Exercise 1：IntHistogram.java</a></li>
+                <li><a href="#exercise-2tablestatsjava">Exercise 2：TableStats.java</a></li>
+                <li><a href="#224-连接基数">2.2.4 连接基数</a></li>
+                <li><a href="#exercise-3join-cost-estimation">Exercise 3：Join Cost Estimation</a></li>
+              </ul>
+            </li>
+            <li><a href="#23-连接排序">2.3 连接排序</a>
+              <ul>
+                <li><a href="#exercise-4join-ordering">Exercise 4：Join Ordering</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
     </li>
-    <li><a href="#2-simpledb架构以及实现指导">2. SimpleDB架构以及实现指导</a>
-      <ul>
-        <li><a href="#21-filter和join操作符">2.1 Filter和Join操作符</a></li>
-        <li><a href="#exercise-1-1">Exercise 1</a></li>
-        <li><a href="#22-aggregates操作符">2.2 Aggregates操作符</a></li>
-        <li><a href="#exercise-2-1">Exercise 2</a></li>
-        <li><a href="#23-堆文件可变性">2.3 堆文件可变性</a></li>
-        <li><a href="#exercise-3-1">Exercise 3</a></li>
-        <li><a href="#24-插入和删除">2.4 插入和删除</a></li>
-        <li><a href="#exercise-4-1">Exercise 4</a></li>
-        <li><a href="#25-页面回收">2.5 页面回收</a></li>
-        <li><a href="#exercise-5-1">Exercise 5</a></li>
-        <li><a href="#26-预查询">2.6 预查询</a></li>
-        <li><a href="#27-查询解析器">2.7 查询解析器</a></li>
-      </ul>
-    </li>
-    <li><a href="#3-后续工作-1">3. 后续工作</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="mit-6830lab翻译">MIT-6.830Lab翻译</h1>
@@ -198,11 +234,11 @@
 <p><code>SimpleDB</code>使用Java语言写的。我们已经为您提供了一组大部分还未实现的类和接口。你将需要为这些类编写代码。我们将通过一组使用<code>JUnit</code>的系统测试来对代码进行打分。我们还提供了一些单元测试，我们不会将其用于评级，但是您可能发现再验证代码是否有效的时候十分有用。我们还鼓励你再我们的测试之外开发自己的测试的套件。</p>
 <p>本文的其余部分描述了<code>SimpleDB</code>的基本架构，提供了一些关于如何开始编码的建议，并讨论了如何上交lab。</p>
 <p>我们强烈建议你尽早开始写这个lab，它要求您编写大量的代码。</p>
-<h2 id="0-环境设置">0. 环境设置</h2>
+<h3 id="0-环境设置">0. 环境设置</h3>
 <p>根据<a href="https://github.com/MIT-DB-Class/simple-db-hw-2021" target="_blank" rel="noopener noreffer">指示</a>从GitHub上下载lab1的代码。</p>
 <p>这些指示是为Athena或者别的基于Unix的平台编写的(例如，Linux，MacOS等等)。因为代码是用Java写的，它在Windows下同样可以工作，即使文档中的指示可能不适用。</p>
 <p>我们包含了使用Eclipse和IntelliJ来使用项目的<a href="https://github.com/MIT-DB-Class/simple-db-hw-2021/blob/master/lab1.md#eclipse" target="_blank" rel="noopener noreffer">章节1.2</a>。</p>
-<h2 id="1-开始">1. 开始</h2>
+<h3 id="1-开始">1. 开始</h3>
 <p><code>SimpleDB</code>使用<a href="" rel="">Ant build tool</a>来编译代码和运行测试。Ant和<a href="" rel="">make</a>相似，但是构建文件使用XML写的以及更适合Java代码。大多数现代Linux发行版包括Ant。在Athena下，它被包含在<code>sipd</code>储物柜中，你可以在Athena提示符下输入<code>add sipd</code>来得到它。注意，对于Athena的某些版本，您还必须运行<code>add -f java</code>来设置正确的Java环境。详细信息请查询<a href="" rel="">Athena使用Java的文档</a>。</p>
 <p>为了在开发过程中帮助您，除了用于评分的端到端测试外，我们还提供了一组单元测试。这些都不是全面的，你不应该仅靠它们来验证项目的正确性。(使用6.170的技巧！)</p>
 <p>使用<code>test</code>来构建目标来运行单元测试：</p>
@@ -289,7 +325,7 @@ test:
 </tbody>
 </table>
 <p>如果您在 windows 系统下，不想从命令行运行 ant 测试，也可以从 eclipse 中运行它们。右键单击 build.xml，在目标标签中，你可以看到“ runtest”“ runsyest”等。例如，选择 runtest 将等效于命令行中的“ ant runtest”。可以在“ Main”选项卡“ Arguments”文本框中指定“-Dtest = testname”等参数。请注意，您还可以通过从 build.xml 中复制、修改目标和参数并将其重命名为 runtest _ build.xml 来创建一个 runtest 快捷方式。</p>
-<h3 id="11运行端对端测试">1.1运行端对端测试</h3>
+<h4 id="11运行端对端测试">1.1运行端对端测试</h4>
 <p>我们也提供了一系列端对端的测试以及最终会被使用来打分。这些测试以<code>test/simpledb/systemtest</code>文件下的Junit测试组成。使用<code>systemtest</code>来构建目标来运行所有的系统测试。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -370,7 +406,7 @@ BUILD SUCCESSFUL
 Total time: <span class="m">52</span> seconds
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="111创建虚拟表">1.1.1创建虚拟表</h4>
+</div><h5 id="111创建虚拟表">1.1.1创建虚拟表</h5>
 <p>您可能希望创建自己的测试和自己的数据表，以测试自己的 <code>SimpleDB</code> 实现。你可以创建任何<code>.txt</code>文件，并使用下列命令来将其转化为<code>SimpleDB</code>的<code>HeapFile</code>格式的<code>.dat</code>文件：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -406,9 +442,9 @@ int1,int2,...,intN
 </code></pre></td></tr></table>
 </div>
 </div><p>这里的<code>file.dat</code>是使用<code>convert</code>命令创建出来的表的名字，以及<code>N</code>是文件中的列数。</p>
-<h3 id="12使用ide">1.2使用IDE</h3>
+<h4 id="12使用ide">1.2使用IDE</h4>
 <p>略</p>
-<h3 id="13实现提示">1.3实现提示</h3>
+<h4 id="13实现提示">1.3实现提示</h4>
 <p>在开始写代码之前，我们强烈建议你先去阅读整个文档来了解对<code>SimpleDB</code>的顶层设计。</p>
 <p>您将需要填写任何未实现的代码。我们认为您应该在哪里编写代码，这是显而易见的。您可能需要添加私有方法和/或帮助器类。你可以改变 api，但是要确保我们的<a href="https://github.com/MIT-DB-Class/simple-db-hw-2021/blob/master/lab1.md#grading" target="_blank" rel="noopener noreffer">评分</a>测试仍然在运行，并且确保在你的记录中提到、解释和为你的决定辩护。</p>
 <p>除了您需要为这个实验室填写的方法之外，类接口还包含许多您在后续实验之前不需要实现的方法。这些要么按类别列出:</p>
@@ -453,9 +489,9 @@ int1,int2,...,intN
 </ul>
 <hr>
 <p>下面第二章节将更详细地向您介绍这些实现步骤以及与每个步骤对应的单元测试。</p>
-<h3 id="14事务锁恢复">1.4事务，锁，恢复</h3>
+<h4 id="14事务锁恢复">1.4事务，锁，恢复</h4>
 <p>当你通过我们给你提供的接口上锁时，你将看到许多关于锁定、事务和恢复的引用。你在lab中不需要支持这些特性，但是你应该保持这些参数在代码的接口中，因为你在将来的lab中将会实现事务和锁定。测试代码给你提供了一个伪造的事务id，该id被传递到它运行的查询操作符中，您将这些事务id传递给其他的操作和缓冲池。</p>
-<h2 id="2-simpledb架构以及实现指引">2. <code>SimpleDB</code>架构以及实现指引</h2>
+<h3 id="2-simpledb架构以及实现指引">2. <code>SimpleDB</code>架构以及实现指引</h3>
 <p><code>SimpleDB包括</code>：</p>
 <ul>
 <li>表示字段、元组和元组模式的类。</li>
@@ -474,11 +510,11 @@ int1,int2,...,intN
 <li>(本lab中)索引。</li>
 </ul>
 <p>在本节的其余部分中，我们将描述在这个lab中需要实现的<code>SimpleDB</code>的每一个主要组件。您应该使用本讨论中的练习来指导您的实现。本文档绝不是<code>SimpleDB</code>的完整规范，您需要决定如何设计和实现系统的各个部分。青丘狐注意，对于lab1，除了顺序扫描外，您不需要实现任何操作符(例如，select，join，project)。您在之后的Lab中会添加对其他操作的支持的。</p>
-<h3 id="21-database类">2.1 Database类</h3>
+<h4 id="21-database类">2.1 Database类</h4>
 <p>Database 类提供对作为数据库全局状态的静态对象集合的访问。特别是，这包括访问目录(数据库中所有表的列表)、缓冲池(当前驻留在内存中的数据库文件页的集合)和日志文件的方法。您不必担心本lab的日志文件。我们已经为您实现了 Database 类。您应该查看这个文件，因为您将需要访问这些对象。</p>
-<h3 id="22-字段和元组">2.2 字段和元组</h3>
+<h4 id="22-字段和元组">2.2 字段和元组</h4>
 <p><code>SimpleDB</code>中的元组是十分基础的。它们由一组<code>Field</code>的对象组成，<code>Tuple</code>中每个字段一个对象。<code>Field</code>是不同数据类型(如，整数、字符串)实现的接口。元组对象是由底层访问方法(例如，heap files或b树)创建的，如下一节所述。元组还有一个类型(或者模式)，称为<code>_tuple</code>描述符<code>_</code>，由<code>TUpleDesc</code>对象表示。这个对象由一组<code>Type</code>对象组成，元组中每个字段一个，每个字段描述相应字段的类型。</p>
-<h3 id="exercise-1">Exercise 1</h3>
+<h4 id="exercise-1">Exercise 1</h4>
 <p><strong>在以下实现框架方法：</strong></p>
 <hr>
 <ul>
@@ -487,10 +523,10 @@ int1,int2,...,intN
 </ul>
 <hr>
 <p>此时，您的代码应该通过了<code>TupleTest</code>和<code>TupleDescTest</code>的单元测试。此时，<code>modifyRecordId()</code>应该会失败，因为您还没有实现它。</p>
-<h3 id="23-目录">2.3 目录</h3>
+<h4 id="23-目录">2.3 目录</h4>
 <p>目录(<code>SimpleDB</code>中的<code>Catalog</code>类)包括由当前数据库中的表和表的模式的列表组成。你需要支持新增表的能力，同时从指定表获取信息的能力。与每个表关联的是一个<code>TupleDesc</code>对象，该对象允许运算符确定表中的字段的类型和数量。</p>
 <p>全局的目录是为整个<code>SimpleDB</code>分配的一个<code>Catalog</code>的单例。可以通过<code>Database.getCatalog()</code>来检索全局目录，全局缓冲池也是如此。(使用<code>Database.getBufferPool()</code>)。</p>
-<h3 id="exercise-2">Exercise 2</h3>
+<h4 id="exercise-2">Exercise 2</h4>
 <p><strong>实现下述框架方法：</strong></p>
 <hr>
 <ul>
@@ -498,10 +534,10 @@ int1,int2,...,intN
 </ul>
 <hr>
 <p>此时，你的代码应该通过了<code>CatalogTest</code>的单元测试。</p>
-<h3 id="24-缓冲池">2.4 缓冲池</h3>
+<h4 id="24-缓冲池">2.4 缓冲池</h4>
 <p>缓冲池(类<code>BufferPool</code>)负责缓存最近从磁盘读取的页到内存中。所有操作符在缓冲池中读写磁盘上不同的文件的页。它由固定数量的页组成，由<code>BufferPool</code>构造函数中的<code>numPages</code>参数定义。在以后的lab中，您将实现淘汰策略。对于该lab，您只需要实现SeqScan操作使用的构造函数和<code>BufferPool.getPage()</code>方法。缓冲池应该存储最多<code>numPages</code>个页面。对于这个lab，如果针对不同的页发出了超过<code>numPages</code>个请求，您可以抛出一个<code>DBExcaption</code>，而不是执行淘汰策略。后续的lab您会实现一个淘汰策略。</p>
 <p><code>Database</code>类提供一个静态方法，<code>Database.getBufferPool()</code>，它会返回对整个<code>SimpleDB</code>进程的缓冲池单例的引用。</p>
-<h3 id="exercise-3">Exercise 3</h3>
+<h4 id="exercise-3">Exercise 3</h4>
 <p><strong>实现下述框架方法：</strong></p>
 <hr>
 <ul>
@@ -509,7 +545,7 @@ int1,int2,...,intN
 </ul>
 <hr>
 <p>我们没有给缓冲池提供单元测试。你实现的功能将在下面的HeapFile实现中被测试。你应该使用<code>DbFile.readPage</code>方法来访问DbFile的页面。</p>
-<h3 id="25-堆文件访问方法">2.5 堆文件访问方法</h3>
+<h4 id="25-堆文件访问方法">2.5 堆文件访问方法</h4>
 <p>访问方法提供了一种从特定方式排列的磁盘读写数据的方法。常见的访问方法包括了堆文件(未排序的元组文件)和b树；对于这个分配，您将只实现堆文件的访问方法，我们已经为您编写了一些代码。</p>
 <p>一个<code>HeapFile</code>对象被安排成一组页，每个页由固定数量的字节组成，用于存储元组(由常量<code>BufferPool.DEFAULT_PAGE_SIZE</code>定义)，包括了一个头结构。在<code>SimpleDB</code>中，数据库中的每个表都有一个<code>HeapFile</code>对象。<code>HeapFile</code>中的每一个页都被安排为一组插槽，每个插槽可以容纳一个元组(<code>SimpleDB</code>中给定表的元组都具有相同的大小)。除了这些插槽之外，每个页面还有一个头部，由位图组成。每个元组插槽由一个位。如果特定元组对应的位为1，代表元组有效；如果为0，代表元组无效(例如，已删除或者未初始化)。<code>HeapFile</code>对象的页类型为<code>HeapPage</code>。它实现了<code>Page</code>接口。页面存储在缓冲池中，但是由<code>HeapFile</code>类读写。</p>
 <p><code>SimpleDB</code>在磁盘上存储对文件的格式和他们在内存中存储对文件的格式大致相同。每个文件包含连续排列在磁盘上的页数据。每个页由一个或多个字节组成，这些字节表示头结构，后面跟着实际页面内容的_page_size_的字节。每个元组的内容需要_tuple size`_* 8 位，头部需要一位，因此一个页中可以容纳的元组数目是：</p>
@@ -518,7 +554,7 @@ int1,int2,...,intN
 <p>一旦我们直到 了每个页面的元组数量，存储头部所需的字节数就很简单了：</p>
 <p><code>headerBytes = ceiling(tupsPerPage/8)</code></p>
 <p>ceiling操作会舍入到最接近的整数字节数(我们从不存储低于整个字节的头信息)。每个字节的低位(最低有效位)表示文件中前面的插槽的状态。因此，第一个字节的最低位表示页中的第一个槽是否正在使用。第一个字节的第二个最低位表示页中的第二个槽是否正在使用，以此类推。另外，请注意，最后一个字节的高阶位可能不对应于文件中的实际插槽，因为插槽的数量的可能不是8的倍数。还要注意，所有的Java虚拟机都是<a href="" rel="">big-endian</a>。</p>
-<h3 id="exercise-4">Exercise 4</h3>
+<h4 id="exercise-4">Exercise 4</h4>
 <p><strong>实现下述的框架代码：</strong></p>
 <hr>
 <ul>
@@ -531,7 +567,7 @@ int1,int2,...,intN
 <p>你还需要在页面的元组上实现一个迭代器，这可能涉及到一个辅助类或者数据结构。</p>
 <p>此时，您的代码应该通过<code>HeapPageIdTest</code>、<code>RecordIDTest</code>和<code>HeapPageReadTest</code>中的单元测试。</p>
 <p>在实现了<code>HeapPage</code>之后，您将在这个lab中为<code>HeapFile</code>编写方法，以计算文件中的页数并从文件中读取页。然后，您能够从存储在磁盘上的文件中获取元组。</p>
-<h3 id="exercise-5">Exercise 5</h3>
+<h4 id="exercise-5">Exercise 5</h4>
 <p><strong>实现下述的框架代码：</strong></p>
 <hr>
 <ul>
@@ -541,12 +577,12 @@ int1,int2,...,intN
 <p>需要从磁盘中读取页，首先需要计算文件中的正确偏移量。提示：为了以任何偏移量读写页面，您需要对文件进行随机访问。从磁盘读取页面时，不应调用缓冲池的方法。</p>
 <p>您还需要实现<code>HeapFile.iterator()</code>方法，它应该遍历堆文件中每个页的元组。迭代器必须使用<code>BufferPool.getPage()</code>方法来访问<code>HeapFile</code>中的页。这种方法将页面加载到缓冲池，并最终用于(在之后的lab中)实现基于锁定的并发控制和恢复。不要在<code>open()</code>调用中将整个表加载到内存中&ndash;这会导致非常大的表出现内存不足的错误。</p>
 <p>此时，您的代码应该能够通过<code>HeapFileReadTest</code>单元测试。</p>
-<h3 id="26-操作符">2.6 操作符</h3>
+<h4 id="26-操作符">2.6 操作符</h4>
 <p>操作符负责查询计划的实际执行。它们实现关系代数的操作。在<code>SimpleDB</code>中，操作符是基于迭代器的；每个操作符都实现<code>DbIterator</code>接口。</p>
 <p>操作符通过将低级别的操作符传递到较高级别的操作符的构造函数，将它们连接在一起，从而连接到一个计划中。计划叶上的特殊访问方法操作符负责从磁盘读取数据(因此它们下面没有任何操作符)。</p>
 <p>在计划的顶部，与<code>SimpleDB</code>交互的程序简单地在根操作符上调用<code>getNext</code>；该操作符然后在其子操作符上调用<code>getNext</code>，以此类推，直到调用这些叶操作符。他们从磁盘中获取元组并将其传递到树中(作为<code>getNext</code>地返回参数)；元组以这种方式传播计划，直到它们从根输出或被计划中另一个操作符合并或者拒绝。</p>
 <p>对于这个lab，您只需要实现一个<code>SimpleDB</code>操作符。</p>
-<h3 id="exercise-6">Exercise 6</h3>
+<h4 id="exercise-6">Exercise 6</h4>
 <p><strong>实现下述的框架代码：</strong></p>
 <hr>
 <ul>
@@ -556,7 +592,7 @@ int1,int2,...,intN
 <p>该操作符顺序的扫描构造函数中的由<code>tableid</code>指定的表页中的所有元组。该操作符应该通过<code>DbFile.iterator()</code>方法访问元组。</p>
 <p>此时，您应该能够完成了<code>ScanTest</code>系统测试了。</p>
 <p>你将在随后的lab中完善其他操作符。</p>
-<h3 id="27-一个简单的查询">2.7 一个简单的查询</h3>
+<h4 id="27-一个简单的查询">2.7 一个简单的查询</h4>
 <p>本节的目的是演示如何将这些不同的组件连接在一起来处理一个简单的查询。</p>
 <p>假设您有一个数据文件“ some _ data _ file.txt”，其内容如下:</p>
 <div class="highlight"><div class="chroma">
@@ -676,7 +712,7 @@ java -classpath dist/simpledb.jar simpledb.test
 </code></pre></td></tr></table>
 </div>
 </div><p>注意<code>ant</code>编译<code>test.java</code>然后生成一个新的包含它的jar文件。</p>
-<h2 id="3-后续工作">3. 后续工作</h2>
+<h3 id="3-后续工作">3. 后续工作</h3>
 <p>略</p>
 <hr>
 <hr>
@@ -689,10 +725,10 @@ java -classpath dist/simpledb.jar simpledb.test
 <p>此外，我们忽略了lab1中的缓冲池管理问题: 我们没有处理在数据库生存期中引用超出内存容量的页面时出现的问题。在 Lab 2中，您将设计一个回收策略来清空缓冲池中的陈旧页面。</p>
 <p>您不需要在这个lab中实现事务或锁定。</p>
 <p>本文的其余部分给出了一些关于如何开始编码的建议，描述了一组帮助您完成实验的练习，并讨论了如何交代码。这个实验室要求您编写大量的代码，所以我们鼓励您尽早开始！</p>
-<h2 id="1-开始-1">1. 开始</h2>
-<h3 id="11-开始lab-2">1.1 开始Lab 2</h3>
+<h3 id="1-开始-1">1. 开始</h3>
+<h4 id="11-开始lab-2">1.1 开始Lab 2</h4>
 <p>略</p>
-<h3 id="12-实现提示">1.2 实现提示</h3>
+<h4 id="12-实现提示">1.2 实现提示</h4>
 <p>开始之前，我们<strong>强烈鼓励</strong>你去阅读完整的文档来对SImpleDB的顶层设计有一个感知。</p>
 <p>我们建议您通过使用本文档的练习来指导您的实现，但是您可能会发现不同的顺序对您更你有意义。和以前一样，我们将通过查看代码并验证您已经通过了ant的目标<code>test</code>和<code>systemtest</code>。注意，代码只需要通过我们在这个lab中指定的测试，而不是所有的单元和系统测试。请查阅章节3.4来了解关于打分的完整讨论以及您需要通过的测试列表。</p>
 <p>下面是一个关于你可以继续您的SimpleDB实现的粗略大纲，关于这个大纲中步骤的更多细节以及练习，将在下面的第二节给出。</p>
@@ -707,14 +743,14 @@ java -classpath dist/simpledb.jar simpledb.test
 <p>此时你应该确保你可以通过ant的目标<code>systemtest</code>。</p>
 <p>你也可以使用提供的SQL解析器来运行以来你的数据库的SQL查询。查看<a href="" rel="">章节2.7</a>的简单教程。</p>
 <p>最后，您可能会注意到这个实验室中的迭代器继承自 <code>Operator</code> 类，而不是实现 <code>OpIterator</code> 接口。因为 <code>next</code>/<code>hasNext</code> 的实现经常是重复的、烦人的和容易出错的，所以 <code>Operator</code> 通用地实现了这个逻辑，只需要您实现一个更简单的 <code>readNext</code>。请随意使用这种类型的实现，或者只是实现 <code>OpIterator</code> 接口(如果您愿意的话)。为了实现 <code>OpIterator</code> 接口，从迭代器类中删除 <code>extends Operator</code>，代之以 <code>implements OpIterator</code>.</p>
-<h2 id="2-simpledb架构以及实现指导">2. SimpleDB架构以及实现指导</h2>
-<h3 id="21-filter和join操作符">2.1 Filter和Join操作符</h3>
+<h3 id="2-simpledb架构以及实现指导">2. SimpleDB架构以及实现指导</h3>
+<h4 id="21-filter和join操作符">2.1 Filter和Join操作符</h4>
 <p>回想一下SimpleDB的<code>OpIterator</code>类实现了关系代数的操作。现在，您将实现两个操作符，这两个操作符比简单的表扫描稍微有趣一点。</p>
 <ul>
 <li><em>Filter</em>：这个操作符只返回满足<code>Predicate</code>的元组，<code>Predicate</code>被指定为其构造函数的一部分。因此，它会过滤掉任何和谓词不匹配的元组。</li>
 <li><em>Join</em>：这个操作符根据<code>JoinPredicate</code>将其两个子元组连接起来，<code>JoinPredicate</code>作为其构造函数的一部分传入。我们只需要一个简单嵌套循环连接，但是您可以探索更有趣的连接实现。描述您在lab中的实现。</li>
 </ul>
-<h3 id="exercise-1-1">Exercise 1</h3>
+<h4 id="exercise-1-1">Exercise 1</h4>
 <p>实现如下的框架方法：</p>
 <hr>
 <ul>
@@ -725,11 +761,11 @@ java -classpath dist/simpledb.jar simpledb.test
 </ul>
 <hr>
 <p>此时，您的代码应该可以通过<code>PredicateTest</code>，<code>JoinPredicateTest</code>，<code>FilterTest</code>以及<code>JoinTest</code>。更多的，你应该确保你可以通过<code>FilterTest</code>和<code>JoinTest</code>系统测试。</p>
-<h3 id="22-aggregates操作符">2.2 Aggregates操作符</h3>
+<h4 id="22-aggregates操作符">2.2 Aggregates操作符</h4>
 <p>另一个 SimpleDB 操作符使用 <code>GROUP BY</code>子句实现基本 SQL 聚合。您应该实现五个 SQL 聚合(<code>COUNT</code>、 <code>SUM</code>、 <code>AVG</code>、 <code>MIN</code>、 <code>MAX</code>)并支持分组。您只需要在单个字段上支持聚合，并按单个字段进行分组。</p>
 <p>为了计算聚合，我们使用了一个 <code>Aggregator</code> 接口，它将一个新的元组合并到一个聚合的现有计算中。聚合器在构造过程中被告知应该使用什么操作进行聚合。随后，客户端代码应该为子迭代器中的每个元组调用 <code>Aggregator.mergeTupleIntoGroup()</code>。合并所有元组后，客户端可以检索聚合结果的 <code>OpIterator</code>。结果中的每个元组都是一对表单(<code>groupValue</code>、 <code>aggregateValue</code>) ，除非按字段分组的值是 <code>Aggregator.NO_GROUPING</code>，在这种情况下，结果是表单的单个元组<code>(aggregateValue)</code>。</p>
 <p>注意，这种实现需要不同组的空间时线性的。对于本实验，你不需要担心组数量超过可用内存的情况。</p>
-<h3 id="exercise-2-1">Exercise 2</h3>
+<h4 id="exercise-2-1">Exercise 2</h4>
 <p>实现下述的框架代码：</p>
 <hr>
 <ul>
@@ -739,11 +775,11 @@ java -classpath dist/simpledb.jar simpledb.test
 </ul>
 <hr>
 <p>此时，您的代码应该可以通过<code>IntegerAggregatorTest</code>，<code>StringAggregatorTest</code>和<code>AggregateTest</code>。更多的，你应该可以通过<code>Aggregate</code>系统测试。</p>
-<h3 id="23-堆文件可变性">2.3 堆文件可变性</h3>
+<h4 id="23-堆文件可变性">2.3 堆文件可变性</h4>
 <p>现在，我们将开始实现支持修改表的方法。我们从单个页面和文件的级别开始。有两组主要的操作: 添加元组和删除元组。</p>
 <p>删除元组: 要删除元组，您需要实现 <code>deletettuple</code>。元组包含 <code>recordid</code>，它允许您查找它们所驻留的页面，因此这应该很简单，只需查找元组所属的页面并适当地修改页面的标题即可。</p>
 <p>添加元组: <code>HeapFile.java</code> 中的 <code>insertTuple</code> 方法负责向堆文件添加元组。要向 <code>HeapFile</code> 添加新的 tuple，您必须找到一个带有空槽的页面。如果 <code>HeapFile</code> 中不存在这样的页，则需要创建一个新页并将其附加到磁盘上的物理文件。您需要确保元组中的 <code>RecordID</code> 被正确更新。</p>
-<h3 id="exercise-3-1">Exercise 3</h3>
+<h4 id="exercise-3-1">Exercise 3</h4>
 <p>实现下述的框架代码：</p>
 <hr>
 <ul>
@@ -763,13 +799,13 @@ java -classpath dist/simpledb.jar simpledb.test
 <hr>
 <p>这些方法应该调用HeapFile中属于正在修改的表的适当方法(这种额外的间接级别用于支持其他类型的文件(比如索引))。</p>
 <p>此时，你的代码应该可以通过<code>HeapPageWriteTest</code>和<code>HeapFileWriteTest</code>的单元测试，以及<code>BufferPoolWriteTest</code>。</p>
-<h3 id="24-插入和删除">2.4 插入和删除</h3>
+<h4 id="24-插入和删除">2.4 插入和删除</h4>
 <p>现在你已经写了所有用于添加和删除元组的HeapFile机制，接下来将实现<code>Insert</code>和<code>Delete</code>操作符。对于实现了<code>insert</code>和<code>delete</code>查询的计划，最上面的操作符是一个特殊的<code>Insert</code>和<code>Delete</code>操作符，用于修改磁盘上的页。这些操作符返回受影响的元组的数量。这是返回带有一个整数字段的单个元组实现了，该字段包含计数。</p>
 <ul>
 <li><em>Insert</em>：这个操作符将其从子操作符中读取的元组添加到其构造函数中指定的<code>tableid</code>。它应该使用<code>BufferPool.insertTuple()</code>方法来完成。</li>
 <li><em>Delete</em>：这个操作符将其从构造函数中指定的表中删除从其自操作符中读取的元组。它应该使用<code>BufferPool.deleteTuple()</code>方法来完成。</li>
 </ul>
-<h3 id="exercise-4-1">Exercise 4</h3>
+<h4 id="exercise-4-1">Exercise 4</h4>
 <p>实现下述的框架代码：</p>
 <hr>
 <ul>
@@ -778,14 +814,14 @@ java -classpath dist/simpledb.jar simpledb.test
 </ul>
 <hr>
 <p>此时，你的代码应该可以通过<code>InsertTest</code>。我们没有提供<code>Delete</code>的单元测试。更多的额，你应该可以通过<code>InsertTest</code>和<code>DeleteTest</code>的系统测试。</p>
-<h3 id="25-页面回收">2.5 页面回收</h3>
+<h4 id="25-页面回收">2.5 页面回收</h4>
 <p>在lab1中，在实验1中，我们没有正确地遵守由构造函数参数 <code>numPages</code> 定义的缓冲池中的最大页数限制。现在，您将选择一个页面收回策略，并检测以前读取或创建页面以实现策略的任何代码。</p>
 <p>当缓冲池中有超过 <code>numPages</code> 页面时，应该在加载下一个页面之前将其中一个页面从缓冲池中删除。驱逐政策的选择取决于你; 没有必要做一些复杂的事情。描述一下你在该lab中的策略。</p>
 <p>请注意，<code>BufferPool</code> 要求您实现一个 <code>flushAllPages()</code>方法。在实际的缓冲池实现中，这并不是您所需要的。但是，我们需要这个方法来进行测试。永远不要在任何实际代码中调用此方法。</p>
 <p>由于我们实现 <code>ScanTest.cacheTest</code> 的方式，您需要确保您的 <code>flushPage</code> 和 <code>flushhallpages</code> 方法不会从缓冲池中排除页面，以便正确地通过这个测试。</p>
 <p><code>flushAllPages</code> 应该在 <code>BufferPool</code> 中的所有页面上调用 <code>flushPage</code>，而 <code>flushPage</code> 应该将任何脏页面写入磁盘并将其标记为非脏页面，同时将其保留在 <code>BufferPool</code> 中。</p>
 <p>唯一应该从缓冲池中删除页面的方法是 <code>evictPage</code>，它应该在它清除的任何脏页面上调用 <code>flushPage</code>。</p>
-<h3 id="exercise-5-1">Exercise 5</h3>
+<h4 id="exercise-5-1">Exercise 5</h4>
 <p>填充方法<code>flushPage()</code>以及在以下方面实施页面驱逐的其他帮助方法：</p>
 <hr>
 <ul>
@@ -795,7 +831,7 @@ java -classpath dist/simpledb.jar simpledb.test
 <p>如果你在之前没有实现<code>HeapFile.java</code>中的<code>writePage()</code>，你将需要在此实现。最终，你应该也实现<code>discardPage()</code>来不刷新该页到磁盘就丢弃。我们将不会在本lab中测试<code>discardPage()</code>，但是这个在将来的lab中会很有必要。</p>
 <p>此时，你的代码应该通过<code>EvictionTest</code>系统测试。</p>
 <p>因为我们不会检查任何特定的收回策略，所以这个测试通过创建一个16页的 <code>BufferPool</code> 来工作(注意: <code>DEFAULT _ PAGES</code> 是50，而我们初始化 <code>BufferPool</code> 时会使用更少的页数)，扫描一个超过16页的文件，看看 JVM 的内存使用是否增加了超过5mb。如果您不能正确执行驱逐政策，您将无法驱逐足够的页面，并且将超过大小限制，因此无法通过测试。</p>
-<h3 id="26-预查询">2.6 预查询</h3>
+<h4 id="26-预查询">2.6 预查询</h4>
 <p>接下来的代码实现了一个简单两个表之间的<code>join</code>查询，每一个包括三个整数列(<code>some_data_file1.dat</code>和<code>some_data_file2.dat</code>是这个文件中页面的二进制表示)。代码相当于如下SQL语句：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -928,7 +964,7 @@ java -classpath dist/simpledb.jar simpledb.test
 </div>
 </div><p>两个表都有三个整数字段。为了表示这一点，我们创建一个 <code>TupleDesc</code> 对象，并向其传递一个 <code>Type</code> 对象数组，该数组指示字段类型和<code>String</code>对象，前者指示字段名称。一旦创建了这个 <code>TupleDesc</code>，我们就初始化两个表示表的 <code>HeapFile</code> 对象。创建表之后，将它们添加到 <code>Catalog</code> 中。(如果这是一个已经在运行的数据库服务器，我们将加载这个目录信息; 我们只需要为了这个测试的目的而加载这个目录信息)。</p>
 <p>初始化完数据库系统后，我们创建一个查询计划。我们的计划由两个 <code>SeqScan</code> 操作符组成，它们扫描磁盘上每个文件的元组，连接到第一个 <code>HeapFile</code> 上的 <code>Filter</code> 操作符，连接到一个 <code>Join</code> 操作符，该操作符根据 <code>JoinPredicate</code> 将表中的元组连接起来。通常，这些运算符通过引用适当的表(对于 <code>SeqScan</code>)或子运算符(对于<code> Join</code>)来实例化。然后，测试程序在 <code>Join</code> 操作符的下一个位置上重复调用，然后 <code>Join</code> 操作符从其子元组中提取元组。由于元组是 <code>Join</code> 的输出，所以它们在命令行上被打印出来。</p>
-<h3 id="27-查询解析器">2.7 查询解析器</h3>
+<h4 id="27-查询解析器">2.7 查询解析器</h4>
 <p>我们为您提供了一个SimpleDB查询解析器，一旦您完成了本实验室的练习，您就可以使用该解析器对数据库编写和运行 SQL 查询。</p>
 <p>第一步是创建一些数据表和目录。假设您有一个文件 <code>data.txt</code>，其内容如下:</p>
 <div class="highlight"><div class="chroma">
@@ -1039,11 +1075,262 @@ SimpleDB&gt;
 <li>不支持<code>UPDATE</code>。</li>
 <li>字符串操作符<code>LIKE</code>是支持的，但是必须写全(也就是说，不允许使用[~]简写)。</li>
 </ul>
-<h2 id="3-后续工作-1">3. 后续工作</h2>
+<h3 id="3-后续工作-1">3. 后续工作</h3>
 <p>略</p>
 <hr>
 <hr>
 <hr>
+<h2 id="lab3-query-optimization">Lab3: Query Optimization</h2>
+<blockquote>
+<p>查询优化</p>
+</blockquote>
+<p>在这lab中，您将在 SimpleDB 之上实现一个查询优化器。主要任务包括实现选择性估计框架和基于成本的优化器。您可以自由决定具体实现什么，但是我们建议使用类似于课堂上讨论的 Selinger 基于成本的优化器(第9课)。</p>
+<p>本文的其余部分描述了添加优化器支持所涉及的内容，并提供了如何添加优化器的基本概要。</p>
+<p>和以前的lab一样，我们建议你尽早开始。</p>
+<h3 id="1-开始-2">1. 开始</h3>
+<p>你应该在你完成了Lab 2的提交之后开始。</p>
+<p>我们提供给你一个额外的测试用例以及本lab的源代码文件，这些文件不在您收到的最开始的发行版中。我们再次鼓励您在我们提供的测试套件之外开发自己的测试套件。</p>
+<p>我们需要</p>
+<p>You will need to add these new files to your release. The easiest way to do this is to change to your project directory (probably called simple-db-hw) and pull from the master GitHub repository:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">cd</span> simple-db-hw
+$ git pull upstream master
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="11-实现提示">1.1 实现提示</h4>
+<p>我们建议使用本文档的练习来指导您的实现，但是您可能会发现不同的顺序对您更有意义。和以前一样，我们将通过查看您的代码并验证您已经通过了 ant 目标测试和系统测试的测试来为您的任务打分。关于评分和你需要通过的测试的完整讨论，请参阅第3.4节。</p>
+<p>以下是本lab粗略的实现步骤。在后面的章节二中给出更多的具体细节。</p>
+<ul>
+<li>实现<code>TableStats</code>类中的方法来允许它使用直方图(<code>IntHistogram</code>类提供的骨架)或者您设计的其他形式的统计数据来估计过滤器的选择性和扫描成本。</li>
+<li>实现<code>JoinOptimizer</code>类中的方法来允许它估计<code>join</code>连接的成本和选择性。</li>
+<li>编写<code>JoinOptimizer</code>中的<code>orderJoins</code>方法。这个方法在给定前两个的计算统计数据的情况下必须产生一个最优排序(可能使用Selinger算法)。</li>
+</ul>
+<h3 id="2-优化器大纲">2. 优化器大纲</h3>
+<p>回想一下，基于成本的优化器的主要思想是:</p>
+<ul>
+<li>使用表的统计信息来估计不同查询计划的“成本”。通常，计划的成本与中间联接和选择的基数(由中间联接产生的元组数量)以及筛选器和联接谓词的选择性有关。</li>
+<li>使用这些统计数据以最佳方式排序连接和选择，并从多个备选方案中选择连接算法的最佳实现。</li>
+</ul>
+<p>在本lab中，你将实现代码来完成上述的功能。</p>
+<p>优化器将在<code>simpledb/Parser.java</code>中调用。你可能希望在开始这个lab之前回顾一下<a href="" rel="">lab 2 解析练习</a>。简要的来讲，如果你有一个目录文件<code>catalog.txt</code>来表述你的表，那么你可以输入下述命令来解析：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -jar dist/simpledb.jar parser catalog.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>当解析器被调用时，它将计算所有表的统计信息(使用您提供的统计信息代码)。当请求查询时，解析器会将查询转化为逻辑计划表示，然后调用查询优化器来生成最优查询。</p>
+<h4 id="21-总体优化器结构">2.1 总体优化器结构</h4>
+<p>在你开始这些实现之前，你需要了解SimpleDB的优化器的整体架构。图1表示SimpleDB的解析器和优化器的整体控制流程。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/controlflow.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/controlflow.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/controlflow.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/controlflow.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/controlflow.png"
+        title="&lt;em&gt;图1:说明解析器中使用的类、方法和对象的图&lt;/em&gt;" /></p>
+<p>底部的键解释了这些符号; 您将使用双边框实现这些组件。类和方法将在下面的文本中更详细地解释(您可能希望回到这个图) ，但是基本操作如下:</p>
+<ol>
+<li><code>Parser.java</code>初始化时构造了一组表统计信息(存储在<code>statsMap</code>容器中)，然后等待一个查询，并对该查询调用<code>parseQuery</code>。</li>
+<li><code>parseQuery</code>首先构造一个<code>LogicalPlan</code>代表解析后的查询。<code>parseQuery</code>然后调用方法构造出来的<code>LogicalPlan</code>实例的<code>physicalPlan</code>方法。<code>physicalPlan</code>方法返回一个可以被用在实际的查询中的<code>DBIterator</code>对象。</li>
+</ol>
+<p>在即将到来的练习中，你将实现帮助<code>physicalPlan</code>设计一个最佳计划的方法。</p>
+<h4 id="22-统计估计">2.2 统计估计</h4>
+<p>准确估计计划成本是相当棘手的。在这个实验中，我们将只关注连接序列和基表访问的成本。我们不会担心访问方法的选择(因为我们只有一个访问方法，表扫描)或其他操作符(如聚合)的成本。</p>
+<p>你只需要考虑这个lab的左深计划。有关您可能实现的其他“额外”优化器特性的描述，请参见第2.3节，其中包括处理复杂计划的方法。</p>
+<h5 id="221-整体计划成本">2.2.1 整体计划成本</h5>
+<p>我们将会编写从<code>p = t1 join t2 join ... tn</code>的join计划，它表示一个左深连接，其中t1是最左边的连接(树中最深的连接)。给定一个类似<code>p</code>的计划，它的成本可以如下表达：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">scancost<span class="o">(</span>t1<span class="o">)</span> + scancost<span class="o">(</span>t2<span class="o">)</span> + joincost<span class="o">(</span>t1 join t2<span class="o">)</span> +
+scancost<span class="o">(</span>t3<span class="o">)</span> + joincost<span class="o">((</span>t1 join t2<span class="o">)</span> join t3<span class="o">)</span> +
+... 
+</code></pre></td></tr></table>
+</div>
+</div><p>这里，<code>scancist(t1)</code>是扫描表t1的I/O成本，<code>joincost(t1, t2)</code>是连接j1到j2的CPU成本。为了让I/O成本和CPU成本可以比较，通常使用一个常量比例因子，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cost<span class="o">(</span>predicate application<span class="o">)</span> <span class="o">=</span> <span class="m">1</span>
+cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</span> SCALING_FACTOR x cost<span class="o">(</span>predicate application<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于本lab你可以忽略缓存的影响(例如，假设每次访问一个表都要付出全表扫描的成本) &ndash; 同样，这也是你可以在2.3章节中作为一个可选的附加扩展添加到你的lab中的东西。因此，<code>scancost(t1)</code>就是<code>t1 x SCALING_FACTOR</code>中的页数。</p>
+<h5 id="222-连接成本">2.2.2 连接成本</h5>
+<p>当使用嵌套循环连接时，回想一下两个表t1和t1(其中t1在外部)之间的连接成本是简单的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">joincost<span class="o">(</span>t1 join t2<span class="o">)</span> <span class="o">=</span> scancost<span class="o">(</span>t1<span class="o">)</span> + ntups<span class="o">(</span>t1<span class="o">)</span> x scancost<span class="o">(</span>t2<span class="o">)</span> //IO cost
+                       + ntups<span class="o">(</span>t1<span class="o">)</span> x ntups<span class="o">(</span>t2<span class="o">)</span>  //CPU cost
+</code></pre></td></tr></table>
+</div>
+</div><p>这里，<code>ntups(t1)</code>是表t1中的元组数量。</p>
+<h5 id="223-过滤器选择性">2.2.3 过滤器选择性</h5>
+<p>通过扫描基表可以直接计算中<code>ntups</code>。对于一个包含一个或多个选择谓词的表进行<code>ntups</code>估计可能会比棘手 &ndash; 这就是过滤器的选择性估计问题。这里有一个你可能会用到的方法，基于对表格中的值进行直方图计算：</p>
+<ul>
+<li>计算每个表中的每个属性的最小值和最大值(扫描一次)。</li>
+<li>为表中的每个属性建立一个直方图。一个方法是使用固定数量的桶 <em>NumB</em>，每个桶表示柱状图属性域的固定范围内的记录数量。例如，如果一个字段_f_的范围从1到100，并且有10个桶，那么桶1可能包含1到10之间记录数的计数，桶2包含11到20之间的记录数的计数，以此类推。</li>
+<li>再次扫描表，选择出所有的元组的字段，并使用它们填充每个直方图中桶的计数。</li>
+<li>要顾及等式表达式_f = const_的选择性，请计算包含值_const_的桶。假设桶的宽度(值的范围)为_w_，桶的高度(元组数量)为_h_，表中元组的数量为_ntups_。然后，假设值在桶中均匀分布，表达式的选择性大致为_(h / w) / ntups_，因为_(h / w)_表示值为_const_的桶中的预期元组数。</li>
+<li>为了估计表达式_f &gt; const_的选择性，计算_const_所在桶_b_，其宽为_w_b_，高度为_h_b_。然后，<em>b_包含整个元组的一个分数_b_f = h_b / ntups</em>。假设元组均匀分在_b_中，那么_b_中_&gt; const_的部分是_(b_right - const) / w_b_，这里的_b_right_是桶_b_的右端点。因此，桶_b_为谓词的选择性贡献了_b_f x b_part_。此外，桶_b+1..NumB-1_贡献了了它们的全部的选择性(可以使用类似于上面_b_f_的公式来计算)。将所有的桶的选择性贡献相加得到表达式的总体选择性。图2说明了这个过程。</li>
+<li>设计到_less than_的表示式的选择性可以执行类似于_greater than_的类似表达式，桶从0开始。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220528170350623.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220528170350623.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220528170350623.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220528170350623.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220528170350623.png"
+        title="&lt;em&gt;Figure2: 图解说明了会在lab5中实现的直方图&lt;/em&gt;" /></p>
+<hr>
+<h5 id="exercise-1inthistogramjava">Exercise 1：IntHistogram.java</h5>
+<p>你需要实现某些方法来记录表中的统计信息以及进行选择性评估。我们已经提供了框架类，<code>IntHistogram</code>来实现这一点。我们的目的是使用上面描述的基于桶的方法计算直方图，但是您可以随意使用其他的方法，只要它提供合理的选择性估计。</p>
+<p>我们提供给你一个类<code>StringHistogram</code>来使用<code>IntHistogram</code>来计算字符串谓词的选择性。你可能需要修改<code>StringHistogram</code>如果你想要实现一个更好的估计器，但是为了完成这个lab您不需要这么做。</p>
+<p>在完成了这个练习之后，你应该可以通过<code>IntHistogramTest</code>单元测试(如果你选择不实现基于直方图的选择性估计那么你不被要求通过这个测试)。</p>
+<hr>
+<h5 id="exercise-2tablestatsjava">Exercise 2：TableStats.java</h5>
+<p><code>TableStats</code>类包含一些方法，这些方法计算表中的元组和页数，并估计谓词对该表字段的选择性。我们已经创建的解析器会给每个表创建一个<code>TableStats</code>实例，然后传递这些结构到你的查询优化器(你在之后的练习中会需要)。</p>
+<p>你应该填充下下述的方法以及<code>TableStats</code>中的类：</p>
+<ul>
+<li>实现<code>TableStats</code>构造函数：一旦你已经实现一个方法来用于跟踪类似于直方图之类的统计信息，你应该实现<code>TableStats</code>构造函数，添加到代码去扫描表(可能多次)来构建你需要的统计信息。</li>
+<li>实现<code>extimateSelectivity(int field, Predicate.Op op, Field constant)</code>：使用你的统计信息(例如一个取决于变量的类型的<code>IntHistogram</code>或<code>StringHistogram</code>)，估计表中谓词<code>field op constant</code>的选择性。</li>
+<li>实现<code>estimateScanCost()</code>：这个方法估计线性扫描文件的成本，给定扫描一页的成本是<code>costPerPageIO</code>。你可以假设没有找寻以及缓冲池中没有页。这个方法可以使用在构造函数中计算成本或者大小。</li>
+<li>实现<code>estimateTableCardinality(double selectivityFactor)</code>：如果应用具有选择性的谓词，这个方法返回关系中的元组数。这个方法可能使用在您在构造函数中计计算成本或大小。</li>
+</ul>
+<p>你可能希望修改<code>TableStats.java</code>中的构造函数，例如，为了选择性估计的目的，计算上面描述的字段的直方图。</p>
+<p>在完成了这些任务之后你应该可以通过<code>TableStatsTest</code>中的单元测试</p>
+<hr>
+<h5 id="224-连接基数">2.2.4 连接基数</h5>
+<p>最后，注意上面的连接计划 <code>p</code> 的成本包括表单联合成本<code>((t1 join t2) join t3)</code>的表达式。为了计算这个表达式，您需要一些方法来估计 <code>t1 join t2</code>的大小。这个连接基数估计问题比过滤器选择性估计问题更难。在这个实验室中，您不需要为此做任何花哨的事情，尽管第2.4节中的一个可选练习包括一个基于直方图的连接选择性评估方法。</p>
+<p>当你实现你的简单的实现的时候，你需要注意下述事项：</p>
+<ul>
+<li>对于相等链接，当其中一个属性是主键的时候，连接生成的元组数量不能大于非主键属性的基数。</li>
+<li>对于没有主键的等式连接，很难说输出的大小是多少&ndash;它可以是表基数乘积的大小(如果两个表中所有元组都有相同的值)&ndash;或者可以是0。构建一个简单的启发式方法(比如，两个表中较大的表的大小)是可行的。</li>
+<li>对于范围扫描，很难说任何准确的大小。输出的大小应该与输入的大小成正比。假设范围扫描(例如说，30%)产生的大小是可以固定的。一般来说，范围连接的成本应该大于大小相同的两个表的非主键连接成本。</li>
+</ul>
+<hr>
+<h5 id="exercise-3join-cost-estimation">Exercise 3：Join Cost Estimation</h5>
+<blockquote>
+<p>Join成本估计</p>
+</blockquote>
+<p>类<code>JoinOptimizer.java</code>包括用于排序和计算连接成本的所有方法。在本练习中，您将编写用于评估连接的选择性和成本的方法，具体如下：</p>
+<ul>
+<li>实现<code>estimateJoinCost(LogicalJoinNode j, int card1, int card2, double cost1, double cost2)</code>：这个方法估计<code>join j</code>的成本，假设左输入的成本是card1，右输入的成本是card2，扫描左输入的成本是cost1，扫描右输入的成本是cost2。你可以假设连接是NL join，并应用之前提到的公式。</li>
+<li>实现<code>estimateJoinCardinality(LogicalJoinNode j, int card1, int card2, boolean t1pkey, boolean t2pkey)</code>：这个方法通过<code>join j</code>估计出元组输出的数量，假设左边的输入card1的大小，右边输入的是card2的大小，标志位t1pkey和t2pkey分别表示左边和右边的字段是否唯一(主键)。</li>
+</ul>
+<p>在实现了这些方法之后，你应该可以通过单元测试<code>JoinOptimizerTest.java</code>中的<code>estimateJoinCostTest</code>和<code>estimateJoinCardinality</code>测试。</p>
+<hr>
+<h4 id="23-连接排序">2.3 连接排序</h4>
+<p>现在你已经实现了估计成本的方法，你将实现Selinger优化器。对于这些方法，joins被表示为连接节点列表(例如，两个表上的谓词)，而不是类中描述的要连接的关系列表。</p>
+<p>将课程中给出的算法转换为上面提到的连接节点列表形式，伪代码的大纲如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="mf">1.</span> <span class="n">j</span> <span class="o">=</span> <span class="n">set</span> <span class="n">of</span> <span class="n">join</span> <span class="n">nodes</span>
+<span class="mf">2.</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mf">1.</span><span class="p">..</span><span class="o">|</span><span class="n">j</span><span class="o">|</span><span class="p">)</span><span class="o">:</span>
+<span class="mf">3.</span>     <span class="k">for</span> <span class="n">s</span> <span class="n">in</span> <span class="p">{</span><span class="n">all</span> <span class="n">length</span> <span class="n">i</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">j</span><span class="p">}</span>
+<span class="mf">4.</span>       <span class="n">bestPlan</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="mf">5.</span>       <span class="k">for</span> <span class="n">s</span><span class="err">&#39;</span> <span class="n">in</span> <span class="p">{</span><span class="n">all</span> <span class="n">length</span> <span class="n">d</span><span class="o">-</span><span class="mi">1</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">s</span><span class="p">}</span>
+<span class="mf">6.</span>            <span class="n">subplan</span> <span class="o">=</span> <span class="n">optjoin</span><span class="p">(</span><span class="n">s</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="mf">7.</span>            <span class="n">plan</span> <span class="o">=</span> <span class="n">best</span> <span class="n">way</span> <span class="n">to</span> <span class="n">join</span> <span class="p">(</span><span class="n">s</span><span class="o">-</span><span class="n">s</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">to</span> <span class="n">subplan</span>
+<span class="mf">8.</span>            <span class="k">if</span> <span class="p">(</span><span class="n">cost</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">cost</span><span class="p">(</span><span class="n">bestPlan</span><span class="p">))</span>
+<span class="mf">9.</span>               <span class="n">bestPlan</span> <span class="o">=</span> <span class="n">plan</span>
+<span class="mf">10.</span>      <span class="n">optjoin</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="n">bestPlan</span>
+<span class="mf">11.</span> <span class="k">return</span> <span class="n">optjoin</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>为了帮助您实现这个算法，我们提供了几个类和方法来帮助您。首先，<code>JoinOptimizer.java</code> 中的<code>enumerateSubsets(List v，int size)</code>方法将返回一组大小为 <code>v</code> 的所有子集。这种方法对于大型集合来说效率非常低; 您可以通过实现更高效的枚举器来获得额外的分数(提示: 考虑使用就地生成算法和惰性迭代器(或流)接口来避免实现整个功率集)。</p>
+<p>然后，我们提供一个方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java">    <span class="kd">private</span> <span class="n">CostCard</span> <span class="nf">computeCostAndCardOfSubplan</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span> 
+                                                <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">filterSelectivities</span><span class="o">,</span> 
+                                                <span class="n">LogicalJoinNode</span> <span class="n">joinToRemove</span><span class="o">,</span>  
+                                                <span class="n">Set</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="n">joinSet</span><span class="o">,</span>
+                                                <span class="kt">double</span> <span class="n">bestCostSoFar</span><span class="o">,</span>
+                                                <span class="n">PlanCache</span> <span class="n">pc</span><span class="o">)</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>给定一个联接子集<code>(joinSet)</code>和一个要从该集中移除的联接<code>(joinToRemove)</code> ，此方法计算将 <code>joinToRemove</code> 联接到 <code>joinSet-{ joinToRemove }</code>的最佳方法。它在 <code>CostCard</code> 对象中返回这个最佳方法，其中包括成本、基数和最佳连接顺序(作为列表)。如果找不到计划(例如，因为不存在可能的左深连接) ，或者如果所有计划的成本大于<code> bestCostSoFar</code> 参数，则 <code>computeCostAndCardOfSubplan</code> 可能返回 null。该方法使用一个名为 <code>pc</code> (在上面的 伪代码中为 <code>optjoin</code>)的前联接缓存来快速查找联接 <code>joinSet-{ joToRemove }</code>的最快方法。其他参数(<code>stats</code> 和 <code>filterSelectivities</code>)被传递到 <code>orderJoins</code> 方法中，您必须将其作为练习4的一部分来实现，下面将对其进行解释。这个方法实际上执行前面描述的假代码的第6-8行。</p>
+<p>在之后，我们提供方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">printJoins</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="n">js</span><span class="o">,</span> 
+                           <span class="n">PlanCache</span> <span class="n">pc</span><span class="o">,</span>
+                           <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span>
+                           <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">selectivities</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>此方法可用于显示连接计划的图形化表示(例如，当通过优化器的&quot;-explain&quot;选项设置标志时)。</p>
+<p>最后，我们已经提供了一个类 <code>PlanCache</code>，它可以用来缓存到目前为止在 Selinger 实现中考虑的连接子集的最佳方式(使用 <code>computeCostAndCardOfSubplan</code> 需要该类的一个实例)。</p>
+<hr>
+<h5 id="exercise-4join-ordering">Exercise 4：Join Ordering</h5>
+<blockquote>
+<p>连接排序</p>
+</blockquote>
+<p>在<code>JoinOptimizer.java</code>中，实现下述方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java">  <span class="n">List</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="nf">orderJoins</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span> 
+                   <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">filterSelectivities</span><span class="o">,</span>  
+                   <span class="kt">boolean</span> <span class="n">explain</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>此方法应对<code>joins</code>类成员进行操作，并返回一个新列表，该列表指定了联接的执行顺序。此列表的项0指示左深计划中最左、最底的联接。返回列表中的相邻联接应该至少共享一个字段，以确保计划是左深的。这里的 <code>stats</code> 是一个对象，可以通过它找到出现在查询的 <code>FROM</code> 列表中的给定表名的 <code>TableStats</code>。<code>filterSelectivities</code> 允许您找到任何谓词对表的选择性; 它保证在 <code>FROM</code> 列表中每个表名有一个条目。最后，<code>explain</code>指定为了提供信息，应该输出连接顺序的表示形式。</p>
+<p>您可能希望使用上面描述的帮助器方法和类来帮助您的实现。粗略地说，您的实现应该遵循上面的伪代码，循环遍历子集大小、子集和子集的子计划，调用 <code>computeCostAndCardOfSubplan</code> 并构建一个 <code>PlanCache</code> 对象，该对象存储执行每个子集连接的最小成本方式。</p>
+<p>实现此方法后，您应该能够通过 <code>JoinOptimizerTest</code> 中的所有单元测试。您还应该通过系统测试 <code>QueryTest</code>。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

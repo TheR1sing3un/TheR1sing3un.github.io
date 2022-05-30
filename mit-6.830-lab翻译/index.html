@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/"
-        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  19107 ,
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  20035 ,
         "url": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/","datePublished": "2022-05-22T13:26:59+08:00","dateModified": "2022-05-22T13:26:59+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MIT 6.830 Lab翻译</h1><h2 class="single-subtitle">MIT-6.830-Lab翻译</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/database/"><i class="far fa-folder fa-fw"></i>Database</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 19107 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 39 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 20035 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 40 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -222,8 +222,10 @@
                 <li><a href="#exercise-4join-ordering">Exercise 4：Join Ordering</a></li>
               </ul>
             </li>
+            <li><a href="#24-格外的分数">2.4 格外的分数</a></li>
           </ul>
         </li>
+        <li><a href="#3-后续工作-2">3. 后续工作</a></li>
       </ul>
     </li>
   </ul>
@@ -1331,6 +1333,39 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </div><p>此方法应对<code>joins</code>类成员进行操作，并返回一个新列表，该列表指定了联接的执行顺序。此列表的项0指示左深计划中最左、最底的联接。返回列表中的相邻联接应该至少共享一个字段，以确保计划是左深的。这里的 <code>stats</code> 是一个对象，可以通过它找到出现在查询的 <code>FROM</code> 列表中的给定表名的 <code>TableStats</code>。<code>filterSelectivities</code> 允许您找到任何谓词对表的选择性; 它保证在 <code>FROM</code> 列表中每个表名有一个条目。最后，<code>explain</code>指定为了提供信息，应该输出连接顺序的表示形式。</p>
 <p>您可能希望使用上面描述的帮助器方法和类来帮助您的实现。粗略地说，您的实现应该遵循上面的伪代码，循环遍历子集大小、子集和子集的子计划，调用 <code>computeCostAndCardOfSubplan</code> 并构建一个 <code>PlanCache</code> 对象，该对象存储执行每个子集连接的最小成本方式。</p>
 <p>实现此方法后，您应该能够通过 <code>JoinOptimizerTest</code> 中的所有单元测试。您还应该通过系统测试 <code>QueryTest</code>。</p>
+<h4 id="24-格外的分数">2.4 格外的分数</h4>
+<p>在本节中，我们将描述您可以实现以获得额外学分的几个可选练习。与前面的练习相比，这些练习的定义不那么明确，但是它们可以让您有机会展示自己对查询优化的掌握！请在报告中清楚标明你选择完成的项目，并简要说明你的实施情况和结果(基准数字、经验报告等)</p>
+<hr>
+<p><strong>加分练习</strong>。这些格外加成中的每一项都可以获得高达5%的额外奖励。</p>
+<ul>
+<li>
+<p><em>添加代码以执行更高级的连接基数估计</em>。语气使用简单的启发式方法来估计连接基数，不如设计一个更复杂的算法。</p>
+<ul>
+<li>一种方法是在每一对表_t1_和_t2_中的每一对属性_a_和_b_之间使用联合直方图。这个想法是创建_a_的桶列，并为_a_的每个桶_A_创建_b_值的柱状图，这些值和_A_桶中的值_a_同时出现。</li>
+<li>估计联接基数的另一种方法是假设较小表中的每个值在较大表中都有匹配值。那么连接选择性的公式是: <em>1/(Max (num-distinct (t1，column1) ，num-distinct (t2，column2))))</em>。这里，column1和 column2是联接属性。连接的基数是 t1和 t2的基数乘以选择性的产物。</li>
+</ul>
+</li>
+<li>
+<p><em>改进子集迭代器</em>。我们的<code>enumerateSubsets</code>实现十分低效，因为它在每个调用上创建大量的Java对象。</p>
+<p>在这个格外的练习中，你将提升<code>enumerateSubsets</code>的性能，以至于你的系统可以对包含了20个或者更多连接的计划执行查询优化(当前这种计划需要花费数分钟或者数小时来进行计算)。</p>
+</li>
+<li>
+<p><em>一个支持缓存的成本模型</em>。估计扫描和连接成本的方法不考虑缓冲池中的缓存。您应该扩展成本模型以考虑缓存效果。这是很棘手的，因为由于迭代器模型，多个连接同时运行，所以很难预测每个连接使用我们在以前实验室中实现的简单缓冲池可以访问多少内存。</p>
+</li>
+<li>
+<p><em>改进join算法以及算法的选择</em>。我们当前的成本估算和连接算子选择算法(请参阅 <code>JoinOptimizer.java</code> 中的 <code>instanatejoin ()</code>)只考虑嵌套循环连接。扩展这些方法以使用一个或多个附加的连接算法(例如，使用 <code>HashMap</code> 进行某种形式的内存散列)</p>
+</li>
+<li>
+<p><em>密集计划</em>。改进所提供的 <code>orderjoin ()</code>和其他助手方法，以生成密集的连接。我们的查询计划生成和可视化算法完全能够处理杂乱的计划; 例如，如果 <code>orderjoin ()</code>返回列表<code>(t1 join t2; t3 join t4; t2 join t3)</code> ，这将对应于一个杂乱的计划，顶部有<code>(t2 join t3)</code>节点。</p>
+</li>
+</ul>
+<hr>
+<p>你现在可以完成这个lab了。</p>
+<h3 id="3-后续工作-2">3. 后续工作</h3>
+<p>略</p>
+<hr>
+<hr>
+<hr>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

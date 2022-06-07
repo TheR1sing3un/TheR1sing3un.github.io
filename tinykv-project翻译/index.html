@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>TinyKV Project翻译 - trs的个人博客</title><meta name="Description" content="只是平凡记录着"><meta property="og:title" content="TinyKV Project翻译" />
+<meta property="og:description" content="TinyKV-Project翻译 Project1 StandaloneKV 项目1 单机KV存储系统 在这个项目中，您将在列族(column family)的支持下构建一个独立的键/值存" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ther1sing3un.github.io/tinykv-project%E7%BF%BB%E8%AF%91/" /><meta property="og:image" content="https://ther1sing3un.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-07T17:58:12+08:00" />
+<meta property="article:modified_time" content="2022-06-07T17:58:12+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ther1sing3un.github.io/"/>
+
+<meta name="twitter:title" content="TinyKV Project翻译"/>
+<meta name="twitter:description" content="TinyKV-Project翻译 Project1 StandaloneKV 项目1 单机KV存储系统 在这个项目中，您将在列族(column family)的支持下构建一个独立的键/值存"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/tinykv-project%E7%BF%BB%E8%AF%91/" /><link rel="prev" href="https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TinyKV Project翻译",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ther1sing3un.github.io\/tinykv-project%E7%BF%BB%E8%AF%91\/"
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "分布式系统, Raft, Golang, PingCAP","wordcount":  10362 ,
+        "url": "https:\/\/ther1sing3un.github.io\/tinykv-project%E7%BF%BB%E8%AF%91\/","datePublished": "2022-06-07T17:58:12+08:00","dateModified": "2022-06-07T17:58:12+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "TheR1sing3un"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/friendship/"> 友链 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="trs的个人博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/baseConfig/blogAvatar.svg"
+        data-srcset="/images/baseConfig/blogAvatar.svg, /images/baseConfig/blogAvatar.svg 1.5x, /images/baseConfig/blogAvatar.svg 2x"
+        data-sizes="auto"
+        alt="/images/baseConfig/blogAvatar.svg"
+        title="/images/baseConfig/blogAvatar.svg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/friendship/" title="">友链</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">TinyKV Project翻译</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>分布式系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-07">2022-06-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10362 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220607180120520.png"
+        data-srcset="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220607180120520.png, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220607180120520.png 1.5x, https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220607180120520.png 2x"
+        data-sizes="auto"
+        alt="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220607180120520.png"
+        title="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20220607180120520.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#the-code">The Code</a></li>
+        <li><a href="#implement-standalone-storage-engine">Implement standalone storage engine</a></li>
+        <li><a href="#implement-service-handlers">Implement service handlers</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#parta">PartA</a>
+      <ul>
+        <li><a href="#the-code-1">The Code</a></li>
+        <li><a href="#implement-the-raft-algorithm">Implement the Raft algorithm</a>
+          <ul>
+            <li><a href="#leader-election">Leader election</a></li>
+            <li><a href="#log-replication">Log replication</a></li>
+          </ul>
+        </li>
+        <li><a href="#implement-the-raw-node-interface">Implement the raw node interface</a></li>
+      </ul>
+    </li>
+    <li><a href="#partb">PartB</a>
+      <ul>
+        <li><a href="#the-code-2">The Code</a></li>
+        <li><a href="#implement-peer-storage">Implement peer storage</a></li>
+        <li><a href="#implement-raft-ready-process">Implement Raft ready process</a></li>
+      </ul>
+    </li>
+    <li><a href="#partc">PartC</a>
+      <ul>
+        <li><a href="#the-code-3">The Code</a></li>
+        <li><a href="#implement-in-raft">Implement in Raft</a></li>
+        <li><a href="#implement-in-raftstore">Implement in raftstore</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="tinykv-project翻译">TinyKV-Project翻译</h1>
+<h1 id="project1-standalonekv">Project1 StandaloneKV</h1>
+<blockquote>
+<p>项目1 单机KV存储系统</p>
+</blockquote>
+<p>在这个项目中，您将在列族(column family)的支持下构建一个独立的键/值存储的gRPC服务。单机意味着只有一个节点，不是一个分布式的系统。列族(下列缩写为CF)是一个类似于键命名空间的术语，即在不同的列族中相同的键的值是不同的。你可以简单地将多列族视为单独地迷你数据库群。它用于支持project4的事务模型，你将会了解为什么TinyKV会需要CF的支持。</p>
+<p>该服务支持四种基本的操作：Put/Delete/Get/Scan。它维护一个简单的KV键值对数据库。键和值都是字符串类型。<code>Put</code>替换数据库中指定CF的特定键的值，<code>Delete</code>删除指定CF的键的值，<code>Get</code>取得指定的CF中的键的当前值，以及<code>Scan</code>取得指定CF中的一系列键的值。</p>
+<p>这个项目可以分为两个步骤，包括：</p>
+<ol>
+<li>实现一个单机存储引擎。</li>
+<li>实现原始键值服务的处理程序。</li>
+</ol>
+<h3 id="the-code">The Code</h3>
+<p><code>gRPC</code>服务端在<code>kv/main.go</code>中被初始化以及该服务端还包括一个用来提供叫<code>TinyKv</code>的<code>gRPC</code>服务的<code>tinykv.Server</code>。它是在<code>proto/proto/tinykvpb.proto</code>中由protocol-buffer定义，以及rpc请求和响应的细节在<code>proto/proto/kvrpcpb.proto</code>中被定义。</p>
+<p>总的来说，你不需要更改proto文件因为所有需要的变量已经为你定义好了。但是如果你仍然需要更改，你可以修改proto文件然后使用<code>make proto</code>命令来更新在<code>proto/pkg/xxx/xxx.pb.go</code>中生成的相关代码。</p>
+<p>另外，<code>Server</code>依赖于<code>Storage</code>，也就是你需要在<code>kv/storage/standalone_storage/stanalone_storage.go</code>中实现一个单机存储引擎接口。一旦在<code>StandaloneStorage</code>实现了接口<code>Storage</code>，你可以使用该接口来给<code>Server</code>实现一个原始的键值对服务。</p>
+<h3 id="implement-standalone-storage-engine">Implement standalone storage engine</h3>
+<blockquote>
+<p>实现单机存储引擎</p>
+</blockquote>
+<p>第一个任务就是要去实现badger的键值对包装器。gRPC服务器依赖于<code>kv/storage/storage.go</code>中定义的<code>Storage</code>。在这个上下文中，单机存储引擎只是一个badger的键值对API包装器，它提供两个方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Storage</span> <span class="kd">interface</span> <span class="p">{</span>
+    <span class="c1">// Other stuffs
+</span><span class="c1"></span>    <span class="nf">Write</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">batch</span> <span class="p">[]</span><span class="nx">Modify</span><span class="p">)</span> <span class="kt">error</span>
+    <span class="nf">Reader</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="nx">StorageReader</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>Write</code>应该提供一种对内部状态应用一系列修改的方法，在这种情况下，内部状态就是一个badger实例。</p>
+<p><code>Reader</code>应该返回一个<code>StorageReader</code>用来支持在快照上进行键值对的get和scan。</p>
+<p>以及你现在不需要考虑<code>kvrpcpb.Context</code>，它会在接下来的项目中使用。</p>
+<blockquote>
+<p>提示：</p>
+<ul>
+<li>你应该使用badger.Txn来实现<code>Reader</code>函数，因为badger提供的事务处理程序可以提供键和值的一致快照。</li>
+<li>Badger不支持列族。引擎工具(kv/util/engine_util)通过给键添加前缀来模拟列族。例如：一个属于列族<code>CF</code>的键<code>key</code>被以<code>${cf}_${key}</code>来存储。它包装了<code>badger</code>以提供列族的操作，以及同样提供了许多有用的辅助函数。因此，你应该通过<code>engine_util</code>提供的方法来执行读/写操作。请阅读<code>util/engine_util/doc.go</code>来了解更多。</li>
+<li>TinyKV使用<code>badger</code>的原始版本，所以请只使用<code>github.com/Connor1996/badger</code> 而不是<code>github.com/dgraph-io/badger</code>。</li>
+<li>不要忘记在丢弃前调用badger.Txn的<code>Discard()</code>以及关闭所有的迭代器。</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="implement-service-handlers">Implement service handlers</h3>
+<blockquote>
+<p>实现服务处理程序</p>
+</blockquote>
+<p>该项目的最后一步是去使用实现的存储引擎来构建原始的键值服务处理程序，包括RawGet/RawScan/RawPut/RawDelete。该处理器已经为你定义了，你只需要完善<code>kv/server/raw_api.go</code>中的实现。一旦完成，记得运行<code>make project1</code>来通过所有的测试套件。</p>
+<hr>
+<hr>
+<h1 id="project2-raftkv">Project2 RaftKV</h1>
+<p>Raft 是一个易于理解的一致性算法。你可以在<a href="https://raft.github.io/" target="_blank" rel="noopener noreffer">Raft网站</a>上阅读关于Raft本身的材料，一个Raft的交互式可视化，和其他资源，包括<a href="https://raft.github.io/raft.pdf" target="_blank" rel="noopener noreffer">扩展Raft论文</a>。</p>
+<p>在本项目中，您将实现一个基于 Raft 的高可用 kv 服务器，这不仅需要您实现 Raft 算法，而且还需要在实际中使用它，这将给您带来更多的挑战，如使用 <code>badger</code> 管理 Raft 的持久状态，为快照消息添加流量控制等。</p>
+<p>该项目有三个部分需要你做，包括：</p>
+<ul>
+<li>实现基本的Raft算法</li>
+<li>基于Raft构建一个容错的KV服务端</li>
+<li>增加对Raft日志垃圾回收和快照的支持</li>
+</ul>
+<h2 id="parta">PartA</h2>
+<h3 id="the-code-1">The Code</h3>
+<p>在这一部分中，您将实现基本的Raft算法。你需要实现的代码在 <code>raft/</code>下。在 <code>raft/</code>中，有一些框架代码和测试用例等着你。您将在这里实现的 Raft 算法与上层应用程序有一个设计良好的接口。此外，它使用一个逻辑时钟(在这里命名为 tick)来测量选举和心跳超时，而不是物理时钟。也就是说，不要在 Raft 模块本身中设置计时器，上层应用程序通过调用 <code>RawNode</code> 负责推进逻辑时钟。除此之外，消息的发送和接收以及其他事情都是异步处理的，什么时候实际执行这些事情也取决于上层应用程序(请参阅下面的更多细节)。例如，Raft 不会阻塞等待任何请求消息的响应。</p>
+<p>在实现之前，请先检查这部分的提示。同样的，你应该粗略的看一下proto文件<code>proto/proto/eraftpb.proto</code>。Raft发送和接收消息以及相关的定义的结构都在文件中，您将使用他们进行实现。</p>
+<p>这个部分可以在三步内完成，包括：</p>
+<ul>
+<li>领袖选举</li>
+<li>日志复制</li>
+<li>原始节点接口</li>
+</ul>
+<h3 id="implement-the-raft-algorithm">Implement the Raft algorithm</h3>
+<blockquote>
+<p>实现Raft算法</p>
+</blockquote>
+<p><code>raft/raft.go</code>中的<code>raft.Raft</code>提供了Raft算法核心包括了消息处理，逻辑时钟驱动，等。对于更多的实现指导，请检查<code>raft/doc.go</code>，这里包含了整体的设计和那些<code>MessageTypes</code>分别都负责什么。</p>
+<h4 id="leader-election">Leader election</h4>
+<blockquote>
+<p>领导选举</p>
+</blockquote>
+<p>为了实现领导选举，你可能想要从<code>raft.Raft.tick()</code>开始，用于将内部逻辑时钟提前一个刻度，从而驱动选举超时或心跳超时。你现在不需要关注消息发送和接收逻辑。如果你需要发送出去一个消息，就将其压入<code>raft.Raft.msgs</code>然后通过<code>raft.Raft.Step()</code>来传递响应消息。<code>raft.Raft.Step()</code>是消息处理的入口，你应该处理像<code>MsgRequestVote</code>，<code>MsgHeartbeat</code>的消息和他们的请求。同时也请实现测试stub函数并让他们像<code>raft.Raft.becomeXXX</code>一样被正确调用，这函数用于在Raft的角色发生变化时更新Raft的内部状态。</p>
+<p>你可以运行<code>make project2aa</code>来测试实现并在这部分结尾处看到一些提示。</p>
+<h4 id="log-replication">Log replication</h4>
+<blockquote>
+<p>日志复制</p>
+</blockquote>
+<p>为了实现日志复制，你可能想要从处理发送方和接收方的<code>MsgAppend</code>和<code>MsgAppendResponse</code>开始。检查<code>raft/log.go</code>中的<code>raft.RaftLog</code>，这个是一个辅助结构用来帮助你管理你的Raft日志，在这里你还需要通过<code>raft/storage.go</code>中定义的<code>Storage</code>接口与上层应用程序交互来获取持久化数据比如日志条目和快照。</p>
+<p>你可以运行<code>make project2ab</code>来测试实现并在这部分结尾处看到一些提示。</p>
+<h3 id="implement-the-raw-node-interface">Implement the raw node interface</h3>
+<blockquote>
+<p>实现原始节点接口</p>
+</blockquote>
+<p><code>raft/rawnode.go</code>中的<code>raft.RawNode</code>是我们和上层状态机交互的接口，<code>raft.RawNode</code>包括<code>raft.Raft</code>以及提供一些包装的函数比如说<code>RawNode.Tick()</code>和<code>RawNode.Step()</code>。它也提供了<code>RawNode.Propose()</code>来让上层应用来提出新的Raft日志。</p>
+<p>另一个重要的结构<code>Ready</code>也在此定义了。当处理消息或者推进逻辑时钟时，<code>raft.Raft</code>可能需要和上层状态机交互，比如：</p>
+<ul>
+<li>发送消息到其他节点</li>
+<li>保存日志到持久化存储</li>
+<li>保存硬状态比如说term，commit index和vote到持久化存储</li>
+<li>应用提交的日志条目到状态机</li>
+<li>其他等</li>
+</ul>
+<p>但是这些交互不会立即发生，相反，它们被封装在<code>Ready</code>中并由<code>RawNode.Ready()</code>返回到上层应用。什么时候调用<code>RawNode.Ready()</code>和处理它是由上层应用程序决定的。在处理返回的<code>Ready</code>时，上层应用程序还需要调用一些函数，比如<code>RawNode.Advance()</code>来更新<code>raft.Raft</code>的内部状态，比如说已应用的日志下标，以持久化的日志下标等。</p>
+<p>你可以运行<code>make project2ac</code>来测试实现并运行<code>make project2a</code>来测试整个A部分。</p>
+<blockquote>
+<p>Hints:</p>
+<ul>
+<li>在<code>eraftpb.proto</code>中添加任何你在<code>raft.Raft</code>，<code>raft.RaftLog</code>，<code>raft.RawNode</code>中需要的状态和消息</li>
+<li>测试假定你第一次运行raft时任期为0</li>
+<li>测试假定最新选举出来的领袖应该在它的任期中追加一条空日志</li>
+<li>测试假定一旦领袖推进了commit index，它将通过<code>MessageType_MsgAppend</code>来广播这个commit index</li>
+<li>测试没有为本地消息，<code>MessageType_MsgHup</code>，<code>MessageType_MsgBeat</code>和<code>MessageType_MsgPropose</code>设置任期</li>
+<li>日志条目的追加在领袖和非领袖之间是不一样的，有不同的来源，检查和处理要小心</li>
+<li>不要忘记不同的peers之间的选举超时要不同</li>
+<li>在<code>rawnode.go</code>中的一些包装方法可以使用<code>raft.Step(local message)</code>来实现</li>
+<li>当开启一个新的raft时，从<code>Storage</code>中获取上次的持久化状态来初始化<code>raft.Raft</code>和<code>raft.RaftLog</code></li>
+</ul>
+</blockquote>
+<h2 id="partb">PartB</h2>
+<p>在这个部分，你将构建一个容错地kv存储服务，使用part A中实现的Raft模块。你的kv服务应该是一个可复制的状态机，由几个使用Raft进行复制的kv服务器组成。您的kv服务应该可以持续的处理客户端的请求，只要大多数服务器是活跃的并且可以通信，尽管有一些其他错误或者网络分区。</p>
+<p>在Project1中，你已经实现了一个单机kv服务器，所以你应该熟悉kv服务器api和<code>Storage</code>接口。</p>
+<p>在介绍代码之前，你应该理解三个术语：<code>Store</code>，<code>Peer</code>和<code>Region</code>，这些在<code>proto/proto/metapb.proto</code>中定义。</p>
+<ul>
+<li>Store代表一个tinykv-server实例</li>
+<li>Peer代表一个运行在一个Store上的Raft节点</li>
+<li>Region是Peers的集合，同样也叫做Raft组</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://github.com/DBDreamers/HugeKV/raw/course/doc/imgs/region.png"
+        data-srcset="https://github.com/DBDreamers/HugeKV/raw/course/doc/imgs/region.png, https://github.com/DBDreamers/HugeKV/raw/course/doc/imgs/region.png 1.5x, https://github.com/DBDreamers/HugeKV/raw/course/doc/imgs/region.png 2x"
+        data-sizes="auto"
+        alt="https://github.com/DBDreamers/HugeKV/raw/course/doc/imgs/region.png"
+        title="region" /></p>
+<p>简单来讲，对于Project2，一个集群中只有一个Region，每个Store上也只有一个Peer。所以现在你不需要考虑Region的范围。多Region在peoject3中被更深的介绍。</p>
+<h3 id="the-code-2">The Code</h3>
+<p>首先，你应该看看<code>kv/storage/raft_storage/raft_server.go</code>中<code>RaftStorage</code>，它同样也实现了<code>Storage</code>接口，不像直接从下层的引擎中进行读写<code>StandaloneStorage</code>，它是先发送每一个读写请求到Raft，然后在Raft提交了该请求之后才进行实际的读写到引擎的操作。通过这个方式，它可以保证多Stores之间的一致性。</p>
+<p><code>RaftStorage</code>主要创建一个<code>Raftstore</code>来驱动Raft。当调用<code>Reader</code>或者<code>Write</code>功能时，它实际发送了一个<code>proto/proto/raft_cmdpd.proto</code>中定义的<code>RaftCmdRequest</code>请求，请求携带四个基本命令类型中的一个(Get/Put/Delete/Snap)，通过channel(channel的接收者是<code>raftWorker</code>的<code>raftCh</code>)传递给raftstore，然后在Raft提交和应用了该命令之后返回响应。<code>Reader</code>和<code>Write</code>中的<code>kvrpc.Context</code>变量同样有用，它携带客户端角度的Region信息，然后作为<code>RaftCmdRequest</code>的头部传递。可能消息是错误的或者陈旧的，所以raftstore要检查他们，并决定是否提出这个请求。</p>
+<p>然后，这里有一个TinyKV的核心—raftstore。这个结构有一些复杂，你可以读关于TiKV的引用来对该设计有更好的理解：</p>
+<ul>
+<li><a href="https://pingcap.com/blog-cn/the-design-and-implementation-of-multi-raft/#raftstore" target="_blank" rel="noopener noreffer">https://pingcap.com/blog-cn/the-design-and-implementation-of-multi-raft/#raftstore</a> (中文版)</li>
+<li><a href="https://pingcap.com/blog/2017-08-15-multi-raft/#raftstore" target="_blank" rel="noopener noreffer">https://pingcap.com/blog/2017-08-15-multi-raft/#raftstore</a> (英文版本)</li>
+</ul>
+<p>raftstore的入口是<code>RaftStore</code>，看<code>kv/raftstore/raftstore.go</code>。它启动一些工作和来异步处理特定任务，其中大部分现在还没有使用，所以可以忽略它们。你只需要关注<code>raftworker</code>。(<code>kv/raftstore/raft_worker.go</code>)</p>
+<p>整个流程被分为两部分：raft工人从<code>raftCh</code>中拉取来获取消息，消息包括了基本的tick来驱动Raft模块以及Raft命令将被以Raft条目提出；它从Raft模块获取和处理ready，包括发送raft消息，持久化状态，应用提交的日志到状态机。一旦应用，返回响应给客户端。</p>
+<h3 id="implement-peer-storage">Implement peer storage</h3>
+<blockquote>
+<p>实现peer strorage</p>
+</blockquote>
+<p>Peer storage是你通过part A中的<code>Storage</code>接口进行交互的，但是除了raft日志，peer storage同时也管理其他的持久化元数据，它们对重启后恢复一致性状态十分重要。此外，在<code>proto/proto/raft_serverpb.proto</code>中定义了三个重要的状态：</p>
+<ul>
+<li>RaftLocalState：用于存储当前的Raft的HardState以及最近的日志索引。</li>
+<li>RaftApplyState：用于存储上一个Raft应用的日志索引，以及一些截断后的日志信息。</li>
+<li>RegionLocalState：用于存储Region信息以及相应的Peer状态到该存储中。Normal表示该peer是正常的，Tombstone表示该peer已经从Region中移除以及不能加入到Raft组中。</li>
+</ul>
+<p>这些状态被存储进两个badger实例：raftdb和kvdb：</p>
+<ul>
+<li>raftdb存储raft日志和<code>RaftLocalState</code></li>
+<li>kvdb存储不同列祖的key-value数据，<code>RegionLocalState</code>和<code>RaftApplyState</code>。你可以视kvdb为Raft论文中提到的状态机。</li>
+</ul>
+<p>格式如下，以及在<code>kv/raftstore/meta</code>中有一些辅助函数，你可以使用<code>writebatch.SetMeta()</code>来设置它们。</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>KeyFormat</th>
+<th>Value</th>
+<th>DB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raft_log_key</td>
+<td>0x01 0x02 region_id 0x01 log_idx</td>
+<td>Entry</td>
+<td>raft</td>
+</tr>
+<tr>
+<td>raft_state_key</td>
+<td>0x01 0x02 region_id 0x02</td>
+<td>RaftLocalState</td>
+<td>raft</td>
+</tr>
+<tr>
+<td>apply_state_key</td>
+<td>0x01 0x02 region_id 0x03</td>
+<td>RaftApplyState</td>
+<td>kv</td>
+</tr>
+<tr>
+<td>region_state_key</td>
+<td>0x01 0x03 region_id 0x01</td>
+<td>RegionLocalState</td>
+<td>kv</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>你可能有疑问为什么TinyKV需要两个badger实例。实际上，它也可以只使用一个badger来存储raft日志和状态机数据。分开到两个实际只是为了和TiKV设计保持一致</p>
+</blockquote>
+<p>这些元数据应该在<code>PeerStorage</code>中被创建和更新。当创建PeerStorage时，看<code>kv/raftstore/peer_storage.go</code>，它初始化了该Peer的RaftLocalState，RaftApplyState，或者从从底层的引擎中获得之前的数据。注意RAFT_INIT_LOG_TERM和RAFT_INIT_LOG_INDEX都是5(只要比1大)而不是0。不设置为0的原因是为了区分配置变更后peer被动创建的情况。你现在可能不是很理解，所以就注意这个就行，细节在当你实现配置变更的project3b中会提及。</p>
+<p>在这个部分你需要实现的代码只有一个函数：<code>PeerStorage.SaveReadyState</code>，这个函数是用来保存<code>raft.Ready</code>中的数据到badger中，包括追加日志条目和保存Raft硬状态。</p>
+<p>为了追加日志条目，只需要将<code>raft.Ready.Entries</code>中所有的日志条目保存到raftdb中，然后删除任何以前追加的那些永远不会提交的日志条目。另外，更新peer storage的<code>RaftLocalState</code>和将其保存到raftdb中。</p>
+<blockquote>
+<p>Hints:</p>
+<ul>
+<li>使用<code>WriteBatch</code>来一次性保存这些状态。</li>
+<li>使用<code>peer_storage.go</code>中的其他函数为了如何读写这些状态。</li>
+<li>设置环境变量LOG_LEVEL=debug可能会帮助你debug</li>
+</ul>
+</blockquote>
+<h3 id="implement-raft-ready-process">Implement Raft ready process</h3>
+<blockquote>
+<p>实现Raft准备过程</p>
+</blockquote>
+<p>在project2 part A中，你已经构建了一个基于tick的Raft模块。现在你需要编写程序驱动它的外部进程，大部分代码已经在<code>kv/raftstore/peer.go</code>和<code>kv/raftstore/peer_msg_handler.go</code>下实现。所以你需要学习代码然后完成<code>proposeRaftCommand</code>和<code>HandleRaftReady</code>的逻辑。下面是对这个框架的一些解释。</p>
+<p>Raft<code>RawNode</code>已经使用<code>PeerStorage</code>创建存储在<code>peer</code>中。在raft的工作者上，你可以看到它用<code>peer</code>并且将其使用<code>peerMsgHandler</code>包装起来。<code>peerMsgHandler</code>主要功能有两个：一个是<code>HandleMsg</code>，另一个是<code>HandleRaftReady</code>。</p>
+<p><code>HandleMsg</code>处理所有从raftCh接收的消息，包括用来调用<code>RawNode.Tick</code>来驱动Raft的<code>MsgTypeTick</code>，用来包装客户端的请求的<code>MsgTypeRaftCmd</code>和用来传输Raft之间的消息的<code>MsgTyepeRaftMessage</code>。所有的消息类型在<code>kv/raftstore/message/msg.go</code>中被定义。你可以检查它们的细节并且其中部分会被用在之后的模块中。</p>
+<p>在消息被处理后，Raft节点应该有一些状态需要更新。所以<code>HandlerRaftReady</code>应该从Raft模块中做好准备，并执行相应的操作，比如说持久化日志条目、应用提交的条目以及通过网络向其他peer发送raft消息。</p>
+<p>在伪代码中，raftstore使用Raft类似于：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="p">{</span>
+  <span class="k">select</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">s</span><span class="p">.</span><span class="nx">Ticker</span><span class="p">:</span>
+    <span class="nx">Node</span><span class="p">.</span><span class="nf">Tick</span><span class="p">()</span>
+  <span class="k">default</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nx">Node</span><span class="p">.</span><span class="nf">HasReady</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">rd</span> <span class="o">:=</span> <span class="nx">Node</span><span class="p">.</span><span class="nf">Ready</span><span class="p">()</span>
+      <span class="nf">saveToStorage</span><span class="p">(</span><span class="nx">rd</span><span class="p">.</span><span class="nx">State</span><span class="p">,</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">Entries</span><span class="p">,</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">)</span>
+      <span class="nf">send</span><span class="p">(</span><span class="nx">rd</span><span class="p">.</span><span class="nx">Messages</span><span class="p">)</span>
+      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">entry</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">CommittedEntries</span> <span class="p">{</span>
+        <span class="nf">process</span><span class="p">(</span><span class="nx">entry</span><span class="p">)</span>
+      <span class="p">}</span>
+      <span class="nx">s</span><span class="p">.</span><span class="nx">Node</span><span class="p">.</span><span class="nf">Advance</span><span class="p">(</span><span class="nx">rd</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>再次之后，读或写的整个过程将是这样：</p>
+<ul>
+<li>客户端调用RPC RawGet/RawPut/RawDelete/RawScan</li>
+<li>RPC处理程序调用<code>RaftStorage</code>相关方法</li>
+<li><code>RaftStorage</code>发送一个Raft命令请求到raftstore，然后等待响应</li>
+<li><code>RaftStore</code>以一条Raft日志的形式提出Raft命令请求</li>
+<li>Raft模块追加日志，然后通过<code>PeerStorage</code>持久化</li>
+<li>Raft模块提交日志</li>
+<li>Raft工人在处理Raft ready时执行Raft命令，并通过回调来返回响应</li>
+<li><code>RaftStorage</code>接收回调的响应并返回给RPC处理程序</li>
+<li>RPC处理程序做出一些行动然后返回RPC响应给客户端</li>
+</ul>
+<p>你应该运行<code>make project2b</code>来通过所有的测试。整个测试是运行一个仿真的集群包括使用仿真网络的多TinyKV实例。它执行一些读写操作，并检查返回值是否符合预期。</p>
+<p>注意，错误处理是通过该测试的重要部分。你可能已经注意到有一些定义在<code>proto/proto/errorpb.proto</code>中的错误，该错误是gRPC响应的一个字段。同样，实现<code>error</code>接口的相应错误在<code>kv/raftstore/util/error.go</code>中定义，因此可以将它们用作函数的返回值。</p>
+<p>这些错误主要和Region有关。所以它也是<code>RaftCmdResponse</code>的<code>RaftResponseHeader</code>字段。当处理一个请求或者应用一个命令时，可能会有一些错误。如果这样，你应该携带着错误来返回raft命令的响应，之后错误将会被深入传递给gRPC响应。在返回携带错误的响应时，你可以使用<code>kv/raftstore/cmd_resp.go</code>提供的<code>BindErrResp</code>来将这些错误转成<code>errorpb.proto</code>中定义的错误类型。</p>
+<p>在该步骤，你可能需要考虑这些错误，其他的将会在project3中被处理：</p>
+<ul>
+<li>ErrNotLeader：raft命令在follower处被提出。所以使用这个错误来让客户端尝试其他peers</li>
+<li>ErrStaleCommand：这可能由于领导人变更，一些日志没有被提交，并被新的领导人的日志覆盖。但是客户端并不知道这一点。他们仍在等待回复。因此，您应该返回这个命令，让客户端知道并重试该命令。</li>
+</ul>
+<blockquote>
+<p>Hints:</p>
+<ul>
+<li><code>PeerStorage</code>实现了Raft模块中的<code>Storage</code>接口，你应该使用提供的方法<code>SaveRaftReady()</code>来持久化Raft相关状态。</li>
+<li>使用<code>engine_util</code>中的<code>WriteBatch</code>来使批量写原子性，例如，你应该确保应用已提交的日志以及更新applied index在一个写批次中。</li>
+<li>使用<code>Transport</code>来发送raft消息到其他peers，它在<code>GlobalContext</code>中。</li>
+<li>当没有大部分的节点同意以及没有最新的数据时，服务端不应该完成一个get的RPC。你可以把get操作放入一个raft日志中，或者实现Raft论文章节8中的read-only操作的优化。</li>
+<li>不要忘记更新和持久化状态，当应用日志条目时。</li>
+<li>你可以异步方式应用已提交的日志条目，就像TiKV做的那样。这不是必要的，但是是一个可以提升性能的巨大挑战。</li>
+<li>在提出日志时记录命令的回调，然后在应用中返回回调。</li>
+<li>对于一个snap命令的响应，应该显示地将badger Txn设置为callback。</li>
+<li>在2A之后，你应该需要多次运行某些测试来找到一些bug。</li>
+</ul>
+</blockquote>
+<h2 id="partc">PartC</h2>
+<p>就目前的代码而言，长时间运行的服务器永远记住整个 Raft 日志是不现实的。相反，服务器将检查 Raft 日志的数量，并不时丢弃超过阈值的日志条目。</p>
+<p>在本部分中，您将基于上面两部分的实现来实现快照处理。一般来说，Snapshot 只是像 AppendEntry 一样的Raft消息，用于向follower复制数据，不同之处在于它的大小，Snapshot 在某个时间点包含了整个状态机的数据，而一次构建和发送如此大的消息将消耗大量的资源和时间，这可能会阻碍其他Raft消息的处理，为了缓解这个问题，Snapshot 消息将使用一个独立的连接，并将数据分成块传输。这就是为什么 TinyKV 服务有一个快照 RPCAPI 的原因。如果您对发送和接收的细节感兴趣，请检查 <code>snapRunner</code> 和参考 <a href="https://pingcap.com/blog-cn/tikv-source-code-reading-10/" target="_blank" rel="noopener noreffer">https://pingcap.com/blog-cn/tikv-source-code-reading-10/</a></p>
+<h3 id="the-code-3">The Code</h3>
+<p>所有你需要的变动都基于你part A和part B中写的代码。</p>
+<h3 id="implement-in-raft">Implement in Raft</h3>
+<blockquote>
+<p>Raft中的实现</p>
+</blockquote>
+<p>即使我们需要一些不同的快照消息的处理程序，但是从Raft算法角度来看没有什么区别。参见<code>eraftpb.Snapshot</code>的定义，<code>eraftpb.Snapshot</code>的字段<code>data</code>不代表实际的状态机数据，但是上层应用使用的一些元数据你可以暂时忽略。当领导者需要向跟随者发送快照消息时，它会调用<code>Storage.Snapshot()</code>来获取<code>eraftpb.Snapshot</code>，然后像其他的Raft消息一样发送快照消息。如何构建和发送状态机数据是由raftstore实现的，这将在下一步中介绍。你可以假设一旦<code>Storage.Snapshot()</code>返回成功，Raft领袖可以发送快照消息到follower，然后follower应该调用<code>handleSnapshot()</code>来处理，即会从<code>eraftpb.SnapshotMetadata</code>中恢复raft内部数据比如说任期，commit index和membership信息等，然后完成快照处理程序。</p>
+<h3 id="implement-in-raftstore">Implement in raftstore</h3>
+<blockquote>
+<p>raftstore中的实现</p>
+</blockquote>
+<p>在该步骤，你需要多学习两个raftstore的工作者—raftlog-gc worker和region worker。</p>
+<p>Raftstore基于配置<code>RaftLogGcCountLimit</code>来时时检查它是否需要回收日志，参考<code>onRaftGcLogTick()</code>。如果需要，它会提出一个raft管理员命令<code>CompactLogRequest</code>，这个命令是由<code>RaftCmdRequest</code>包装的，就像project2 part B中实现二点四种基本命令类型(Get/Put/Delete/Snap)。然后你需要当管理员命令由Raft提交时处理这个它。但是不像 Get/Put/Delete/Snap 命令时读写状态机数据的，<code>CompactLogRequest</code>修改元数据，也就是更新<code>RaftApplyState</code>中的<code>RaftTruncatedState</code>。之后，你应该通过<code>ScheduleCompactLog</code>来分配一个任务给raftlog-gc worker。Raftlog-gc worker将会异步的做实际的日志删除工作。</p>
+<p>然后由于日志压缩，Raft模块可能需要发送一个快照。<code>PeerStorage</code>实现了<code>Storage.Snapshot()</code>。TinyKV在region worker中生成快照和应用快照。当调用<code>Snapshot()</code>，它实际会发送一个任务<code>RegionTaskGen</code>给region worker。region worker的消息处理程序位于<code>kv/raftstore/runner/region_task.go</code>中。它会扫描底层的引擎来生成快照，然后通过channel发送快照的元数据。下一次Raft调用<code>Snapshot</code>，它会检查是否快照是否完成生成了。如果是，Raft应该发送快照数据到其他的peers，快照发送和接收工作在<code>kv/storage/raft_storage/snap_runner.go</code>中被处理。你不需要深入细节，只需要知道快照消息将在接收到快照之后由<code>onRaftMsg</code>处理。</p>
+<p>然后快照将反映在下一个Raft ready，所以你需要做的任务就是修改reft ready流程来处理如果是snaphot的情况。当你确保应用了快照时，你可以更新你的peer storage的内存状态比如说<code>RaftLocalState</code>，<code>RaftApplyState</code>和<code>RegionLocalState</code>。同样的，不要忘记持久化这些状态到kvdb和raftdb以及从kvdb和raftdb中移除旧的状态。除此之外，你也需要更新<code>PeerStorage.snapState</code>到<code>snap.SnapState_Applying</code>然后发送<code>runner.RegionTaskApply</code>任务到region worker通过<code>PeerStorage.regionSched</code>并等待直到region worker完成。</p>
+<p>你应该运行<code>make project2c</code>来通过所有的测试。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-06-07</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/tinykv-project%E7%BF%BB%E8%AF%91/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>,&nbsp;<a href="/tags/raft/">Raft</a>,&nbsp;<a href="/tags/golang/">Golang</a>,&nbsp;<a href="/tags/pingcap/">PingCAP</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mit-6.830-lab%E7%BF%BB%E8%AF%91/" class="prev" rel="prev" title="MIT 6.830 Lab翻译"><i class="fas fa-angle-left fa-fw"></i>MIT 6.830 Lab翻译</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">粤ICP备2021124507号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"TheR1sing3un的个人博客","id-2":"TheR1sing3un的个人博客"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="TinyKV Project翻译"/>
 <meta name="twitter:description" content="TinyKV-Project翻译 Project1 StandaloneKV 项目1 单机KV存储系统 在这个项目中，您将在列族(column family)的支持下构建一个独立的键/值存"/>
 <meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/tinykv-project%E7%BF%BB%E8%AF%91/" /><link rel="prev" href="https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/baseConfig/blogAvatar.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ther1sing3un.github.io/tinykv-project%E7%BF%BB%E8%AF%91/" /><link rel="prev" href="https://ther1sing3un.github.io/mit-6.830-lab%E7%BF%BB%E8%AF%91/" /><link rel="next" href="https://ther1sing3un.github.io/2022%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -202,12 +202,12 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Storage</span> <span class="kd">interface</span> <span class="p">{</span>
-    <span class="c1">// Other stuffs
-</span><span class="c1"></span>    <span class="nf">Write</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">batch</span> <span class="p">[]</span><span class="nx">Modify</span><span class="p">)</span> <span class="kt">error</span>
-    <span class="nf">Reader</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="nx">StorageReader</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Storage</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Other stuffs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">Write</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">batch</span> <span class="p">[]</span><span class="nx">Modify</span><span class="p">)</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Reader</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="nx">StorageReader</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>Write</code>应该提供一种对内部状态应用一系列修改的方法，在这种情况下，内部状态就是一个badger实例。</p>
 <p><code>Reader</code>应该返回一个<code>StorageReader</code>用来支持在快照上进行键值对的get和scan。</p>
@@ -416,22 +416,22 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="p">{</span>
-  <span class="k">select</span> <span class="p">{</span>
-  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">s</span><span class="p">.</span><span class="nx">Ticker</span><span class="p">:</span>
-    <span class="nx">Node</span><span class="p">.</span><span class="nf">Tick</span><span class="p">()</span>
-  <span class="k">default</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nx">Node</span><span class="p">.</span><span class="nf">HasReady</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">rd</span> <span class="o">:=</span> <span class="nx">Node</span><span class="p">.</span><span class="nf">Ready</span><span class="p">()</span>
-      <span class="nf">saveToStorage</span><span class="p">(</span><span class="nx">rd</span><span class="p">.</span><span class="nx">State</span><span class="p">,</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">Entries</span><span class="p">,</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">)</span>
-      <span class="nf">send</span><span class="p">(</span><span class="nx">rd</span><span class="p">.</span><span class="nx">Messages</span><span class="p">)</span>
-      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">entry</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">CommittedEntries</span> <span class="p">{</span>
-        <span class="nf">process</span><span class="p">(</span><span class="nx">entry</span><span class="p">)</span>
-      <span class="p">}</span>
-      <span class="nx">s</span><span class="p">.</span><span class="nx">Node</span><span class="p">.</span><span class="nf">Advance</span><span class="p">(</span><span class="nx">rd</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">s</span><span class="p">.</span><span class="nx">Ticker</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Node</span><span class="p">.</span><span class="nf">Tick</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">Node</span><span class="p">.</span><span class="nf">HasReady</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">rd</span> <span class="o">:=</span> <span class="nx">Node</span><span class="p">.</span><span class="nf">Ready</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">saveToStorage</span><span class="p">(</span><span class="nx">rd</span><span class="p">.</span><span class="nx">State</span><span class="p">,</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">Entries</span><span class="p">,</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">send</span><span class="p">(</span><span class="nx">rd</span><span class="p">.</span><span class="nx">Messages</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">entry</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">rd</span><span class="p">.</span><span class="nx">CommittedEntries</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">process</span><span class="p">(</span><span class="nx">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">s</span><span class="p">.</span><span class="nx">Node</span><span class="p">.</span><span class="nf">Advance</span><span class="p">(</span><span class="nx">rd</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>再次之后，读或写的整个过程将是这样：</p>
 <ul>
@@ -511,11 +511,12 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/mit-6.830-lab%E7%BF%BB%E8%AF%91/" class="prev" rel="prev" title="MIT 6.830 Lab翻译"><i class="fas fa-angle-left fa-fw"></i>MIT 6.830 Lab翻译</a></div>
+    <div class="post-nav"><a href="/mit-6.830-lab%E7%BF%BB%E8%AF%91/" class="prev" rel="prev" title="MIT 6.830 Lab翻译"><i class="fas fa-angle-left fa-fw"></i>MIT 6.830 Lab翻译</a>
+            <a href="/2022%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" class="next" rel="next" title="2022年终总结">2022年终总结<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

@@ -258,62 +258,62 @@
 </span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">GetArgs</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="nx">GetReply</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">// Your code here.
-</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 返回Get RPC请求,args=[%v];Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
-   <span class="p">}()</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收Get RPC请求,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
-   <span class="c1">//1.先判断该命令是否已经被执行过了
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">&gt;=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
-         <span class="c1">//若当前的请求已经被执行过了,那么直接返回结果
-</span><span class="c1"></span>         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Err</span>
-         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Value</span>
-         <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-         <span class="k">return</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="c1">//2.若命令未被执行,那么开始生成Op并传递给raft
-</span><span class="c1"></span>   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">Op</span><span class="p">{</span>
-      <span class="nx">CommandType</span><span class="p">:</span> <span class="nx">GetMethod</span><span class="p">,</span>
-      <span class="nx">Key</span><span class="p">:</span>         <span class="nx">args</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span>
-      <span class="nx">ClientId</span><span class="p">:</span>    <span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span>
-      <span class="nx">CommandId</span><span class="p">:</span>   <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span>
-   <span class="p">}</span>
-   <span class="nx">index</span><span class="p">,</span> <span class="nx">term</span><span class="p">,</span> <span class="nx">isLeader</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">op</span><span class="p">)</span>
-   <span class="c1">//3.若不为leader则直接返回Err
-</span><span class="c1"></span>   <span class="k">if</span> <span class="p">!</span><span class="nx">isLeader</span> <span class="p">{</span>
-      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
-      <span class="c1">//kv.mu.Unlock()
-</span><span class="c1"></span>      <span class="k">return</span>
-   <span class="p">}</span>
-   <span class="nx">replyCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="nx">ApplyNotifyMsg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">=</span> <span class="nx">replyCh</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 创建reply通道:index=[%d]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="c1">//4.等待应用后返回消息
-</span><span class="c1"></span>   <span class="k">select</span> <span class="p">{</span>
-   <span class="k">case</span> <span class="nx">replyMsg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">replyCh</span><span class="p">:</span>
-      <span class="c1">//当被通知时,返回结果
-</span><span class="c1"></span>      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 获取到通知结果,index=[%d],replyMsg: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">replyMsg</span><span class="p">)</span>
-      <span class="k">if</span> <span class="nx">term</span> <span class="o">==</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Term</span> <span class="p">{</span>
-         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Err</span>
-         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Value</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
-      <span class="p">}</span>
-   <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">500</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">):</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 处理请求超时: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">)</span>
-      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrTimeout</span>
-   <span class="p">}</span>
-   <span class="c1">//5.清除chan
-</span><span class="c1"></span>   <span class="k">go</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">CloseChan</span><span class="p">(</span><span class="nx">index</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">GetArgs</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="nx">GetReply</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// Your code here.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 返回Get RPC请求,args=[%v];Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收Get RPC请求,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//1.先判断该命令是否已经被执行过了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">&gt;=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//若当前的请求已经被执行过了,那么直接返回结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Err</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span><span class="p">.</span><span class="nx">Value</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//2.若命令未被执行,那么开始生成Op并传递给raft
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">Op</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">CommandType</span><span class="p">:</span> <span class="nx">GetMethod</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">Key</span><span class="p">:</span>         <span class="nx">args</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">ClientId</span><span class="p">:</span>    <span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">CommandId</span><span class="p">:</span>   <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">index</span><span class="p">,</span> <span class="nx">term</span><span class="p">,</span> <span class="nx">isLeader</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">op</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//3.若不为leader则直接返回Err
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="p">!</span><span class="nx">isLeader</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//kv.mu.Unlock()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">replyCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="nx">ApplyNotifyMsg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">=</span> <span class="nx">replyCh</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 创建reply通道:index=[%d]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//4.等待应用后返回消息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="nx">replyMsg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">replyCh</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//当被通知时,返回结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 获取到通知结果,index=[%d],replyMsg: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">replyMsg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="nx">term</span> <span class="o">==</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Term</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Err</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">replyMsg</span><span class="p">.</span><span class="nx">Value</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">500</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 处理请求超时: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrTimeout</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//5.清除chan
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">go</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">CloseChan</span><span class="p">(</span><span class="nx">index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -365,53 +365,53 @@
 </span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">applyCommand</span><span class="p">(</span><span class="nx">applyMsg</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="kd">var</span> <span class="nx">commonReply</span> <span class="nx">ApplyNotifyMsg</span>
-   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span><span class="p">.(</span><span class="nx">Op</span><span class="p">)</span>
-   <span class="nx">index</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
-   <span class="c1">//当命令已经被应用过了
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">&gt;=</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该命令已被应用过,applyMsg: %v, commandContext: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">commandContext</span><span class="p">)</span>
-      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span>
-      <span class="k">return</span>
-   <span class="p">}</span>
-   <span class="c1">//当命令未被应用过
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">GetMethod</span> <span class="p">{</span>
-      <span class="c1">//Get请求时
-</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
-         <span class="c1">//有该数据时
-</span><span class="c1"></span>         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-         <span class="c1">//当没有数据时
-</span><span class="c1"></span>         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">ErrNoKey</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
-      <span class="p">}</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">PutMethod</span> <span class="p">{</span>
-      <span class="c1">//Put请求时
-</span><span class="c1"></span>      <span class="nx">value</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
-      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">AppendMethod</span> <span class="p">{</span>
-      <span class="c1">//Append请求时
-</span><span class="c1"></span>      <span class="nx">newValue</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
-      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
-   <span class="p">}</span>
-   <span class="c1">//通知handler去响应请求
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">replyCh</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-      <span class="nx">replyCh</span> <span class="o">&lt;-</span> <span class="nx">commonReply</span>
-   <span class="p">}</span>
-   <span class="nx">value</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">)</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 此时key=[%v],value=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-   <span class="c1">//更新clientReply
-</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">CommandContext</span><span class="p">{</span><span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">}</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 更新ClientId=[%d],CommandId=[%d],Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">)</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
-   <span class="c1">//判断是否需要快照
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">needSnapshot</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">kv</span><span class="p">.</span><span class="nf">startSnapshot</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span><span class="p">)</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">applyCommand</span><span class="p">(</span><span class="nx">applyMsg</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="kd">var</span> <span class="nx">commonReply</span> <span class="nx">ApplyNotifyMsg</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">op</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span><span class="p">.(</span><span class="nx">Op</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">index</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//当命令已经被应用过了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">commandContext</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Command</span> <span class="o">&gt;=</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该命令已被应用过,applyMsg: %v, commandContext: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">commandContext</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">commandContext</span><span class="p">.</span><span class="nx">Reply</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//当命令未被应用过
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">GetMethod</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//Get请求时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//有该数据时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//当没有数据时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">ErrNoKey</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">PutMethod</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//Put请求时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">value</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">AppendMethod</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//Append请求时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">newValue</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//通知handler去响应请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">replyCh</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">replyCh</span> <span class="o">&lt;-</span> <span class="nx">commonReply</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">value</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 此时key=[%v],value=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//更新clientReply
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">CommandContext</span><span class="p">{</span><span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 更新ClientId=[%d],CommandId=[%d],Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//判断是否需要快照
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">needSnapshot</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">kv</span><span class="p">.</span><span class="nf">startSnapshot</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <blockquote>
@@ -481,64 +481,64 @@
 </span><span class="lnt">57
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">GetArgs</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="nx">GetReply</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">// Your code here.
-</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 返回Get RPC请求,args=[%v];Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
-   <span class="p">}()</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收Get RPC请求,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
-   <span class="c1">//1.先判断该命令是否已经被执行过了
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">RequestId</span> <span class="o">&gt;=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
-         <span class="c1">//若当前的请求已经被执行过了,那么直接返回结果
-</span><span class="c1"></span>         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Err</span>
-         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Value</span>
-         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该Get RPC请求为历史请求,args=[%v],reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
-         <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-         <span class="k">return</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="c1">//2.发送一轮心跳来检查自己是否还是Leader
-</span><span class="c1"></span>   <span class="k">if</span> <span class="p">!</span><span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">CheckIsLeader</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">//不为Leader则返回
-</span><span class="c1"></span>      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
-      <span class="k">return</span>
-   <span class="p">}</span>
-   <span class="c1">//3.当前仍为Leader,取当前的commitIndex(一定可以取到和节点term相同的log的commitIndex,由Raft的该方法自行保证)
-</span><span class="c1"></span>   <span class="nx">readIndex</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">GetCommitIndex</span><span class="p">()</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]:获取ReadIndex: %d\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">readIndex</span><span class="p">)</span>
-   <span class="c1">//等待该readIndex被应用到状态机
-</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="kd">var</span> <span class="nx">cond</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span>
-   <span class="k">if</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">readCon</span><span class="p">[</span><span class="nx">readIndex</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-      <span class="c1">//若没有该readIndex的con,则新建一个
-</span><span class="c1"></span>      <span class="nx">lock</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">{}</span>
-      <span class="nx">cond</span> <span class="p">=</span> <span class="nx">sync</span><span class="p">.</span><span class="nf">NewCond</span><span class="p">(</span><span class="nx">lock</span><span class="p">)</span>
-      <span class="nx">kv</span><span class="p">.</span><span class="nx">readCon</span><span class="p">[</span><span class="nx">readIndex</span><span class="p">]</span> <span class="p">=</span> <span class="nx">cond</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">cond</span> <span class="p">=</span> <span class="nx">c</span>
-   <span class="p">}</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 开始等待ReadIndex: %d,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">readIndex</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="c1">//在该cond上等待
-</span><span class="c1"></span>   <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-   <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="c1">//执行读请求
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">Key</span><span class="p">);</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrNoKey</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">OK</span>
-      <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">value</span>
-   <span class="p">}</span>
-   <span class="c1">//更新clientReply
-</span><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">RequestResult</span><span class="p">{</span><span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span><span class="p">,</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">GetArgs</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="nx">GetReply</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// Your code here.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 返回Get RPC请求,args=[%v];Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 接收Get RPC请求,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//1.先判断该命令是否已经被执行过了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">RequestId</span> <span class="o">&gt;=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//若当前的请求已经被执行过了,那么直接返回结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>         <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Err</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Value</span>
+</span></span><span class="line"><span class="cl">         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该Get RPC请求为历史请求,args=[%v],reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//2.发送一轮心跳来检查自己是否还是Leader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="p">!</span><span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">CheckIsLeader</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//不为Leader则返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrWrongLeader</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//3.当前仍为Leader,取当前的commitIndex(一定可以取到和节点term相同的log的commitIndex,由Raft的该方法自行保证)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">readIndex</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">rf</span><span class="p">.</span><span class="nf">GetCommitIndex</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]:获取ReadIndex: %d\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">readIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//等待该readIndex被应用到状态机
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="kd">var</span> <span class="nx">cond</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">readCon</span><span class="p">[</span><span class="nx">readIndex</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//若没有该readIndex的con,则新建一个
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">lock</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cond</span> <span class="p">=</span> <span class="nx">sync</span><span class="p">.</span><span class="nf">NewCond</span><span class="p">(</span><span class="nx">lock</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">kv</span><span class="p">.</span><span class="nx">readCon</span><span class="p">[</span><span class="nx">readIndex</span><span class="p">]</span> <span class="p">=</span> <span class="nx">cond</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cond</span> <span class="p">=</span> <span class="nx">c</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 开始等待ReadIndex: %d,args=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">readIndex</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//在该cond上等待
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//执行读请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">Key</span><span class="p">);</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">ErrNoKey</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">OK</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">value</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//更新clientReply
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">args</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">RequestResult</span><span class="p">{</span><span class="nx">args</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Err</span><span class="p">,</span> <span class="nx">reply</span><span class="p">.</span><span class="nx">Value</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Apply</p>
@@ -591,51 +591,51 @@
 </span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">applyCommand</span><span class="p">(</span><span class="nx">applyMsg</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="kd">var</span> <span class="nx">commonReply</span> <span class="nx">ApplyNotifyMsg</span>
-   <span class="nx">index</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
-   <span class="k">if</span> <span class="nx">index</span> <span class="o">&lt;=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">{</span>
-      <span class="k">return</span>
-   <span class="p">}</span>
-   <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">=</span> <span class="nx">index</span>
-   <span class="k">if</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="nx">op</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span><span class="p">.(</span><span class="nx">Op</span><span class="p">)</span>
-      <span class="c1">//当命令已经被应用过了
-</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">RequestId</span> <span class="o">&gt;=</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
-         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该命令已被应用过,applyMsg: %v, requestReply: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
-         <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Err</span>
-         <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Value</span>
-         <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Term</span> <span class="p">=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span>
-         <span class="k">return</span>
-      <span class="p">}</span>
-      <span class="c1">//当命令未被应用过
-</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">PutMethod</span> <span class="p">{</span>
-         <span class="c1">//Put请求时
-</span><span class="c1"></span>         <span class="nx">value</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
-         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">AppendMethod</span> <span class="p">{</span>
-         <span class="c1">//Append请求时
-</span><span class="c1"></span>         <span class="nx">newValue</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
-         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
-      <span class="p">}</span>
-      <span class="c1">//通知handler去响应请求
-</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">replyCh</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-         <span class="nx">replyCh</span> <span class="o">&lt;-</span> <span class="nx">commonReply</span>
-      <span class="p">}</span>
-      <span class="nx">value</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">)</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 此时key=[%v],value=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-      <span class="c1">//更新clientReply
-</span><span class="c1"></span>      <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">RequestResult</span><span class="p">{</span><span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Err</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Value</span><span class="p">}</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 更新ClientId=[%d],CommandId=[%d],Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">)</span>
-   <span class="p">}</span>
-   <span class="c1">//判断是否需要快照
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">needSnapshot</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">kv</span><span class="p">.</span><span class="nf">startSnapshot</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span><span class="p">)</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">applyCommand</span><span class="p">(</span><span class="nx">applyMsg</span> <span class="nx">raft</span><span class="p">.</span><span class="nx">ApplyMsg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="kd">var</span> <span class="nx">commonReply</span> <span class="nx">ApplyNotifyMsg</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">index</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">index</span> <span class="o">&lt;=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">=</span> <span class="nx">index</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">op</span> <span class="o">:=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">Command</span><span class="p">.(</span><span class="nx">Op</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//当命令已经被应用过了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">];</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">RequestId</span> <span class="o">&gt;=</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 该命令已被应用过,applyMsg: %v, requestReply: %v\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Err</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Err</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Value</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Term</span> <span class="p">=</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//当命令未被应用过
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">PutMethod</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//Put请求时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>         <span class="nx">value</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandType</span> <span class="o">==</span> <span class="nx">AppendMethod</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">//Append请求时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>         <span class="nx">newValue</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">commonReply</span> <span class="p">=</span> <span class="nx">ApplyNotifyMsg</span><span class="p">{</span><span class="nx">OK</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">,</span> <span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandTerm</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//通知handler去响应请求
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="nx">replyCh</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">replyChMap</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">replyCh</span> <span class="o">&lt;-</span> <span class="nx">commonReply</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">value</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">storeInterface</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 此时key=[%v],value=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//更新clientReply
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">kv</span><span class="p">.</span><span class="nx">clientReply</span><span class="p">[</span><span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">]</span> <span class="p">=</span> <span class="nx">RequestResult</span><span class="p">{</span><span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Err</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">.</span><span class="nx">Value</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 更新ClientId=[%d],CommandId=[%d],Reply=[%v]\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">ClientId</span><span class="p">,</span> <span class="nx">op</span><span class="p">.</span><span class="nx">CommandId</span><span class="p">,</span> <span class="nx">commonReply</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//判断是否需要快照
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">kv</span><span class="p">.</span><span class="nf">needSnapshot</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">kv</span><span class="p">.</span><span class="nf">startSnapshot</span><span class="p">(</span><span class="nx">applyMsg</span><span class="p">.</span><span class="nx">CommandIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="增加checkreadindex方法">增加CheckReadIndex方法</h2>
@@ -658,21 +658,21 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">checkReadIndex</span><span class="p">()</span> <span class="p">{</span>
-   <span class="k">for</span> <span class="p">!</span><span class="nx">kv</span><span class="p">.</span><span class="nf">killed</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">//检查是否有可以返回的readIndex了
-</span><span class="c1"></span>      <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-      <span class="k">for</span> <span class="nx">readIndex</span><span class="p">,</span> <span class="nx">cond</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">readCon</span> <span class="p">{</span>
-         <span class="k">if</span> <span class="nx">readIndex</span> <span class="o">&lt;=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">{</span>
-            <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 检查到ReadIndex: %v,lastApplied: %v,因为通知更新返回get结果\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">readIndex</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span><span class="p">)</span>
-            <span class="nx">cond</span><span class="p">.</span><span class="nf">Broadcast</span><span class="p">()</span>
-         <span class="p">}</span>
-      <span class="p">}</span>
-      <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-      <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">kv</span> <span class="o">*</span><span class="nx">KVServer</span><span class="p">)</span> <span class="nf">checkReadIndex</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="p">!</span><span class="nx">kv</span><span class="p">.</span><span class="nf">killed</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//检查是否有可以返回的readIndex了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="k">for</span> <span class="nx">readIndex</span><span class="p">,</span> <span class="nx">cond</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">readCon</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">if</span> <span class="nx">readIndex</span> <span class="o">&lt;=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;kvserver[%d]: 检查到ReadIndex: %v,lastApplied: %v,因为通知更新返回get结果\n&#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">readIndex</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">lastApplied</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">cond</span><span class="p">.</span><span class="nf">Broadcast</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">         <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">kv</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="raft改动">Raft改动</h2>
@@ -937,26 +937,26 @@
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// CheckIsLeader 检查当前是否仍是leader
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">rf</span> <span class="o">*</span><span class="nx">Raft</span><span class="p">)</span> <span class="nf">CheckIsLeader</span><span class="p">()</span> <span class="p">(</span><span class="nx">isLeader</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//发送一轮广播
-</span><span class="c1"></span>   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 检查目前是否为Leader: %v\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">isLeader</span><span class="p">)</span>
-   <span class="p">}()</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 开始检查自己是否为leader\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">)</span>
-   <span class="k">if</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span> <span class="o">!=</span> <span class="nx">LEADER</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="kc">false</span>
-   <span class="p">}</span>
-   <span class="nx">cond</span> <span class="o">:=</span> <span class="nx">sync</span><span class="p">.</span><span class="nf">NewCond</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">)</span>
-   <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-   <span class="k">go</span> <span class="nx">rf</span><span class="p">.</span><span class="nf">BoardCastOneRound</span><span class="p">(</span><span class="nx">cond</span><span class="p">,</span> <span class="nx">ch</span><span class="p">)</span>
-   <span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 检查Leader协程被唤醒: %v\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">isLeader</span><span class="p">)</span>
-   <span class="k">return</span> <span class="o">&lt;-</span><span class="nx">ch</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// CheckIsLeader 检查当前是否仍是leader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">rf</span> <span class="o">*</span><span class="nx">Raft</span><span class="p">)</span> <span class="nf">CheckIsLeader</span><span class="p">()</span> <span class="p">(</span><span class="nx">isLeader</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//发送一轮广播
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 检查目前是否为Leader: %v\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">isLeader</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 开始检查自己是否为leader\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span> <span class="o">!=</span> <span class="nx">LEADER</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cond</span> <span class="o">:=</span> <span class="nx">sync</span><span class="p">.</span><span class="nf">NewCond</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">go</span> <span class="nx">rf</span><span class="p">.</span><span class="nf">BoardCastOneRound</span><span class="p">(</span><span class="nx">cond</span><span class="p">,</span> <span class="nx">ch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 检查Leader协程被唤醒: %v\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">isLeader</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>BroadcastOneRound</p>
@@ -998,39 +998,39 @@
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// BroadcastOneRound 发起广播发送AppendEntries RPC
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">rf</span> <span class="o">*</span><span class="nx">Raft</span><span class="p">)</span> <span class="nf">BroadcastOneRound</span><span class="p">(</span><span class="nx">cond</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span><span class="p">,</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="nx">wg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">{}</span>
-   <span class="kd">var</span> <span class="nx">successNums</span> <span class="kt">int64</span>
-   <span class="nx">successNums</span> <span class="p">=</span> <span class="mi">1</span>
-   <span class="k">if</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span> <span class="o">==</span> <span class="nx">LEADER</span> <span class="p">{</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 开始一轮检验leader广播\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">)</span>
-      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">peers</span> <span class="p">{</span>
-         <span class="k">if</span> <span class="nx">i</span> <span class="o">!=</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span> <span class="p">{</span>
-            <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">server</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-               <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;server = %v\n&#34;</span><span class="p">,</span> <span class="nx">server</span><span class="p">)</span>
-               <span class="k">if</span> <span class="nx">rf</span><span class="p">.</span><span class="nf">HandleAppendEntries</span><span class="p">(</span><span class="nx">server</span><span class="p">)</span> <span class="p">{</span>
-                  <span class="nx">atomic</span><span class="p">.</span><span class="nf">AddInt64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">successNums</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                  <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 节点%v 同意本节点仍为leader\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">server</span><span class="p">)</span>
-               <span class="p">}</span>
-               <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
-            <span class="p">}(</span><span class="nx">i</span><span class="p">)</span>
-         <span class="p">}</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="c1">//等待所有的返回
-</span><span class="c1"></span>   <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-   <span class="c1">//广播完,通知正在等待的CheckIsLeader协程
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">cond</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 通知checkIsLeader协程,successNums: %v\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">successNums</span><span class="p">)</span>
-      <span class="nx">cond</span><span class="p">.</span><span class="nf">Signal</span><span class="p">()</span>
-      <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">successNums</span> <span class="p">&gt;</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">rf</span><span class="p">.</span><span class="nx">peers</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// BroadcastOneRound 发起广播发送AppendEntries RPC
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">rf</span> <span class="o">*</span><span class="nx">Raft</span><span class="p">)</span> <span class="nf">BroadcastOneRound</span><span class="p">(</span><span class="nx">cond</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span><span class="p">,</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">wg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">   <span class="kd">var</span> <span class="nx">successNums</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">successNums</span> <span class="p">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span> <span class="o">==</span> <span class="nx">LEADER</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 开始一轮检验leader广播\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">peers</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">if</span> <span class="nx">i</span> <span class="o">!=</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">server</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">               <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;server = %v\n&#34;</span><span class="p">,</span> <span class="nx">server</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="k">if</span> <span class="nx">rf</span><span class="p">.</span><span class="nf">HandleAppendEntries</span><span class="p">(</span><span class="nx">server</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                  <span class="nx">atomic</span><span class="p">.</span><span class="nf">AddInt64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">successNums</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 节点%v 同意本节点仍为leader\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">server</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">}</span>
+</span></span><span class="line"><span class="cl">               <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//等待所有的返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//广播完,通知正在等待的CheckIsLeader协程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">cond</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 通知checkIsLeader协程,successNums: %v\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">successNums</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cond</span><span class="p">.</span><span class="nf">Signal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">successNums</span> <span class="p">&gt;</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">rf</span><span class="p">.</span><span class="nx">peers</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h3 id="获取最新的commitindex">获取最新的CommitIndex</h3>
@@ -1049,17 +1049,17 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// GetCommitIndex 返回最新的commitIndex
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">rf</span> <span class="o">*</span><span class="nx">Raft</span><span class="p">)</span> <span class="nf">GetCommitIndex</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="k">for</span> <span class="nx">rf</span><span class="p">.</span><span class="nf">index</span><span class="p">(</span><span class="nx">rf</span><span class="p">.</span><span class="nx">commitIndex</span><span class="p">).</span><span class="nx">Term</span> <span class="o">!=</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span> <span class="p">{</span>
-      <span class="nx">rf</span><span class="p">.</span><span class="nx">applyCond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-   <span class="p">}</span>
-   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 当前的commitIndex: %d\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">commitIndex</span><span class="p">)</span>
-   <span class="k">return</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">commitIndex</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// GetCommitIndex 返回最新的commitIndex
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">rf</span> <span class="o">*</span><span class="nx">Raft</span><span class="p">)</span> <span class="nf">GetCommitIndex</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="nx">rf</span><span class="p">.</span><span class="nf">index</span><span class="p">(</span><span class="nx">rf</span><span class="p">.</span><span class="nx">commitIndex</span><span class="p">).</span><span class="nx">Term</span> <span class="o">!=</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">rf</span><span class="p">.</span><span class="nx">applyCond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">DPrintf</span><span class="p">(</span><span class="s">&#34;id[%d].state[%v].term[%d]: 当前的commitIndex: %d\n&#34;</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">me</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">currentTerm</span><span class="p">,</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">commitIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nx">rf</span><span class="p">.</span><span class="nx">commitIndex</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="总结">总结</h2>
@@ -1095,7 +1095,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

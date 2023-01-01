@@ -174,8 +174,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// YOUR CODE HERE (lab1).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>完成这些部分之后，运行<code>make lab1P0</code>命令来检查是否所有的测试用例都通过了。注意事项：</p>
 <ul>
@@ -262,20 +262,20 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Command is an abstraction which covers the process from receiving a request from gRPC to returning a response.
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Command</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">Context</span><span class="p">()</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span>
-	<span class="nf">StartTs</span><span class="p">()</span> <span class="kt">uint64</span>
-	<span class="c1">// WillWrite returns a list of all keys that might be written by this command. Return nil if the command is readonly.
-</span><span class="c1"></span>	<span class="nf">WillWrite</span><span class="p">()</span> <span class="p">[][]</span><span class="kt">byte</span>
-	<span class="c1">// Read executes a readonly part of the command. Only called if WillWrite returns nil. If the command needs to write
-</span><span class="c1"></span>	<span class="c1">// to the DB it should return a non-nil set of keys that the command will write.
-</span><span class="c1"></span>	<span class="nf">Read</span><span class="p">(</span><span class="nx">txn</span> <span class="o">*</span><span class="nx">mvcc</span><span class="p">.</span><span class="nx">RoTxn</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-	<span class="c1">// PrepareWrites is for building writes in an mvcc transaction. Commands can also make non-transactional
-</span><span class="c1"></span>	<span class="c1">// reads and writes using txn. Returning without modifying txn means that no transaction will be executed.
-</span><span class="c1"></span>	<span class="nf">PrepareWrites</span><span class="p">(</span><span class="nx">txn</span> <span class="o">*</span><span class="nx">mvcc</span><span class="p">.</span><span class="nx">MvccTxn</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Command is an abstraction which covers the process from receiving a request from gRPC to returning a response.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Command</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">Context</span><span class="p">()</span> <span class="o">*</span><span class="nx">kvrpcpb</span><span class="p">.</span><span class="nx">Context</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">StartTs</span><span class="p">()</span> <span class="kt">uint64</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// WillWrite returns a list of all keys that might be written by this command. Return nil if the command is readonly.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">WillWrite</span><span class="p">()</span> <span class="p">[][]</span><span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Read executes a readonly part of the command. Only called if WillWrite returns nil. If the command needs to write
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// to the DB it should return a non-nil set of keys that the command will write.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">Read</span><span class="p">(</span><span class="nx">txn</span> <span class="o">*</span><span class="nx">mvcc</span><span class="p">.</span><span class="nx">RoTxn</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// PrepareWrites is for building writes in an mvcc transaction. Commands can also make non-transactional
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// reads and writes using txn. Returning without modifying txn means that no transaction will be executed.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">PrepareWrites</span><span class="p">(</span><span class="nx">txn</span> <span class="o">*</span><span class="nx">mvcc</span><span class="p">.</span><span class="nx">MvccTxn</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>WillWrite</code>创建该请求所需写入的内容，<code>Read</code>将执行该命令所需的读取请求。<code>PrepareWrites</code>用来为这个命令构建实际的写内容，它是写命令处理的核心部分。由于每个事务都有它唯一的标识符，即<code>start_ts</code>也就是分配的全局时间戳，因此可以使用<code>StartTs</code>来返回当前命令的值。</p>
 <p>尝试理解整个客户端请求处理的过程(事务命令处理和<code>raftstore</code>日志提交/应用)。事务命令导致一些写突变，这些突变将会被转为raft命令请求，然后发送到<code>raftstore</code>，处理之后，在<code>raftstore</code>中提交并应用处理，事务命令被认为时成功的，结果发回给客户端。</p>
@@ -299,8 +299,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// YOUR CODE HERE (lab1).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h3 id="implement-the-prewrite-and-commit-commands">Implement the <code>Prewrite</code> and <code>Commit</code> Commands</h3>
@@ -313,8 +313,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// YOUR CODE HERE (lab1).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意事项：</p>
 <ul>
@@ -334,8 +334,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// YOUR CODE HERE (lab1).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>完成这些部分，运行<code>make lab2P2</code>来检查是否所有的测试都已经通过。注意事项如下：</p>
 <ul>
@@ -353,8 +353,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">// YOUR CODE HERE (lab1).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// YOUR CODE HERE (lab1).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>当完成这些部分时，运行<code>make lab2P3</code>来检查是否所有测试都已经被通过了。注意事项如下：</p>
 <ul>
@@ -392,7 +392,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

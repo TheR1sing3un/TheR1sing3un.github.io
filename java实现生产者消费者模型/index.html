@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ther1sing3un.github.io\/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B\/"
-        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Java, 多线程, 面试","wordcount":  5066 ,
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Java, 多线程, 面试","wordcount":  5018 ,
         "url": "https:\/\/ther1sing3un.github.io\/java%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B\/","datePublished": "2022-01-09T20:06:46+08:00","dateModified": "2022-01-09T20:06:46+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java实现生产者消费者模型</h1><h2 class="single-subtitle">简单的生产者消费者模型在Java语言中的多种实现</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw"></i>算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-09">2022-01-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5066 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-09">2022-01-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5018 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -259,25 +259,25 @@
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:18
-</span><span class="cm"> * @description Bug类
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bug</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">bugId</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Bug</span><span class="o">(</span><span class="n">Integer</span> <span class="n">bugId</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">bugId</span> <span class="o">=</span> <span class="n">bugId</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getBugId</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">bugId</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:18
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description Bug类
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bug</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">bugId</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Bug</span><span class="o">(</span><span class="n">Integer</span> <span class="n">bugId</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">bugId</span> <span class="o">=</span> <span class="n">bugId</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getBugId</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bugId</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Producer类</p>
@@ -362,83 +362,83 @@
 </span><span class="lnt">76
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:03
-</span><span class="cm"> * @description
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 构造方法
-</span><span class="cm">     * @param name
-</span><span class="cm">     * @param queue
-</span><span class="cm">     * @param maxSize
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">,</span><span class="kt">int</span> <span class="n">maxSize</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">maxSize</span> <span class="o">=</span> <span class="n">maxSize</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 重写run方法,来不断生产bug到队列中
-</span><span class="cm">     */</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
-        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-            <span class="c1">//生产者不断生产bug
-</span><span class="c1"></span>            <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">produceBug</span><span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span>
-            <span class="c1">//模拟耗时操作
-</span><span class="c1"></span>
-            <span class="c1">//加锁,避免并发问题
-</span><span class="c1"></span>            <span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">queue</span><span class="o">){</span>
-                <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">maxSize</span><span class="o">){</span>
-                    <span class="c1">//当前的队列已满,无法将bug放进去,那么就等待,直到被唤醒(消费者会来唤醒的)
-</span><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
-                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 当前系统的Bug达到上限,歇会儿,不满的时候跟俺说一声~&#34;</span><span class="o">);</span>
-                        <span class="n">queue</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                    <span class="o">}</span>
-                <span class="o">}</span>
-                <span class="c1">//现在可以把bug放进去了
-</span><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 俺往系统里面放了一个Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;,嘿嘿~嘿嘿嘿~&#34;</span><span class="o">);</span>
-                <span class="c1">//唤醒在睡眠的消费者(当时那些消费者消费的时候发现队列为空,就sleep去了,现在我刚放进去一个bug,队列肯定不为空,所以唤醒他们)
-</span><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     *
-</span><span class="cm">     * 生产者生产一个带编号的Bug(可真是和我一模一样呢)
-</span><span class="cm">     * @param i
-</span><span class="cm">     * @return
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="n">Bug</span> <span class="nf">produceBug</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
-        <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bug</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">bug</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:03
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 构造方法
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param name
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param queue
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param maxSize
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">,</span><span class="kt">int</span> <span class="n">maxSize</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">maxSize</span> <span class="o">=</span> <span class="n">maxSize</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 重写run方法,来不断生产bug到队列中
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//生产者不断生产bug
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">produceBug</span><span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//模拟耗时操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//加锁,避免并发问题
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">queue</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">maxSize</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//当前的队列已满,无法将bug放进去,那么就等待,直到被唤醒(消费者会来唤醒的)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 当前系统的Bug达到上限,歇会儿,不满的时候跟俺说一声~&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">queue</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//现在可以把bug放进去了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 俺往系统里面放了一个Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;,嘿嘿~嘿嘿嘿~&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//唤醒在睡眠的消费者(当时那些消费者消费的时候发现队列为空,就sleep去了,现在我刚放进去一个bug,队列肯定不为空,所以唤醒他们)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 生产者生产一个带编号的Bug(可真是和我一模一样呢)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param i
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Bug</span> <span class="nf">produceBug</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bug</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bug</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Cunsumer类</p>
@@ -506,66 +506,66 @@
 </span><span class="lnt">59
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:32
-</span><span class="cm"> * @description 消费者
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 重写run方法,消费者从队列中拿Bug,然后去修复(消费者就是修复Bug的可怜程序员)
-</span><span class="cm">     */</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="c1">//操作队列就要上锁!
-</span><span class="c1"></span>            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">queue</span><span class="o">){</span>
-                <span class="k">while</span> <span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
-                    <span class="c1">//当队列中没有Bug时,就等待
-</span><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
-                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 这系统做的可以,咋没Bug,整挺好,我摸鱼去了,有Bug叫我&#34;</span><span class="o">);</span>
-                        <span class="n">queue</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                    <span class="o">}</span>
-                <span class="o">}</span>
-                <span class="c1">//有bug时取出
-</span><span class="c1"></span>                <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
-                <span class="c1">//模拟耗时操作
-</span><span class="c1"></span>                <span class="k">try</span> <span class="o">{</span>
-                    <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
-                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                <span class="o">}</span>
-                <span class="n">fixBug</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
-                <span class="c1">//唤醒生产者线程
-</span><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 消费者修复Bug
-</span><span class="cm">     * @param bug
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fixBug</span><span class="o">(</span><span class="n">Bug</span> <span class="n">bug</span><span class="o">){</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 修复了Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:32
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description 消费者
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 重写run方法,消费者从队列中拿Bug,然后去修复(消费者就是修复Bug的可怜程序员)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//操作队列就要上锁!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">queue</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">while</span> <span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//当队列中没有Bug时,就等待
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 这系统做的可以,咋没Bug,整挺好,我摸鱼去了,有Bug叫我&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">queue</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//有bug时取出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//模拟耗时操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">fixBug</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//唤醒生产者线程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 消费者修复Bug
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param bug
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fixBug</span><span class="o">(</span><span class="n">Bug</span> <span class="n">bug</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 修复了Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>测试</p>
@@ -595,28 +595,28 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:41
-</span><span class="cm"> * @description
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
-        <span class="kt">int</span> <span class="n">maxSize</span> <span class="o">=</span> <span class="n">3</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="s">&#34;新手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">,</span><span class="n">maxSize</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="s">&#34;老手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:41
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">maxSize</span> <span class="o">=</span> <span class="n">3</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="s">&#34;新手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">,</span><span class="n">maxSize</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="s">&#34;老手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><em>测试截图如下：</em></p>
 <p><img
@@ -673,27 +673,27 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:18
-</span><span class="cm"> * @description Bug类
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bug</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">bugId</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Bug</span><span class="o">(</span><span class="n">Integer</span> <span class="n">bugId</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">bugId</span> <span class="o">=</span> <span class="n">bugId</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getBugId</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">bugId</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:18
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description Bug类
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bug</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">bugId</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Bug</span><span class="o">(</span><span class="n">Integer</span> <span class="n">bugId</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">bugId</span> <span class="o">=</span> <span class="n">bugId</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getBugId</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bugId</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Producer类</p>
@@ -797,102 +797,102 @@
 </span><span class="lnt">95
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
-
-
-<span class="kn">import</span> <span class="nn">javax.security.auth.login.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Condition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Lock</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 22:03
-</span><span class="cm"> * @description 生产者类
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">;</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 构造方法
-</span><span class="cm">     * @param name
-</span><span class="cm">     * @param queue
-</span><span class="cm">     * @param maxSize
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">,</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="o">,</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">maxSize</span> <span class="o">=</span> <span class="n">maxSize</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">lock</span> <span class="o">=</span> <span class="n">lock</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">noFull</span> <span class="o">=</span> <span class="n">noFull</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">noEmpty</span> <span class="o">=</span> <span class="n">noEmpty</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 重写run方法,来不断生产bug到队列中
-</span><span class="cm">     */</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
-        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-            <span class="c1">//生产者不断生产bug
-</span><span class="c1"></span>            <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">produceBug</span><span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span>
-            <span class="c1">//模拟耗时操作
-</span><span class="c1"></span>            <span class="c1">//加锁,避免并发问题
-</span><span class="c1"></span>            <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
-            <span class="k">try</span><span class="o">{</span>
-                <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">maxSize</span><span class="o">){</span>
-                    <span class="c1">//当前的队列已满,无法将bug放进去,那么就等待,直到被唤醒(消费者会来唤醒的)
-</span><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
-                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 当前系统的Bug达到上限,歇会儿,不满的时候跟俺说一声~&#34;</span><span class="o">);</span>
-                        <span class="c1">//在noFull条件上等待,等待不为满的时候将其唤醒
-</span><span class="c1"></span>                        <span class="n">noFull</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                    <span class="o">}</span>
-                <span class="o">}</span>
-                <span class="c1">//现在可以把bug放进去了
-</span><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 俺往系统里面放了一个Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;,嘿嘿~嘿嘿嘿~&#34;</span><span class="o">);</span>
-                <span class="c1">//唤醒在睡眠的消费者(当时那些消费者消费的时候发现队列为空,就在noEmpty条件变量上等待,现在我刚放进去一个bug,队列肯定不为空,所以唤醒他们)
-</span><span class="c1"></span>                <span class="n">noEmpty</span><span class="o">.</span><span class="na">signalAll</span><span class="o">();</span>
-            <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
-                <span class="c1">//解锁
-</span><span class="c1"></span>                <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     *
-</span><span class="cm">     * 生产者生产一个带编号的Bug(可真是和我一模一样呢)
-</span><span class="cm">     * @param i
-</span><span class="cm">     * @return
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="n">Bug</span> <span class="nf">produceBug</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
-        <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bug</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">bug</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">javax.security.auth.login.Configuration</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Condition</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 22:03
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description 生产者类
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 构造方法
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param name
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param queue
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param maxSize
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">,</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="o">,</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">maxSize</span> <span class="o">=</span> <span class="n">maxSize</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">lock</span> <span class="o">=</span> <span class="n">lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">noFull</span> <span class="o">=</span> <span class="n">noFull</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">noEmpty</span> <span class="o">=</span> <span class="n">noEmpty</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 重写run方法,来不断生产bug到队列中
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//生产者不断生产bug
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">produceBug</span><span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//模拟耗时操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">//加锁,避免并发问题
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">maxSize</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//当前的队列已满,无法将bug放进去,那么就等待,直到被唤醒(消费者会来唤醒的)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 当前系统的Bug达到上限,歇会儿,不满的时候跟俺说一声~&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//在noFull条件上等待,等待不为满的时候将其唤醒
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="n">noFull</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//现在可以把bug放进去了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 俺往系统里面放了一个Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;,嘿嘿~嘿嘿嘿~&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//唤醒在睡眠的消费者(当时那些消费者消费的时候发现队列为空,就在noEmpty条件变量上等待,现在我刚放进去一个bug,队列肯定不为空,所以唤醒他们)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">noEmpty</span><span class="o">.</span><span class="na">signalAll</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//解锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 生产者生产一个带编号的Bug(可真是和我一模一样呢)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param i
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Bug</span> <span class="nf">produceBug</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bug</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bug</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Consumer类</p>
@@ -978,84 +978,84 @@
 </span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Condition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Lock</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:32
-</span><span class="cm"> * @description 消费者
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">,</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">lock</span> <span class="o">=</span> <span class="n">lock</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">noEmpty</span> <span class="o">=</span> <span class="n">noEmpty</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">noFull</span> <span class="o">=</span> <span class="n">noFull</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 重写run方法,消费者从队列中拿Bug,然后去修复(消费者就是修复Bug的可怜程序员)
-</span><span class="cm">     */</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="c1">//操作队列就要上锁!
-</span><span class="c1"></span>            <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
-            <span class="k">try</span><span class="o">{</span>
-                <span class="k">while</span> <span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
-                    <span class="c1">//当队列中没有Bug时,就等待
-</span><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
-                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 这系统做的可以,咋没Bug,整挺好,我摸鱼去了,有Bug叫我&#34;</span><span class="o">);</span>
-                        <span class="c1">//当前队列为空,需要等待不为空的时候继续,于是在noEmpty上等待
-</span><span class="c1"></span>                        <span class="n">noEmpty</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                    <span class="o">}</span>
-                <span class="o">}</span>
-                <span class="c1">//有bug时取出
-</span><span class="c1"></span>                <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
-                <span class="c1">//模拟耗时操作
-</span><span class="c1"></span>                <span class="k">try</span> <span class="o">{</span>
-                    <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
-                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                <span class="o">}</span>
-                <span class="n">fixBug</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
-                <span class="c1">//唤醒在noFull上等待的生产者,因为刚刚该线程才消费了,目前肯定不满了
-</span><span class="c1"></span>                <span class="n">noFull</span><span class="o">.</span><span class="na">signalAll</span><span class="o">();</span>
-            <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
-                <span class="c1">//解锁
-</span><span class="c1"></span>                <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 消费者修复Bug
-</span><span class="cm">     * @param bug
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fixBug</span><span class="o">(</span><span class="n">Bug</span> <span class="n">bug</span><span class="o">){</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 修复了Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Condition</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:32
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description 消费者
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">,</span> <span class="n">Lock</span> <span class="n">lock</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noFull</span><span class="o">,</span> <span class="n">Condition</span> <span class="n">noEmpty</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">lock</span> <span class="o">=</span> <span class="n">lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">noEmpty</span> <span class="o">=</span> <span class="n">noEmpty</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">noFull</span> <span class="o">=</span> <span class="n">noFull</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 重写run方法,消费者从队列中拿Bug,然后去修复(消费者就是修复Bug的可怜程序员)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//操作队列就要上锁!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">while</span> <span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//当队列中没有Bug时,就等待
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 这系统做的可以,咋没Bug,整挺好,我摸鱼去了,有Bug叫我&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//当前队列为空,需要等待不为空的时候继续,于是在noEmpty上等待
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="n">noEmpty</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//有bug时取出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//模拟耗时操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">fixBug</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//唤醒在noFull上等待的生产者,因为刚刚该线程才消费了,目前肯定不满了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">noFull</span><span class="o">.</span><span class="na">signalAll</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//解锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 消费者修复Bug
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param bug
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fixBug</span><span class="o">(</span><span class="n">Bug</span> <span class="n">bug</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 修复了Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Test测试</p>
@@ -1093,36 +1093,36 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Condition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Lock</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.locks.ReentrantLock</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:41
-</span><span class="cm"> * @description
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
-        <span class="n">Lock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="o">();</span>
-        <span class="n">Condition</span> <span class="n">noFull</span> <span class="o">=</span> <span class="n">lock</span><span class="o">.</span><span class="na">newCondition</span><span class="o">();</span>
-        <span class="n">Condition</span> <span class="n">noEmpty</span> <span class="o">=</span> <span class="n">lock</span><span class="o">.</span><span class="na">newCondition</span><span class="o">();</span>
-        <span class="kt">int</span> <span class="n">maxSize</span> <span class="o">=</span> <span class="n">5</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="s">&#34;新手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">,</span><span class="n">maxSize</span><span class="o">,</span><span class="n">lock</span><span class="o">,</span><span class="n">noFull</span><span class="o">,</span><span class="n">noEmpty</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="s">&#34;老手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">,</span><span class="n">lock</span><span class="o">,</span><span class="n">noFull</span><span class="o">,</span><span class="n">noEmpty</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Condition</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.Lock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.locks.ReentrantLock</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:41
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Lock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Condition</span> <span class="n">noFull</span> <span class="o">=</span> <span class="n">lock</span><span class="o">.</span><span class="na">newCondition</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Condition</span> <span class="n">noEmpty</span> <span class="o">=</span> <span class="n">lock</span><span class="o">.</span><span class="na">newCondition</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">maxSize</span> <span class="o">=</span> <span class="n">5</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="s">&#34;新手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">,</span><span class="n">maxSize</span><span class="o">,</span><span class="n">lock</span><span class="o">,</span><span class="n">noFull</span><span class="o">,</span><span class="n">noEmpty</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="s">&#34;老手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">queue</span><span class="o">,</span><span class="n">lock</span><span class="o">,</span><span class="n">noFull</span><span class="o">,</span><span class="n">noEmpty</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><em>测试截图：</em></p>
 <p><img
@@ -1207,66 +1207,66 @@
 </span><span class="lnt">59
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon2</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">ProAndCon.Bug</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.BlockingDeque</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 22:58
-</span><span class="cm"> * @description
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">BlockingDeque</span> <span class="n">blockingDeque</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">BlockingDeque</span> <span class="n">blockingDeque</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">blockingDeque</span> <span class="o">=</span> <span class="n">blockingDeque</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="cm">/**
-</span><span class="cm">     * 重写run方法,来不断生产bug到队列中
-</span><span class="cm">     */</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
-        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="c1">//模拟耗时操作
-</span><span class="c1"></span>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">1000</span><span class="o">));</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-            <span class="c1">//生产者不断生产bug
-</span><span class="c1"></span>            <span class="n">ProAndCon</span><span class="o">.</span><span class="na">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">produceBug</span><span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span>
-            <span class="c1">//往阻塞队列里面放
-</span><span class="c1"></span>            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">blockingDeque</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 俺往系统里面放了一个Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;,嘿嘿~嘿嘿嘿~&#34;</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     *
-</span><span class="cm">     * 生产者生产一个带编号的Bug(可真是和我一模一样呢)
-</span><span class="cm">     * @param i
-</span><span class="cm">     * @return
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="n">ProAndCon</span><span class="o">.</span><span class="na">Bug</span> <span class="nf">produceBug</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
-        <span class="n">ProAndCon</span><span class="o">.</span><span class="na">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bug</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">bug</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon2</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">ProAndCon.Bug</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.BlockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 22:58
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">BlockingDeque</span> <span class="n">blockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">BlockingDeque</span> <span class="n">blockingDeque</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">blockingDeque</span> <span class="o">=</span> <span class="n">blockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 重写run方法,来不断生产bug到队列中
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//模拟耗时操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">1000</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//生产者不断生产bug
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">ProAndCon</span><span class="o">.</span><span class="na">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">produceBug</span><span class="o">(</span><span class="n">random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//往阻塞队列里面放
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">blockingDeque</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 俺往系统里面放了一个Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;,嘿嘿~嘿嘿嘿~&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 生产者生产一个带编号的Bug(可真是和我一模一样呢)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param i
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ProAndCon</span><span class="o">.</span><span class="na">Bug</span> <span class="nf">produceBug</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ProAndCon</span><span class="o">.</span><span class="na">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bug</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">bug</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Consumer类</p>
@@ -1330,62 +1330,62 @@
 </span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon2</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">ProAndCon.Bug</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.BlockingDeque</span><span class="o">;</span>
-
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 23:00
-</span><span class="cm"> * @description
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">BlockingDeque</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">blockingDeque</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">BlockingDeque</span> <span class="n">blockingDeque</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">blockingDeque</span> <span class="o">=</span> <span class="n">blockingDeque</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 重写run方法,消费者从队列中拿Bug,然后去修复(消费者就是修复Bug的可怜程序员)
-</span><span class="cm">     */</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="c1">//从阻塞队列中取bug
-</span><span class="c1"></span>            <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">bug</span> <span class="o">=</span> <span class="n">blockingDeque</span><span class="o">.</span><span class="na">take</span><span class="o">();</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="c1">//模拟耗时操作
-</span><span class="c1"></span>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">1000</span><span class="o">));</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-            <span class="n">fixBug</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 消费者修复Bug
-</span><span class="cm">     * @param bug
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fixBug</span><span class="o">(</span><span class="n">Bug</span> <span class="n">bug</span><span class="o">){</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 修复了Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon2</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">ProAndCon.Bug</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.BlockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 23:00
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">extends</span> <span class="n">Thread</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">BlockingDeque</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">blockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">BlockingDeque</span> <span class="n">blockingDeque</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">blockingDeque</span> <span class="o">=</span> <span class="n">blockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 重写run方法,消费者从队列中拿Bug,然后去修复(消费者就是修复Bug的可怜程序员)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//从阻塞队列中取bug
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Bug</span> <span class="n">bug</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bug</span> <span class="o">=</span> <span class="n">blockingDeque</span><span class="o">.</span><span class="na">take</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//模拟耗时操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">1000</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fixBug</span><span class="o">(</span><span class="n">bug</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 消费者修复Bug
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param bug
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fixBug</span><span class="o">(</span><span class="n">Bug</span> <span class="n">bug</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;[&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;]: 修复了Bug&#34;</span> <span class="o">+</span> <span class="n">bug</span><span class="o">.</span><span class="na">getBugId</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Test测试</p>
@@ -1416,29 +1416,29 @@
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">ProAndCon2</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.concurrent.BlockingDeque</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.LinkedBlockingDeque</span><span class="o">;</span>
-
-<span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2022/1/9 17:41
-</span><span class="cm"> * @description
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">BlockingDeque</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">blockingDeque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedBlockingDeque</span><span class="o">&lt;&gt;(</span><span class="n">10</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="s">&#34;新手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">blockingDeque</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="s">&#34;老手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">blockingDeque</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">ProAndCon2</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.BlockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.LinkedBlockingDeque</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2022/1/9 17:41
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">BlockingDeque</span><span class="o">&lt;</span><span class="n">Bug</span><span class="o">&gt;</span> <span class="n">blockingDeque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedBlockingDeque</span><span class="o">&lt;&gt;(</span><span class="n">10</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="s">&#34;新手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">blockingDeque</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="s">&#34;老手程序员&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s">&#34;号&#34;</span><span class="o">,</span><span class="n">blockingDeque</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><em>测试截图：</em></p>
 <p><img
@@ -1482,7 +1482,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

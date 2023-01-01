@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ther1sing3un.github.io\/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0\/"
-        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "算法, Java, 面试, GoLang","wordcount":  5457 ,
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "算法, Java, 面试, GoLang","wordcount":  5364 ,
         "url": "https:\/\/ther1sing3un.github.io\/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0\/","datePublished": "2021-12-30T10:40:18+08:00","dateModified": "2021-12-30T10:40:18+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">LRU算法原理及实现</h1><h2 class="single-subtitle">简易的LRU算法的多种实现</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw"></i>算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-30">2021-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5457 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-30">2021-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5364 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -234,20 +234,20 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
-
-    <span class="c1">//Node中存键值对
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">;</span>
-
-    <span class="c1">//前置节点和后置节点
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="n">next</span><span class="o">,</span><span class="n">pre</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">Node</span> <span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//Node中存键值对
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//前置节点和后置节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="n">Node</span> <span class="n">next</span><span class="o">,</span><span class="n">pre</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">Node</span> <span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>接下来实现一个关于Node节点的双向链表以及相关方法</p>
@@ -344,90 +344,90 @@
 </span><span class="lnt">83
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2021/12/30 11:14
-</span><span class="cm"> * @description 双向链表数据结构实现
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoubleList</span> <span class="o">{</span>
-
-    <span class="c1">//头节点和尾节点
-</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="n">head</span><span class="o">,</span><span class="n">tail</span><span class="o">;</span>
-
-    <span class="c1">//大小
-</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 构造方法并且完成首尾节点初始化
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="nf">DoubleList</span> <span class="o">(){</span>
-        <span class="n">head</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">);</span>
-        <span class="n">tail</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">);</span>
-        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
-        <span class="n">tail</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 添加一个节点到队首
-</span><span class="cm">     * @param node
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">){</span>
-        <span class="n">node</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
-        <span class="n">node</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
-        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
-        <span class="n">size</span><span class="o">++;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 删除最后一个节点
-</span><span class="cm">     * @return 返回被删除的节点
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">removeLast</span><span class="o">(){</span>
-        <span class="c1">//没有节点时候,返回null
-</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="n">tail</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="n">Node</span> <span class="n">last</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
-        <span class="n">last</span><span class="o">.</span><span class="na">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
-        <span class="n">tail</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
-        <span class="n">size</span><span class="o">--;</span>
-        <span class="k">return</span> <span class="n">last</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 删除某个节点
-</span><span class="cm">     * @param node
-</span><span class="cm">     * @return 返回被删除的节点
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">){</span>
-        <span class="n">node</span><span class="o">.</span><span class="na">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="n">node</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
-        <span class="n">size</span><span class="o">--;</span>
-        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 获取当前链表大小
-</span><span class="cm">     * @return 链表大小
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="n">size</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 打印该链表
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
-        <span class="n">Node</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="k">while</span><span class="o">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="n">tail</span><span class="o">){</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span> <span class="n">cur</span><span class="o">.</span><span class="na">val</span><span class="o">+</span><span class="s">&#34; &#34;</span><span class="o">);</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2021/12/30 11:14
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description 双向链表数据结构实现
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoubleList</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//头节点和尾节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">private</span> <span class="n">Node</span> <span class="n">head</span><span class="o">,</span><span class="n">tail</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 构造方法并且完成首尾节点初始化
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">DoubleList</span> <span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tail</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tail</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 添加一个节点到队首
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param node
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">size</span><span class="o">++;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 删除最后一个节点
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 返回被删除的节点
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">removeLast</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//没有节点时候,返回null
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="n">tail</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Node</span> <span class="n">last</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">last</span><span class="o">.</span><span class="na">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tail</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">size</span><span class="o">--;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">last</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 删除某个节点
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param node
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 返回被删除的节点
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">.</span><span class="na">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">pre</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">pre</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">size</span><span class="o">--;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 获取当前链表大小
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 链表大小
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">size</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 打印该链表
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Node</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="n">tail</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span> <span class="n">cur</span><span class="o">.</span><span class="na">val</span><span class="o">+</span><span class="s">&#34; &#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>接下来实现LRU队列</p>
@@ -569,133 +569,133 @@
 </span><span class="lnt">126
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2021/12/30 11:49
-</span><span class="cm"> * @description LRU队列实现
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRUCache</span> <span class="o">{</span>
-
-    <span class="c1">//key-&gt;node的映射
-</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">;</span>
-
-    <span class="c1">//双向链表作为缓存队列
-</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">DoubleList</span> <span class="n">cache</span><span class="o">;</span>
-
-    <span class="c1">//最大容量
-</span><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
-
-    <span class="c1">//构造方法,并且完成map和list的初始化
-</span><span class="c1"></span>    <span class="kd">public</span> <span class="nf">LRUCache</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
-        <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Node</span> <span class="o">&gt;();</span>
-        <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DoubleList</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 删除某个key对于的键值对
-</span><span class="cm">     * @param key
-</span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
-        <span class="c1">//从map中获取该节点
-</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="c1">//从链表删除该节点
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
-        <span class="c1">//从map中删除该key
-</span><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 删除缓存队列中最后一个节点,也就是最久未被使用的节点
-</span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">removeLast</span><span class="o">(){</span>
-        <span class="c1">//从链表中删除该节点
-</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">removeLast</span><span class="o">();</span>
-        <span class="c1">//根据该节点的key来删除map中对应的键值对
-</span><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
-        <span class="c1">//此处也就是为什么我们需要Node中存key的原因,因为需要根据key来删除map中的键值对
-</span><span class="c1"></span>    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 将某个键提前到队首,也就是变成最近使用的节点
-</span><span class="cm">     * @param key
-</span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeFirst</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
-        <span class="c1">//从map中获取该节点
-</span><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="c1">//删除该节点
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
-        <span class="c1">//将该节点重新插入到队首
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 添加一个键值对到队首,也就是到最近使用的位置
-</span><span class="cm">     * @param key
-</span><span class="cm">     * @param val
-</span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
-        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-        <span class="c1">//添加到队首
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
-        <span class="c1">//添加映射
-</span><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">node</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 暴露出来的put()方法,向LRUCache中插入一个键值对,若key已存在则更新
-</span><span class="cm">     * @param key
-</span><span class="cm">     * @param val
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
-            <span class="c1">//若key已存在,那么需要先删除旧数据
-</span><span class="c1"></span>            <span class="n">delete</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-            <span class="c1">//插入到队首
-</span><span class="c1"></span>            <span class="n">addFirst</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-            <span class="k">return</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="c1">//当达到容量上限时
-</span><span class="c1"></span>        <span class="k">if</span><span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">cap</span><span class="o">){</span>
-            <span class="c1">//删除最久未被使用的节点
-</span><span class="c1"></span>            <span class="n">removeLast</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="c1">//添加到队首
-</span><span class="c1"></span>        <span class="n">addFirst</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 暴露出来的get()方法,根据key获取到val,若不存在,则返回-1(假定val都为正整数)
-</span><span class="cm">     * @param key
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
-        <span class="k">if</span> <span class="o">(!</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
-            <span class="c1">//key不存在
-</span><span class="c1"></span>            <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="c1">//将该key移动到队首,也就是最近使用的第一个
-</span><span class="c1"></span>        <span class="n">makeFirst</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="c1">//返回值　
-</span><span class="c1"></span>        <span class="k">return</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">).</span><span class="na">val</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 暴露出来的size()方法,返回当前的大小
-</span><span class="cm">     * @return 返回当前队列大小
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 打印缓存队列
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
-        <span class="n">cache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2021/12/30 11:49
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description LRU队列实现
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRUCache</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//key-&gt;node的映射
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Node</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//双向链表作为缓存队列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">private</span> <span class="n">DoubleList</span> <span class="n">cache</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//最大容量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//构造方法,并且完成map和list的初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="nf">LRUCache</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Node</span> <span class="o">&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DoubleList</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 删除某个key对于的键值对
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//从map中获取该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//从链表删除该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//从map中删除该key
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 删除缓存队列中最后一个节点,也就是最久未被使用的节点
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">removeLast</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//从链表中删除该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">removeLast</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//根据该节点的key来删除map中对应的键值对
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//此处也就是为什么我们需要Node中存key的原因,因为需要根据key来删除map中的键值对
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 将某个键提前到队首,也就是变成最近使用的节点
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeFirst</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//从map中获取该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//删除该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将该节点重新插入到队首
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 添加一个键值对到队首,也就是到最近使用的位置
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param val
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//添加到队首
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//添加映射
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">node</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 暴露出来的put()方法,向LRUCache中插入一个键值对,若key已存在则更新
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param val
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//若key已存在,那么需要先删除旧数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">delete</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//插入到队首
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">addFirst</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//当达到容量上限时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">cap</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//删除最久未被使用的节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">removeLast</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//添加到队首
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">addFirst</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 暴露出来的get()方法,根据key获取到val,若不存在,则返回-1(假定val都为正整数)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//key不存在
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将该key移动到队首,也就是最近使用的第一个
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">makeFirst</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//返回值　
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">).</span><span class="na">val</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 暴露出来的size()方法,返回当前的大小
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return 返回当前队列大小
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 打印缓存队列
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="测试">测试</h2>
@@ -725,29 +725,29 @@
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">LRUCache</span> <span class="n">lruCache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LRUCache</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
-        <span class="n">Scanner</span> <span class="n">sc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
-        <span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">;</span>
-        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;请输入插入的key和val(以空格隔开,输入-1则结束)&#34;</span><span class="o">);</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
-            <span class="n">lruCache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-            <span class="n">lruCache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;请输入需要获取的key(输入-1则结束)&#34;</span><span class="o">);</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;key-&gt;val: &#34;</span><span class="o">+</span><span class="n">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span><span class="n">lruCache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">));</span>
-            <span class="n">lruCache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">LRUCache</span> <span class="n">lruCache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LRUCache</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Scanner</span> <span class="n">sc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;请输入插入的key和val(以空格隔开,输入-1则结束)&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">key</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">val</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lruCache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lruCache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;请输入需要获取的key(输入-1则结束)&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">key</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;key-&gt;val: &#34;</span><span class="o">+</span><span class="n">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span><span class="n">lruCache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lruCache</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><figure><a class="lightgallery" href="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png" title="image-20211230132907832" data-thumbnail="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/image-20211230132907832.png" data-sub-html="<h2>自行输入测试</h2><p>image-20211230132907832</p>">
         <img
@@ -846,86 +846,86 @@
 </span><span class="lnt">79
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
-</span><span class="cm"> * @author TheR1sing3un
-</span><span class="cm"> * @date 2021/12/30 13:35
-</span><span class="cm"> * @description 使用LinkedHashMap实现的LRU
-</span><span class="cm"> */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRUCacheSimple</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">();</span>
-
-    <span class="kd">public</span> <span class="nf">LRUCacheSimple</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 将某个键改成最近使用的
-</span><span class="cm">     * @param key
-</span><span class="cm">     */</span>
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeRecently</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
-        <span class="c1">//先获取值
-</span><span class="c1"></span>        <span class="n">Integer</span> <span class="n">val</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="c1">//删除该键
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="c1">//重新插入
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 插入key,val
-</span><span class="cm">     * @param key
-</span><span class="cm">     * @param val
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
-            <span class="c1">//如果已存在,那么覆盖
-</span><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-            <span class="c1">//将key变成最近使用
-</span><span class="c1"></span>            <span class="n">makeRecently</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-            <span class="k">return</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">cap</span> <span class="o">&lt;=</span> <span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">()){</span>
-            <span class="c1">//当满了之后
-</span><span class="c1"></span>            <span class="c1">//获取第一个key(也就是LinkedHashMap中最久未被访问的节点)
-</span><span class="c1"></span>            <span class="n">Integer</span> <span class="n">first</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">().</span><span class="na">next</span><span class="o">();</span>
-            <span class="c1">//删除该节点
-</span><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">first</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="c1">//将新的key,val插入
-</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 根据key获取value(假定value都是正整数)
-</span><span class="cm">     * @param key
-</span><span class="cm">     * @return value(-1表示不存在)
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
-        <span class="k">if</span> <span class="o">(!</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
-            <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="c1">//将该key变成最近使用的
-</span><span class="c1"></span>        <span class="n">makeRecently</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**
-</span><span class="cm">     * 打印该缓存
-</span><span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
-        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">();</span>
-        <span class="k">while</span><span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()){</span>
-            <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">)+</span><span class="s">&#34; &#34;</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @author TheR1sing3un
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @date 2021/12/30 13:35
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @description 使用LinkedHashMap实现的LRU
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LRUCacheSimple</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">LRUCacheSimple</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 将某个键改成最近使用的
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeRecently</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//先获取值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Integer</span> <span class="n">val</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//删除该键
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//重新插入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 插入key,val
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param val
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">,</span><span class="kt">int</span> <span class="n">val</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//如果已存在,那么覆盖
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//将key变成最近使用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">makeRecently</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">cap</span> <span class="o">&lt;=</span> <span class="n">cache</span><span class="o">.</span><span class="na">size</span><span class="o">()){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//当满了之后
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">//获取第一个key(也就是LinkedHashMap中最久未被访问的节点)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Integer</span> <span class="n">first</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">().</span><span class="na">next</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//删除该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">first</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将新的key,val插入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">val</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 根据key获取value(假定value都是正整数)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return value(-1表示不存在)
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将该key变成最近使用的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">makeRecently</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 打印该缓存
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()){</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">key</span><span class="o">+</span><span class="s">&#34;-&gt;&#34;</span><span class="o">+</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">)+</span><span class="s">&#34; &#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="lrugolang实现">LRU(GoLang实现)</h2>
@@ -1043,113 +1043,113 @@
 </span><span class="lnt">106
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">LRU</span>
-
-<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-
-<span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
-   <span class="nx">key</span>  <span class="kt">int</span>
-   <span class="nx">val</span>  <span class="kt">int</span>
-   <span class="nx">pre</span>  <span class="o">*</span><span class="nx">Node</span>
-   <span class="nx">next</span> <span class="o">*</span><span class="nx">Node</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">LRUCache</span> <span class="kd">struct</span> <span class="p">{</span>
-   <span class="nx">Cap</span>    <span class="kt">int</span>           <span class="c1">//最大容量
-</span><span class="c1"></span>   <span class="nx">bucket</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="o">*</span><span class="nx">Node</span> <span class="c1">//HashMap
-</span><span class="c1"></span>   <span class="nx">head</span>   <span class="o">*</span><span class="nx">Node</span>
-   <span class="nx">tail</span>   <span class="o">*</span><span class="nx">Node</span>
-   <span class="nx">Size</span>   <span class="kt">int</span>
-<span class="p">}</span>
-
-<span class="c1">//LRUCache的构造
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">New</span><span class="p">(</span><span class="nx">cap</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">LRUCache</span> <span class="p">{</span>
-   <span class="nx">cache</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">LRUCache</span><span class="p">{</span>
-      <span class="nx">Cap</span><span class="p">:</span>    <span class="nx">cap</span><span class="p">,</span>
-      <span class="nx">bucket</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="o">*</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">cap</span><span class="p">),</span>
-      <span class="nx">head</span><span class="p">:</span>   <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">},</span>
-      <span class="nx">tail</span><span class="p">:</span>   <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">},</span>
-      <span class="nx">Size</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span>
-   <span class="p">}</span>
-   <span class="nx">cache</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">tail</span>
-   <span class="nx">cache</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">head</span>
-   <span class="k">return</span> <span class="nx">cache</span>
-<span class="p">}</span>
-
-<span class="c1">//添加一个节点到首位(也就是最近一个访问的)
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//判断是否到容量上限
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span> <span class="o">==</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Cap</span> <span class="p">{</span>
-      <span class="c1">//到达上限之后,删除最后一个节点
-</span><span class="c1"></span>      <span class="nx">this</span><span class="p">.</span><span class="nf">deleteNode</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">pre</span><span class="p">)</span>
-   <span class="p">}</span>
-   <span class="c1">//添加节点到首位
-</span><span class="c1"></span>   <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span>
-   <span class="nx">node</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span>
-   <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">node</span>
-   <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">node</span>
-   <span class="c1">//添加该映射
-</span><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">node</span><span class="p">.</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span>
-   <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span><span class="o">++</span>
-<span class="p">}</span>
-
-<span class="c1">//将某个key变成最近使用的(假定该key一定存在)
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//根据key获取该节点
-</span><span class="c1"></span>   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-   <span class="c1">//先删除该节点
-</span><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nf">deleteNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
-   <span class="c1">//再加入该节点到首位
-</span><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1">//删除某个节点
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">deleteNode</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//先删除映射
-</span><span class="c1"></span>   <span class="nb">delete</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
-   <span class="c1">//从双向链表中删除该节点
-</span><span class="c1"></span>   <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">next</span>
-   <span class="nx">node</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span>
-   <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span><span class="o">--</span>
-<span class="p">}</span>
-
-<span class="c1">//put方法
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//先判断是否已有该节点,有则更新
-</span><span class="c1"></span>   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-   <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="c1">//当没有该节点时,直接加入到首位
-</span><span class="c1"></span>      <span class="nx">node</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">}</span>
-      <span class="nx">this</span><span class="p">.</span><span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="c1">//如果已经有该节点,那么先直接更新该节点的值并且提前至首位
-</span><span class="c1"></span>      <span class="nx">node</span><span class="p">.</span><span class="nx">val</span> <span class="p">=</span> <span class="nx">val</span>
-      <span class="nx">this</span><span class="p">.</span><span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">//get方法,如果不存在则返回-1(假设值都是正数)
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-   <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="c1">//不存在则返回-1
-</span><span class="c1"></span>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="c1">//将节点提前到首位
-</span><span class="c1"></span>      <span class="nx">this</span><span class="p">.</span><span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-      <span class="c1">//返回值
-</span><span class="c1"></span>      <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">val</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
-   <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span>
-   <span class="k">for</span> <span class="p">;</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">;</span> <span class="nx">cur</span> <span class="p">=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">next</span> <span class="p">{</span>
-      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d-&gt;%d &#34;</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">val</span><span class="p">)</span>
-   <span class="p">}</span>
-   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">LRU</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">key</span>  <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">val</span>  <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">pre</span>  <span class="o">*</span><span class="nx">Node</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">next</span> <span class="o">*</span><span class="nx">Node</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">LRUCache</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">Cap</span>    <span class="kt">int</span>           <span class="c1">//最大容量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">bucket</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="o">*</span><span class="nx">Node</span> <span class="c1">//HashMap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">head</span>   <span class="o">*</span><span class="nx">Node</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">tail</span>   <span class="o">*</span><span class="nx">Node</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">Size</span>   <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//LRUCache的构造
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">New</span><span class="p">(</span><span class="nx">cap</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">LRUCache</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">LRUCache</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">Cap</span><span class="p">:</span>    <span class="nx">cap</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">bucket</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="o">*</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">cap</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">head</span><span class="p">:</span>   <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">tail</span><span class="p">:</span>   <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">Size</span><span class="p">:</span>   <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">tail</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nx">head</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nx">cache</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//添加一个节点到首位(也就是最近一个访问的)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//判断是否到容量上限
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span> <span class="o">==</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Cap</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//到达上限之后,删除最后一个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">this</span><span class="p">.</span><span class="nf">deleteNode</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">.</span><span class="nx">pre</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//添加节点到首位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">node</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">node</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">node</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//添加该映射
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">node</span><span class="p">.</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//将某个key变成最近使用的(假定该key一定存在)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//根据key获取该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//先删除该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nf">deleteNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//再加入该节点到首位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">this</span><span class="p">.</span><span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//删除某个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">deleteNode</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//先删除映射
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nb">delete</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//从双向链表中删除该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">next</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">node</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">pre</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">pre</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">this</span><span class="p">.</span><span class="nx">Size</span><span class="o">--</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//put方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//先判断是否已有该节点,有则更新
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//当没有该节点时,直接加入到首位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">node</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">this</span><span class="p">.</span><span class="nf">addNodeFirst</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//如果已经有该节点,那么先直接更新该节点的值并且提前至首位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">node</span><span class="p">.</span><span class="nx">val</span> <span class="p">=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">this</span><span class="p">.</span><span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//get方法,如果不存在则返回-1(假设值都是正数)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">node</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">bucket</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//不存在则返回-1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//将节点提前到首位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">this</span><span class="p">.</span><span class="nf">makeNodeFirst</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">val</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">LRUCache</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">next</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="p">;</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">tail</span><span class="p">;</span> <span class="nx">cur</span> <span class="p">=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">next</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d-&gt;%d &#34;</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>测试代码如下</p>
@@ -1179,28 +1179,28 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">LRU</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-   <span class="s">&#34;fmt&#34;</span>
-   <span class="s">&#34;testing&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">TestLRUCache_New</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">cache</span> <span class="o">:=</span> <span class="nf">New</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-   <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;加入节点%d\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-      <span class="nx">cache</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">11</span><span class="o">*</span><span class="nx">i</span><span class="p">)</span>
-      <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
-   <span class="p">}</span>
-   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
-   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
-   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
-   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
-   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">LRU</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;testing&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">TestLRUCache_New</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span> <span class="o">:=</span> <span class="nf">New</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;加入节点%d\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cache</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">11</span><span class="o">*</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;查询节点%d ,值为%d\n&#34;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">cache</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -1347,119 +1347,119 @@
 </span><span class="lnt">112
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">lru</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-   <span class="s">&#34;container/list&#34;</span>
-   <span class="s">&#34;fmt&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">type</span> <span class="nx">Cache</span> <span class="kd">struct</span> <span class="p">{</span>
-   <span class="c1">//缓存队列最大缓存大小
-</span><span class="c1"></span>   <span class="nx">maxBytes</span> <span class="kt">int64</span>
-   <span class="c1">//缓存队列目前已经使用大小
-</span><span class="c1"></span>   <span class="nx">usedBytes</span> <span class="kt">int64</span>
-   <span class="c1">//链表
-</span><span class="c1"></span>   <span class="nx">cacheList</span> <span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">List</span>
-   <span class="c1">//map映射key-&gt;Element
-</span><span class="c1"></span>   <span class="nx">cacheMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">Element</span>
-   <span class="c1">//删除记录时的回调函数
-</span><span class="c1"></span>   <span class="nx">OnEvicted</span> <span class="kd">func</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1">//键值对类型
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">entry</span> <span class="kd">struct</span> <span class="p">{</span>
-   <span class="nx">key</span>   <span class="kt">string</span>
-   <span class="nx">value</span> <span class="nx">Value</span>
-<span class="p">}</span>
-
-<span class="c1">//缓存的值的类型
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Value</span> <span class="kd">interface</span> <span class="p">{</span>
-   <span class="c1">//返回Value的内存大小
-</span><span class="c1"></span>   <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span>
-<span class="p">}</span>
-
-<span class="c1">//实例化函数
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">New</span><span class="p">(</span><span class="nx">maxBytes</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">onEvicted</span> <span class="kd">func</span><span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="nx">Value</span><span class="p">))</span> <span class="o">*</span><span class="nx">Cache</span> <span class="p">{</span>
-   <span class="k">return</span> <span class="o">&amp;</span><span class="nx">Cache</span><span class="p">{</span>
-      <span class="nx">maxBytes</span><span class="p">:</span>  <span class="nx">maxBytes</span><span class="p">,</span>
-      <span class="nx">usedBytes</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="nx">cacheList</span><span class="p">:</span> <span class="nx">list</span><span class="p">.</span><span class="nf">New</span><span class="p">(),</span>
-      <span class="nx">cacheMap</span><span class="p">:</span>  <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">Element</span><span class="p">),</span>
-      <span class="nx">OnEvicted</span><span class="p">:</span> <span class="nx">onEvicted</span><span class="p">,</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">//查找
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">Value</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//先从map里查找是否有该值
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-      <span class="c1">//若有则将该提至最近使用的
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
-      <span class="c1">//返回(将element的value强转成自定义的Value类型
-</span><span class="c1"></span>      <span class="nx">e</span> <span class="o">:=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
-      <span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span>
-   <span class="p">}</span>
-   <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">false</span>
-<span class="p">}</span>
-
-<span class="c1">//删除最久未被使用的节点
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">RemoveOldest</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//获取最后一个节点
-</span><span class="c1"></span>   <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Back</span><span class="p">()</span>
-   <span class="k">if</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="c1">//从list中删除
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="nx">cur</span><span class="p">)</span>
-      <span class="c1">//从map中删除
-</span><span class="c1"></span>      <span class="nx">entry</span> <span class="o">:=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
-      <span class="nb">delete</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
-      <span class="c1">//更新当前已用内存
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">-=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
-      <span class="c1">//运行回调函数
-</span><span class="c1"></span>      <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">OnEvicted</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-         <span class="nx">c</span><span class="p">.</span><span class="nf">OnEvicted</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">//添加缓存
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Put</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">//判断当前是否已经有该key
-</span><span class="c1"></span>   <span class="k">if</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-      <span class="c1">//已经有该节点,则将该节点更新并移至队首(最近访问)
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
-      <span class="nx">entry</span> <span class="o">:=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
-      <span class="c1">//更新当前已用内存(加上当前新增的value大小再减去原本的value大小)
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span> <span class="o">-</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
-      <span class="c1">//更新值
-</span><span class="c1"></span>      <span class="nx">entry</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">value</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="c1">//若不存在,则添加至队首,并更新map
-</span><span class="c1"></span>      <span class="nx">element</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">PushFront</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">entry</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">})</span>
-      <span class="c1">//添加至map
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">element</span>
-      <span class="c1">//更新已用内存
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
-   <span class="p">}</span>
-   <span class="c1">//添加之后判断是否已经超过最大内存(当最大内存不为0时而且已用内存超过最大内存时删除最近未使用的节点)
-</span><span class="c1"></span>   <span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="p">&lt;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="p">{</span>
-      <span class="nx">c</span><span class="p">.</span><span class="nf">RemoveOldest</span><span class="p">()</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">//获取当前缓存的数据条数
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-   <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
-   <span class="k">for</span> <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Front</span><span class="p">();</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">;</span> <span class="nx">cur</span> <span class="p">=</span> <span class="nx">cur</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">kv</span> <span class="o">:=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
-      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s-&gt;%s &#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
-   <span class="p">}</span>
-   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">lru</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;container/list&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Cache</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//缓存队列最大缓存大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">maxBytes</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//缓存队列目前已经使用大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">usedBytes</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">cacheList</span> <span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">List</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//map映射key-&gt;Element
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">cacheMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">Element</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//删除记录时的回调函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">OnEvicted</span> <span class="kd">func</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//键值对类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">entry</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">key</span>   <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">value</span> <span class="nx">Value</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//缓存的值的类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Value</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//返回Value的内存大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//实例化函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">New</span><span class="p">(</span><span class="nx">maxBytes</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">onEvicted</span> <span class="kd">func</span><span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="nx">Value</span><span class="p">))</span> <span class="o">*</span><span class="nx">Cache</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="o">&amp;</span><span class="nx">Cache</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">maxBytes</span><span class="p">:</span>  <span class="nx">maxBytes</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">usedBytes</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cacheList</span><span class="p">:</span> <span class="nx">list</span><span class="p">.</span><span class="nf">New</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">cacheMap</span><span class="p">:</span>  <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">list</span><span class="p">.</span><span class="nx">Element</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">OnEvicted</span><span class="p">:</span> <span class="nx">onEvicted</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//查找
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">Value</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//先从map里查找是否有该值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//若有则将该提至最近使用的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//返回(将element的value强转成自定义的Value类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">e</span> <span class="o">:=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//删除最久未被使用的节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">RemoveOldest</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//获取最后一个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Back</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//从list中删除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="nx">cur</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//从map中删除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">entry</span> <span class="o">:=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">delete</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//更新当前已用内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">-=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//运行回调函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">OnEvicted</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">c</span><span class="p">.</span><span class="nf">OnEvicted</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//添加缓存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Put</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//判断当前是否已经有该key
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">if</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//已经有该节点,则将该节点更新并移至队首(最近访问)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">entry</span> <span class="o">:=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//更新当前已用内存(加上当前新增的value大小再减去原本的value大小)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span> <span class="o">-</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//更新值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">entry</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">value</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//若不存在,则添加至队首,并更新map
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">element</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">PushFront</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">entry</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//添加至map
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">cacheMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">element</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//更新已用内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//添加之后判断是否已经超过最大内存(当最大内存不为0时而且已用内存超过最大内存时删除最近未使用的节点)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="p">&lt;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">usedBytes</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">c</span><span class="p">.</span><span class="nf">RemoveOldest</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//获取当前缓存的数据条数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cacheList</span><span class="p">.</span><span class="nf">Front</span><span class="p">();</span> <span class="nx">cur</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">;</span> <span class="nx">cur</span> <span class="p">=</span> <span class="nx">cur</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">kv</span> <span class="o">:=</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s-&gt;%s &#34;</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1505,47 +1505,47 @@
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">gocache</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-   <span class="s">&#34;github.com/TheR1sing3un/gocache/gocache/lru&#34;</span>
-   <span class="s">&#34;sync&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">type</span> <span class="nx">cache</span> <span class="kd">struct</span> <span class="p">{</span>
-   <span class="c1">//互斥锁
-</span><span class="c1"></span>   <span class="nx">lock</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
-   <span class="c1">//lru缓存队列
-</span><span class="c1"></span>   <span class="nx">lru</span> <span class="o">*</span><span class="nx">lru</span><span class="p">.</span><span class="nx">Cache</span>
-   <span class="c1">//最大缓存大小
-</span><span class="c1"></span>   <span class="nx">cacheBytes</span> <span class="kt">int64</span>
-<span class="p">}</span>
-
-<span class="c1">//缓存put方法
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">put</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">ByteView</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="c1">//懒加载lru
-</span><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="p">=</span> <span class="nx">lru</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheBytes</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
-   <span class="p">}</span>
-   <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1">//缓存get方法
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">value</span> <span class="nx">ByteView</span><span class="p">,</span> <span class="nx">ok</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-   <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-   <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="c1">//还未初始化(当前肯定没有数据)
-</span><span class="c1"></span>      <span class="k">return</span>
-   <span class="p">}</span>
-   <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">value</span><span class="p">.(</span><span class="nx">ByteView</span><span class="p">),</span> <span class="kc">true</span>
-   <span class="p">}</span>
-   <span class="k">return</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">gocache</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;github.com/TheR1sing3un/gocache/gocache/lru&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">cache</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//互斥锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">lock</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//lru缓存队列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">lru</span> <span class="o">*</span><span class="nx">lru</span><span class="p">.</span><span class="nx">Cache</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">//最大缓存大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="nx">cacheBytes</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//缓存put方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">put</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">ByteView</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//懒加载lru
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="p">=</span> <span class="nx">lru</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheBytes</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//缓存get方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">value</span> <span class="nx">ByteView</span><span class="p">,</span> <span class="nx">ok</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//还未初始化(当前肯定没有数据)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">value</span><span class="p">.(</span><span class="nx">ByteView</span><span class="p">),</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="总结">总结</h2>
 <p>至此，我们就完成了三种手写LRU算法，不需要过多练习，只需要记住核心思想就是每次get时候我就提前，每次put也要提前，并且需要判断是否满载，若满则删除最后的(最久未被访问的节点)。</p>
@@ -1579,7 +1579,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

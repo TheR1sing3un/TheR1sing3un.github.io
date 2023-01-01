@@ -4,7 +4,16 @@
         <link>https://ther1sing3un.github.io/posts/</link>
         <description>所有文章 | trs的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ther1sing3un@163.com (TheR1sing3un)</managingEditor>
-            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Tue, 07 Jun 2022 17:58:12 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ther1sing3un@163.com (TheR1sing3un)</webMaster><lastBuildDate>Sat, 31 Dec 2022 17:18:02 &#43;0800</lastBuildDate><atom:link href="https://ther1sing3un.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>2022年终总结</title>
+    <link>https://ther1sing3un.github.io/2022%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Sat, 31 Dec 2022 17:18:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ther1sing3un.github.io/2022%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/blog/2023-01-01/50906501-DED6-48FA-8BF5-4B56168BCAD7_1_105_c.jpeg" referrerpolicy="no-referrer">
+            </div>2022流水账式年终总结 前言 2022，是我大学生活中最为值得记录的一年，虽然也有许多坎坷和挫折，并不是一帆风顺的，但是还是想记录一下，希望以]]></description>
+</item><item>
     <title>TinyKV Project翻译</title>
     <link>https://ther1sing3un.github.io/tinykv-project%E7%BF%BB%E8%AF%91/</link>
     <pubDate>Tue, 07 Jun 2022 17:58:12 &#43;0800</pubDate>
@@ -83,14 +92,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/007S8ZIlgy1gippgnh88tj31de0d0786.jpg" referrerpolicy="no-referrer">
             </div>Java实现生产者消费者模型 前言 什么是生产者消费者模型？ 简单来讲就是有两种线程，分别称为生产者线程和消费者线程。生产者线程生产出&quot;]]></description>
-</item><item>
-    <title>LRU算法原理及实现</title>
-    <link>https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/</link>
-    <pubDate>Thu, 30 Dec 2021 10:40:18 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ther1sing3un.github.io/lru%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="https://ther1sing3un-personal-resource.oss-cn-beijing.aliyuncs.com/typora/images/407408-20180321102219351-2030402661.png" referrerpolicy="no-referrer">
-            </div>LRU算法原理及实现 前言 什么是LRU算法？ LRU（Least recently used，最近最少使用）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是]]></description>
 </item></channel>
 </rss>

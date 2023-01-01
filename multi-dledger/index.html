@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ther1sing3un.github.io\/multi-dledger\/"
-        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "分布式系统, Raft, Java, DLedger","wordcount":  3543 ,
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "分布式系统, Raft, Java, DLedger","wordcount":  3569 ,
         "url": "https:\/\/ther1sing3un.github.io\/multi-dledger\/","datePublished": "2022-05-09T17:40:32+08:00","dateModified": "2022-05-09T17:40:32+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Multi DLedger</h1><h2 class="single-subtitle">Multi-DLedger设计文档</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>分布式系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-09">2022-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3543 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-09">2022-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3569 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -253,23 +253,23 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">DLedgerConfigs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="w">
-</span><span class="w">   	  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g0</span><span class="w">
-</span><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">n0</span><span class="w">
-</span><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">n0-127.0.0.1:10000;n1-127.0.0.1:10001;n2-127.0.0.1:10002</span><span class="w">
-</span><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">n0</span><span class="w">
-</span><span class="w">  </span>- <span class="nt">DLedgerConfig</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g1</span><span class="w">
-</span><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">a0</span><span class="w">
-</span><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">a0-127.0.0.1:10000;a1-127.0.0.1:10001;a2-127.0.0.1:10002</span><span class="w">
-</span><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">a1</span><span class="w">
-</span><span class="w">  </span>- <span class="nt">DLedgerConfig</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g2</span><span class="w">
-</span><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">b0</span><span class="w">
-</span><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">b0-127.0.0.1:10000;b1-127.0.0.1:10001;b2-127.0.0.1:10002</span><span class="w">
-</span><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">b2</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">DLedgerConfigs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   	  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">n0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">n0-127.0.0.1:10000;n1-127.0.0.1:10001;n2-127.0.0.1:10002</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">n0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">DLedgerConfig</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">a0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">a0-127.0.0.1:10000;a1-127.0.0.1:10001;a2-127.0.0.1:10002</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">a1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">DLedgerConfig</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">g2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">b0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">peers</span><span class="p">:</span><span class="w"> </span><span class="l">b0-127.0.0.1:10000;b1-127.0.0.1:10001;b2-127.0.0.1:10002</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">preferredLeaderId</span><span class="p">:</span><span class="w"> </span><span class="l">b2</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>根据上述配置进行多个DLedgerConfig的实例化，然后根据DLedgerConfig来进行DLedgerServer来实例化。我们可以看到我们现在一个端口用来处理多个Raft节点的请求，使用<code>id</code>来进行表示。</p>
 <h3 id="需要完成的要点">需要完成的要点</h3>
@@ -365,7 +365,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/"
-        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  20035 ,
+        },"image": ["https:\/\/ther1sing3un.github.io\/images\/baseConfig\/blogAvatar.svg"],"genre": "posts","keywords": "Database, 翻译","wordcount":  20047 ,
         "url": "https:\/\/ther1sing3un.github.io\/mit-6.830-lab%E7%BF%BB%E8%AF%91\/","datePublished": "2022-05-22T13:26:59+08:00","dateModified": "2022-05-22T13:26:59+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MIT 6.830 Lab翻译</h1><h2 class="single-subtitle">MIT-6.830-Lab翻译</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>TheR1sing3un</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/database/"><i class="far fa-folder fa-fw"></i>Database</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 20035 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 40 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-22">2022-05-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 20047 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 41 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -253,12 +253,12 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">cd</span> <span class="o">[</span>project-directory<span class="o">]</span>
-$ <span class="c1"># run all unit tests</span>
-$ ant <span class="nb">test</span>
-$ <span class="c1"># run a specific unit test</span>
-$ ant runtest -Dtest<span class="o">=</span>TupleTest
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="o">[</span>project-directory<span class="o">]</span>
+</span></span><span class="line"><span class="cl">$ <span class="c1"># run all unit tests</span>
+</span></span><span class="line"><span class="cl">$ ant <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">$ <span class="c1"># run a specific unit test</span>
+</span></span><span class="line"><span class="cl">$ ant runtest -Dtest<span class="o">=</span>TupleTest
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你应该看到相似的输出：</p>
 <div class="highlight"><div class="chroma">
@@ -274,16 +274,16 @@ $ ant runtest -Dtest<span class="o">=</span>TupleTest
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> build output...
-
-test:
-    <span class="o">[</span>junit<span class="o">]</span> Running simpledb.CatalogTest
-    <span class="o">[</span>junit<span class="o">]</span> Testsuite: simpledb.CatalogTest
-    <span class="o">[</span>junit<span class="o">]</span> Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.037 sec
-    <span class="o">[</span>junit<span class="o">]</span> Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.037 sec
-
- ... stack traces and error reports ...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> build output...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">test:
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Running simpledb.CatalogTest
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Testsuite: simpledb.CatalogTest
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.037 sec
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Tests run: 2, Failures: 0, Errors: 2, Time elapsed: 0.037 sec
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ... stack traces and error reports ...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面的输出表明在编译过程中出现了两个错误，这是因为我们给出的代码还不能工作。当您完成lab的各个部分时，您将努力的通过其他的单元测试。</p>
 <p>如果您希望在编写代码的过程中编写新的单元测试，那么你应该将他加入到<code>test/simpledb</code>文件下。</p>
@@ -352,26 +352,26 @@ test:
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ ant systemtest
-
- ... build output ...
-
-    <span class="o">[</span>junit<span class="o">]</span> Testcase: testSmall took 0.017 sec
-    <span class="o">[</span>junit<span class="o">]</span>     Caused an ERROR
-    <span class="o">[</span>junit<span class="o">]</span> expected to find the following tuples:
-    <span class="o">[</span>junit<span class="o">]</span>     <span class="m">19128</span>
-    <span class="o">[</span>junit<span class="o">]</span> 
-    <span class="o">[</span>junit<span class="o">]</span> java.lang.AssertionError: expected to find the following tuples:
-    <span class="o">[</span>junit<span class="o">]</span>     <span class="m">19128</span>
-    <span class="o">[</span>junit<span class="o">]</span> 
-    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:122<span class="o">)</span>
-    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:83<span class="o">)</span>
-    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:75<span class="o">)</span>
-    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.ScanTest.validateScan<span class="o">(</span>ScanTest.java:30<span class="o">)</span>
-    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.ScanTest.testSmall<span class="o">(</span>ScanTest.java:40<span class="o">)</span>
-
- ... more error messages ...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ant systemtest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ... build output ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Testcase: testSmall took 0.017 sec
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     Caused an ERROR
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> expected to find the following tuples:
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     <span class="m">19128</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> java.lang.AssertionError: expected to find the following tuples:
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     <span class="m">19128</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:122<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:83<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.SystemTestUtil.matchTuples<span class="o">(</span>SystemTestUtil.java:75<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.ScanTest.validateScan<span class="o">(</span>ScanTest.java:30<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span>     at simpledb.systemtest.ScanTest.testSmall<span class="o">(</span>ScanTest.java:40<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ... more error messages ...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这表示此测试失败，显示在何处检测到错误的堆栈跟踪。要进行调试，首先读取发生错误的源代码。当测试通过时，你会看到如下内容:</p>
 <div class="highlight"><div class="chroma">
@@ -392,21 +392,21 @@ test:
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ ant systemtest
-
- ... build output ...
-
-    <span class="o">[</span>junit<span class="o">]</span> Testsuite: simpledb.systemtest.ScanTest
-    <span class="o">[</span>junit<span class="o">]</span> Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 7.278 sec
-    <span class="o">[</span>junit<span class="o">]</span> Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 7.278 sec
-    <span class="o">[</span>junit<span class="o">]</span> 
-    <span class="o">[</span>junit<span class="o">]</span> Testcase: testSmall took 0.937 sec
-    <span class="o">[</span>junit<span class="o">]</span> Testcase: testLarge took 5.276 sec
-    <span class="o">[</span>junit<span class="o">]</span> Testcase: testRandom took 1.049 sec
-
-BUILD SUCCESSFUL
-Total time: <span class="m">52</span> seconds
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ ant systemtest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> ... build output ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Testsuite: simpledb.systemtest.ScanTest
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 7.278 sec
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 7.278 sec
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Testcase: testSmall took 0.937 sec
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Testcase: testLarge took 5.276 sec
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>junit<span class="o">]</span> Testcase: testRandom took 1.049 sec
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">BUILD SUCCESSFUL
+</span></span><span class="line"><span class="cl">Total time: <span class="m">52</span> seconds
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="111创建虚拟表">1.1.1创建虚拟表</h5>
 <p>您可能希望创建自己的测试和自己的数据表，以测试自己的 <code>SimpleDB</code> 实现。你可以创建任何<code>.txt</code>文件，并使用下列命令来将其转化为<code>SimpleDB</code>的<code>HeapFile</code>格式的<code>.dat</code>文件：</p>
@@ -415,8 +415,8 @@ Total time: <span class="m">52</span> seconds
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ java -jar dist/simpledb.jar convert file.txt N
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ java -jar dist/simpledb.jar convert file.txt N
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>当文件的名字为<code>file.txt</code>以及<code>N</code>时文件的列数。注意<code>file.txt</code>必须是以下的格式：</p>
 <div class="highlight"><div class="chroma">
@@ -427,11 +427,11 @@ Total time: <span class="m">52</span> seconds
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt">int1,int2,...,intN
-int1,int2,...,intN
-int1,int2,...,intN
-int1,int2,...,intN
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">int1,int2,...,intN
+</span></span><span class="line"><span class="cl">int1,int2,...,intN
+</span></span><span class="line"><span class="cl">int1,int2,...,intN
+</span></span><span class="line"><span class="cl">int1,int2,...,intN
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中iniN是个非负整数。</p>
 <p>使用<code>print</code>命令来查看表的内容。</p>
@@ -440,8 +440,8 @@ int1,int2,...,intN
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ java -jar dist/simpledb.jar print file.dat N
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ java -jar dist/simpledb.jar print file.dat N
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里的<code>file.dat</code>是使用<code>convert</code>命令创建出来的表的名字，以及<code>N</code>是文件中的列数。</p>
 <h4 id="12使用ide">1.2使用IDE</h4>
@@ -456,9 +456,9 @@ int1,int2,...,intN
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">// Not necessary for lab1.
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Insert</span> <span class="kd">implements</span> <span class="n">DbIterator</span> <span class="o">{</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// Not necessary for lab1.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Insert</span> <span class="kd">implements</span> <span class="n">DbIterator</span> <span class="o">{</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>或者每个方法：</p>
 <div class="highlight"><div class="chroma">
@@ -470,12 +470,12 @@ int1,int2,...,intN
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">deleteTuple</span><span class="o">(</span><span class="n">Tuple</span> <span class="n">t</span><span class="o">)</span><span class="kd">throws</span> <span class="n">DbException</span><span class="o">{</span>
-        <span class="c1">// some code goes here
-</span><span class="c1"></span>        <span class="c1">// not necessary for lab1
-</span><span class="c1"></span>        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">deleteTuple</span><span class="o">(</span><span class="n">Tuple</span> <span class="n">t</span><span class="o">)</span><span class="kd">throws</span> <span class="n">DbException</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// some code goes here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// not necessary for lab1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>您提交的代码应该可以编译，而无需修改这些方法。</p>
 <p>我们建议使用本文档的练习来指导您的实现，但是您可能会发现不同的顺序对您更有意义。</p>
@@ -604,10 +604,10 @@ int1,int2,...,intN
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1,1,1
-2,2,2 
-3,4,4
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1,1,1
+</span></span><span class="line"><span class="cl">2,2,2 
+</span></span><span class="line"><span class="cl">3,4,4
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你可以转化把它转化成一个<code>SimpleDB</code>可以查询的二进制文件：</p>
 <div class="highlight"><div class="chroma">
@@ -615,8 +615,8 @@ int1,int2,...,intN
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -jar dist/simpledb.jar convert some_data_file.txt <span class="m">3</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">java -jar dist/simpledb.jar convert some_data_file.txt <span class="m">3</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里的参数&quot;3&quot;意思是输入有三列。</p>
 <p>下面的代码实现了对该文件的简单选择查询。这段代码相当于SQL语句中的<code>SELECT * FROM some_data_fiel</code>。</p>
@@ -661,44 +661,44 @@ int1,int2,...,intN
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">simpledb</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">test</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">argv</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// construct a 3-column table schema
-</span><span class="c1"></span>        <span class="n">Type</span> <span class="n">types</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Type</span><span class="o">[]{</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span> <span class="o">};</span>
-        <span class="n">String</span> <span class="n">names</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span> <span class="s">&#34;field0&#34;</span><span class="o">,</span> <span class="s">&#34;field1&#34;</span><span class="o">,</span> <span class="s">&#34;field2&#34;</span> <span class="o">};</span>
-        <span class="n">TupleDesc</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TupleDesc</span><span class="o">(</span><span class="n">types</span><span class="o">,</span> <span class="n">names</span><span class="o">);</span>
-
-        <span class="c1">// create the table, associate it with some_data_file.dat
-</span><span class="c1"></span>        <span class="c1">// and tell the catalog about the schema of this table.
-</span><span class="c1"></span>        <span class="n">HeapFile</span> <span class="n">table1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file.dat&#34;</span><span class="o">),</span> <span class="n">descriptor</span><span class="o">);</span>
-        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">);</span>
-
-        <span class="c1">// construct the query: we use a simple SeqScan, which spoonfeeds
-</span><span class="c1"></span>        <span class="c1">// tuples via its iterator.
-</span><span class="c1"></span>        <span class="n">TransactionId</span> <span class="n">tid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TransactionId</span><span class="o">();</span>
-        <span class="n">SeqScan</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table1</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
-
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="c1">// and run it
-</span><span class="c1"></span>            <span class="n">f</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
-            <span class="k">while</span> <span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                <span class="n">Tuple</span> <span class="n">tup</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tup</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="n">f</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="n">Database</span><span class="o">.</span><span class="na">getBufferPool</span><span class="o">().</span><span class="na">transactionComplete</span><span class="o">(</span><span class="n">tid</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="s">&#34;Exception : &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">simpledb</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">test</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">argv</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// construct a 3-column table schema
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Type</span> <span class="n">types</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Type</span><span class="o">[]{</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span> <span class="o">};</span>
+</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">names</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span> <span class="s">&#34;field0&#34;</span><span class="o">,</span> <span class="s">&#34;field1&#34;</span><span class="o">,</span> <span class="s">&#34;field2&#34;</span> <span class="o">};</span>
+</span></span><span class="line"><span class="cl">        <span class="n">TupleDesc</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TupleDesc</span><span class="o">(</span><span class="n">types</span><span class="o">,</span> <span class="n">names</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// create the table, associate it with some_data_file.dat
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// and tell the catalog about the schema of this table.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">HeapFile</span> <span class="n">table1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file.dat&#34;</span><span class="o">),</span> <span class="n">descriptor</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table1</span><span class="o">,</span> <span class="s">&#34;test&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// construct the query: we use a simple SeqScan, which spoonfeeds
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// tuples via its iterator.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">TransactionId</span> <span class="n">tid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TransactionId</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SeqScan</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table1</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// and run it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">f</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Tuple</span> <span class="n">tup</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tup</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">f</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Database</span><span class="o">.</span><span class="na">getBufferPool</span><span class="o">().</span><span class="na">transactionComplete</span><span class="o">(</span><span class="n">tid</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="s">&#34;Exception : &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>该表有三个整数字段。为了表示出来，我们创建了一个<code>TupleDesc</code>的对象然后传递给它一个<code>Type</code>数组对象，以及一个<code>String</code>类型的字段名数组。一旦我们创建了这个<code>TupleDesc</code>，我们就初始化一个<code>HeapFile</code>对象来表示存储在<code>some_data_file.dat</code>中的表。一旦我们完成了表的创建，我们将其加入到目录中。如果这是一个已经在运行的数据库服务器，我们将加载这个目录信息。我们需要显式地加载它，以使这段代码被包含进去。</p>
 <p>初始化完数据库系统后，我们创建一个查询计划。我们的计划只包含从磁盘扫描元组的 <code>SeqScan</code> 操作符。一般来说，这些运算符通过引用适当的表(在 <code>SeqScan</code> 中)或子运算符(在 Filter 中)来实例化。然后测试程序在 <code>SeqScan</code> 操作符上反复调用 <code>hasNext</code> 和 <code>next</code>。由于元组是从 <code>SeqScan</code> 输出的，所以它们在命令行上被打印出来。</p>
@@ -709,9 +709,9 @@ int1,int2,...,intN
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ant
-java -classpath dist/simpledb.jar simpledb.test
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ant
+</span></span><span class="line"><span class="cl">java -classpath dist/simpledb.jar simpledb.test
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意<code>ant</code>编译<code>test.java</code>然后生成一个新的包含它的jar文件。</p>
 <h3 id="3-后续工作">3. 后续工作</h3>
@@ -844,12 +844,12 @@ java -classpath dist/simpledb.jar simpledb.test
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">
-</span><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">some_data_file1</span><span class="p">,</span><span class="w">
-</span><span class="w">     </span><span class="n">some_data_file2</span><span class="w">
-</span><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="n">some_data_file1</span><span class="p">.</span><span class="n">field1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">some_data_file2</span><span class="p">.</span><span class="n">field1</span><span class="w">
-</span><span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">some_data_file1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">some_data_file1</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">some_data_file2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="n">some_data_file1</span><span class="p">.</span><span class="n">field1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">some_data_file2</span><span class="p">.</span><span class="n">field1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">some_data_file1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于更广泛的查询操作示例，您可能会发现浏览关于连接、筛选器和聚合的单元测试很有帮助。</p>
 <div class="highlight"><div class="chroma">
@@ -909,60 +909,60 @@ java -classpath dist/simpledb.jar simpledb.test
 </span><span class="lnt">53
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">simpledb</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">jointest</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">argv</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// construct a 3-column table schema
-</span><span class="c1"></span>        <span class="n">Type</span> <span class="n">types</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Type</span><span class="o">[]{</span><span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">};</span>
-        <span class="n">String</span> <span class="n">names</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">&#34;field0&#34;</span><span class="o">,</span> <span class="s">&#34;field1&#34;</span><span class="o">,</span> <span class="s">&#34;field2&#34;</span><span class="o">};</span>
-
-        <span class="n">TupleDesc</span> <span class="n">td</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TupleDesc</span><span class="o">(</span><span class="n">types</span><span class="o">,</span> <span class="n">names</span><span class="o">);</span>
-
-        <span class="c1">// create the tables, associate them with the data files
-</span><span class="c1"></span>        <span class="c1">// and tell the catalog about the schema  the tables.
-</span><span class="c1"></span>        <span class="n">HeapFile</span> <span class="n">table1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file1.dat&#34;</span><span class="o">),</span> <span class="n">td</span><span class="o">);</span>
-        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table1</span><span class="o">,</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
-
-        <span class="n">HeapFile</span> <span class="n">table2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file2.dat&#34;</span><span class="o">),</span> <span class="n">td</span><span class="o">);</span>
-        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table2</span><span class="o">,</span> <span class="s">&#34;t2&#34;</span><span class="o">);</span>
-
-        <span class="c1">// construct the query: we use two SeqScans, which spoonfeed
-</span><span class="c1"></span>        <span class="c1">// tuples via iterators into join
-</span><span class="c1"></span>        <span class="n">TransactionId</span> <span class="n">tid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TransactionId</span><span class="o">();</span>
-
-        <span class="n">SeqScan</span> <span class="n">ss1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table1</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
-        <span class="n">SeqScan</span> <span class="n">ss2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table2</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="s">&#34;t2&#34;</span><span class="o">);</span>
-
-        <span class="c1">// create a filter for the where condition
-</span><span class="c1"></span>        <span class="n">Filter</span> <span class="n">sf1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Filter</span><span class="o">(</span>
-                <span class="k">new</span> <span class="n">Predicate</span><span class="o">(</span><span class="n">0</span><span class="o">,</span>
-                        <span class="n">Predicate</span><span class="o">.</span><span class="na">Op</span><span class="o">.</span><span class="na">GREATER_THAN</span><span class="o">,</span> <span class="k">new</span> <span class="n">IntField</span><span class="o">(</span><span class="n">1</span><span class="o">)),</span> <span class="n">ss1</span><span class="o">);</span>
-
-        <span class="n">JoinPredicate</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JoinPredicate</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">Predicate</span><span class="o">.</span><span class="na">Op</span><span class="o">.</span><span class="na">EQUALS</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
-        <span class="n">Join</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Join</span><span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">sf1</span><span class="o">,</span> <span class="n">ss2</span><span class="o">);</span>
-
-        <span class="c1">// and run it
-</span><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">j</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
-            <span class="k">while</span> <span class="o">(</span><span class="n">j</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                <span class="n">Tuple</span> <span class="n">tup</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tup</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="n">j</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="n">Database</span><span class="o">.</span><span class="na">getBufferPool</span><span class="o">().</span><span class="na">transactionComplete</span><span class="o">(</span><span class="n">tid</span><span class="o">);</span>
-
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nn">simpledb</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">jointest</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">argv</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// construct a 3-column table schema
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Type</span> <span class="n">types</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Type</span><span class="o">[]{</span><span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">,</span> <span class="n">Type</span><span class="o">.</span><span class="na">INT_TYPE</span><span class="o">};</span>
+</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">names</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">&#34;field0&#34;</span><span class="o">,</span> <span class="s">&#34;field1&#34;</span><span class="o">,</span> <span class="s">&#34;field2&#34;</span><span class="o">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">TupleDesc</span> <span class="n">td</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TupleDesc</span><span class="o">(</span><span class="n">types</span><span class="o">,</span> <span class="n">names</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// create the tables, associate them with the data files
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// and tell the catalog about the schema  the tables.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">HeapFile</span> <span class="n">table1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file1.dat&#34;</span><span class="o">),</span> <span class="n">td</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table1</span><span class="o">,</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">HeapFile</span> <span class="n">table2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HeapFile</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&#34;some_data_file2.dat&#34;</span><span class="o">),</span> <span class="n">td</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Database</span><span class="o">.</span><span class="na">getCatalog</span><span class="o">().</span><span class="na">addTable</span><span class="o">(</span><span class="n">table2</span><span class="o">,</span> <span class="s">&#34;t2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// construct the query: we use two SeqScans, which spoonfeed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// tuples via iterators into join
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">TransactionId</span> <span class="n">tid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TransactionId</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">SeqScan</span> <span class="n">ss1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table1</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="s">&#34;t1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SeqScan</span> <span class="n">ss2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeqScan</span><span class="o">(</span><span class="n">tid</span><span class="o">,</span> <span class="n">table2</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="s">&#34;t2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// create a filter for the where condition
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Filter</span> <span class="n">sf1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Filter</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">Predicate</span><span class="o">(</span><span class="n">0</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">Predicate</span><span class="o">.</span><span class="na">Op</span><span class="o">.</span><span class="na">GREATER_THAN</span><span class="o">,</span> <span class="k">new</span> <span class="n">IntField</span><span class="o">(</span><span class="n">1</span><span class="o">)),</span> <span class="n">ss1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">JoinPredicate</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JoinPredicate</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">Predicate</span><span class="o">.</span><span class="na">Op</span><span class="o">.</span><span class="na">EQUALS</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Join</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Join</span><span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">sf1</span><span class="o">,</span> <span class="n">ss2</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// and run it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">j</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="o">(</span><span class="n">j</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Tuple</span> <span class="n">tup</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tup</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">j</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Database</span><span class="o">.</span><span class="na">getBufferPool</span><span class="o">().</span><span class="na">transactionComplete</span><span class="o">(</span><span class="n">tid</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>两个表都有三个整数字段。为了表示这一点，我们创建一个 <code>TupleDesc</code> 对象，并向其传递一个 <code>Type</code> 对象数组，该数组指示字段类型和<code>String</code>对象，前者指示字段名称。一旦创建了这个 <code>TupleDesc</code>，我们就初始化两个表示表的 <code>HeapFile</code> 对象。创建表之后，将它们添加到 <code>Catalog</code> 中。(如果这是一个已经在运行的数据库服务器，我们将加载这个目录信息; 我们只需要为了这个测试的目的而加载这个目录信息)。</p>
 <p>初始化完数据库系统后，我们创建一个查询计划。我们的计划由两个 <code>SeqScan</code> 操作符组成，它们扫描磁盘上每个文件的元组，连接到第一个 <code>HeapFile</code> 上的 <code>Filter</code> 操作符，连接到一个 <code>Join</code> 操作符，该操作符根据 <code>JoinPredicate</code> 将表中的元组连接起来。通常，这些运算符通过引用适当的表(对于 <code>SeqScan</code>)或子运算符(对于<code> Join</code>)来实例化。然后，测试程序在 <code>Join</code> 操作符的下一个位置上重复调用，然后 <code>Join</code> 操作符从其子元组中提取元组。由于元组是 <code>Join</code> 的输出，所以它们在命令行上被打印出来。</p>
@@ -979,13 +979,13 @@ java -classpath dist/simpledb.jar simpledb.test
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1,10
-2,20
-3,30
-4,40
-5,50
-5,50
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1,10
+</span></span><span class="line"><span class="cl">2,20
+</span></span><span class="line"><span class="cl">3,30
+</span></span><span class="line"><span class="cl">4,40
+</span></span><span class="line"><span class="cl">5,50
+</span></span><span class="line"><span class="cl">5,50
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>您可以使用 <code>convert</code> 命令将其转换为SimpleDB的表(请确保首先输入 <code>ant</code>!) ：</p>
 <div class="highlight"><div class="chroma">
@@ -993,8 +993,8 @@ java -classpath dist/simpledb.jar simpledb.test
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -jar dist/simpledb.jar convert data.txt <span class="m">2</span> <span class="s2">&#34;int,int&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">java -jar dist/simpledb.jar convert data.txt <span class="m">2</span> <span class="s2">&#34;int,int&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这会创建一个<code>data.dat</code>文件。除了表中的原始数据，这两个附加参数还指定了每个记录有两个字段，他们的类型是<code>int</code>和<code>int</code>。</p>
 <p>接下来，创建一个目录文件，<code>catalog.txt</code>，携带如下内容：</p>
@@ -1003,8 +1003,8 @@ java -classpath dist/simpledb.jar simpledb.test
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">data<span class="o">(</span>f1 int, f2 int<span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">data<span class="o">(</span>f1 int, f2 int<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这告诉SimpleDB有一个表，<code>data</code>(存储在<code>data.dat</code>)的两个整数字段名为<code>f1</code>和<code>f2</code>。</p>
 <p>最终，调用解析器。你必须从命令行运行java程序(ant对于交互式的目标不能正常工作)。从<code>simpledb/</code>文件下，输入：</p>
@@ -1013,8 +1013,8 @@ java -classpath dist/simpledb.jar simpledb.test
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -jar dist/simpledb.jar parser catalog.txt
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">java -jar dist/simpledb.jar parser catalog.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你应该看到如此输出：</p>
 <div class="highlight"><div class="chroma">
@@ -1023,9 +1023,9 @@ java -classpath dist/simpledb.jar simpledb.test
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">Added table : data with schema INT<span class="o">(</span>f1<span class="o">)</span>, INT<span class="o">(</span>f2<span class="o">)</span>, 
-SimpleDB&gt; 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Added table : data with schema INT<span class="o">(</span>f1<span class="o">)</span>, INT<span class="o">(</span>f2<span class="o">)</span>, 
+</span></span><span class="line"><span class="cl">SimpleDB&gt; 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最终，你可以运行一个查询：</p>
 <div class="highlight"><div class="chroma">
@@ -1048,23 +1048,23 @@ SimpleDB&gt;
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">SimpleDB&gt; <span class="k">select</span> d.f1, d.f2 from data d<span class="p">;</span>
-Started a new transaction <span class="nv">tid</span> <span class="o">=</span> <span class="m">1221852405823</span>
- ADDING TABLE d<span class="o">(</span>data<span class="o">)</span> TO tableMap
-     TABLE HAS  tupleDesc INT<span class="o">(</span>d.f1<span class="o">)</span>, INT<span class="o">(</span>d.f2<span class="o">)</span>, 
-<span class="m">1</span>       <span class="m">10</span>
-<span class="m">2</span>       <span class="m">20</span>
-<span class="m">3</span>       <span class="m">30</span>
-<span class="m">4</span>       <span class="m">40</span>
-<span class="m">5</span>       <span class="m">50</span>
-<span class="m">5</span>       <span class="m">50</span>
-
- <span class="m">6</span> rows.
-----------------
-0.16 seconds
-
-SimpleDB&gt; 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">SimpleDB&gt; <span class="k">select</span> d.f1, d.f2 from data d<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Started a new transaction <span class="nv">tid</span> <span class="o">=</span> <span class="m">1221852405823</span>
+</span></span><span class="line"><span class="cl"> ADDING TABLE d<span class="o">(</span>data<span class="o">)</span> TO tableMap
+</span></span><span class="line"><span class="cl">     TABLE HAS  tupleDesc INT<span class="o">(</span>d.f1<span class="o">)</span>, INT<span class="o">(</span>d.f2<span class="o">)</span>, 
+</span></span><span class="line"><span class="cl"><span class="m">1</span>       <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="m">2</span>       <span class="m">20</span>
+</span></span><span class="line"><span class="cl"><span class="m">3</span>       <span class="m">30</span>
+</span></span><span class="line"><span class="cl"><span class="m">4</span>       <span class="m">40</span>
+</span></span><span class="line"><span class="cl"><span class="m">5</span>       <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="m">5</span>       <span class="m">50</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="m">6</span> rows.
+</span></span><span class="line"><span class="cl">----------------
+</span></span><span class="line"><span class="cl">0.16 seconds
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">SimpleDB&gt; 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>解析器的功能相对完整(包括对 <code>SELECT</code>、 <code>INSERT</code>、 <code>DELETE</code> 和事务的支持) ，但是确实存在一些问题，并且不一定报告完全信息化的错误消息。这里有一些需要记住的限制:</p>
 <ul>
@@ -1100,9 +1100,9 @@ SimpleDB&gt;
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">cd</span> simple-db-hw
-$ git pull upstream master
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="nb">cd</span> simple-db-hw
+</span></span><span class="line"><span class="cl">$ git pull upstream master
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="11-实现提示">1.1 实现提示</h4>
 <p>我们建议使用本文档的练习来指导您的实现，但是您可能会发现不同的顺序对您更有意义。和以前一样，我们将通过查看您的代码并验证您已经通过了 ant 目标测试和系统测试的测试来为您的任务打分。关于评分和你需要通过的测试的完整讨论，请参阅第3.4节。</p>
@@ -1125,8 +1125,8 @@ $ git pull upstream master
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">java -jar dist/simpledb.jar parser catalog.txt
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">java -jar dist/simpledb.jar parser catalog.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>当解析器被调用时，它将计算所有表的统计信息(使用您提供的统计信息代码)。当请求查询时，解析器会将查询转化为逻辑计划表示，然后调用查询优化器来生成最优查询。</p>
 <h4 id="21-总体优化器结构">2.1 总体优化器结构</h4>
@@ -1157,10 +1157,10 @@ $ git pull upstream master
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">scancost<span class="o">(</span>t1<span class="o">)</span> + scancost<span class="o">(</span>t2<span class="o">)</span> + joincost<span class="o">(</span>t1 join t2<span class="o">)</span> +
-scancost<span class="o">(</span>t3<span class="o">)</span> + joincost<span class="o">((</span>t1 join t2<span class="o">)</span> join t3<span class="o">)</span> +
-... 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">scancost<span class="o">(</span>t1<span class="o">)</span> + scancost<span class="o">(</span>t2<span class="o">)</span> + joincost<span class="o">(</span>t1 join t2<span class="o">)</span> +
+</span></span><span class="line"><span class="cl">scancost<span class="o">(</span>t3<span class="o">)</span> + joincost<span class="o">((</span>t1 join t2<span class="o">)</span> join t3<span class="o">)</span> +
+</span></span><span class="line"><span class="cl">... 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里，<code>scancist(t1)</code>是扫描表t1的I/O成本，<code>joincost(t1, t2)</code>是连接j1到j2的CPU成本。为了让I/O成本和CPU成本可以比较，通常使用一个常量比例因子，例如：</p>
 <div class="highlight"><div class="chroma">
@@ -1169,9 +1169,9 @@ scancost<span class="o">(</span>t3<span class="o">)</span> + joincost<span class
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cost<span class="o">(</span>predicate application<span class="o">)</span> <span class="o">=</span> <span class="m">1</span>
-cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</span> SCALING_FACTOR x cost<span class="o">(</span>predicate application<span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cost<span class="o">(</span>predicate application<span class="o">)</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</span> SCALING_FACTOR x cost<span class="o">(</span>predicate application<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于本lab你可以忽略缓存的影响(例如，假设每次访问一个表都要付出全表扫描的成本) &ndash; 同样，这也是你可以在2.3章节中作为一个可选的附加扩展添加到你的lab中的东西。因此，<code>scancost(t1)</code>就是<code>t1 x SCALING_FACTOR</code>中的页数。</p>
 <h5 id="222-连接成本">2.2.2 连接成本</h5>
@@ -1182,9 +1182,9 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">joincost<span class="o">(</span>t1 join t2<span class="o">)</span> <span class="o">=</span> scancost<span class="o">(</span>t1<span class="o">)</span> + ntups<span class="o">(</span>t1<span class="o">)</span> x scancost<span class="o">(</span>t2<span class="o">)</span> //IO cost
-                       + ntups<span class="o">(</span>t1<span class="o">)</span> x ntups<span class="o">(</span>t2<span class="o">)</span>  //CPU cost
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">joincost<span class="o">(</span>t1 join t2<span class="o">)</span> <span class="o">=</span> scancost<span class="o">(</span>t1<span class="o">)</span> + ntups<span class="o">(</span>t1<span class="o">)</span> x scancost<span class="o">(</span>t2<span class="o">)</span> //IO cost
+</span></span><span class="line"><span class="cl">                       + ntups<span class="o">(</span>t1<span class="o">)</span> x ntups<span class="o">(</span>t2<span class="o">)</span>  //CPU cost
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里，<code>ntups(t1)</code>是表t1中的元组数量。</p>
 <h5 id="223-过滤器选择性">2.2.3 过滤器选择性</h5>
@@ -1261,18 +1261,18 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="mf">1.</span> <span class="n">j</span> <span class="o">=</span> <span class="n">set</span> <span class="n">of</span> <span class="n">join</span> <span class="n">nodes</span>
-<span class="mf">2.</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mf">1.</span><span class="p">..</span><span class="o">|</span><span class="n">j</span><span class="o">|</span><span class="p">)</span><span class="o">:</span>
-<span class="mf">3.</span>     <span class="k">for</span> <span class="n">s</span> <span class="n">in</span> <span class="p">{</span><span class="n">all</span> <span class="n">length</span> <span class="n">i</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">j</span><span class="p">}</span>
-<span class="mf">4.</span>       <span class="n">bestPlan</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="mf">5.</span>       <span class="k">for</span> <span class="n">s</span><span class="err">&#39;</span> <span class="n">in</span> <span class="p">{</span><span class="n">all</span> <span class="n">length</span> <span class="n">d</span><span class="o">-</span><span class="mi">1</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">s</span><span class="p">}</span>
-<span class="mf">6.</span>            <span class="n">subplan</span> <span class="o">=</span> <span class="n">optjoin</span><span class="p">(</span><span class="n">s</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="mf">7.</span>            <span class="n">plan</span> <span class="o">=</span> <span class="n">best</span> <span class="n">way</span> <span class="n">to</span> <span class="n">join</span> <span class="p">(</span><span class="n">s</span><span class="o">-</span><span class="n">s</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">to</span> <span class="n">subplan</span>
-<span class="mf">8.</span>            <span class="k">if</span> <span class="p">(</span><span class="n">cost</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">cost</span><span class="p">(</span><span class="n">bestPlan</span><span class="p">))</span>
-<span class="mf">9.</span>               <span class="n">bestPlan</span> <span class="o">=</span> <span class="n">plan</span>
-<span class="mf">10.</span>      <span class="n">optjoin</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="n">bestPlan</span>
-<span class="mf">11.</span> <span class="k">return</span> <span class="n">optjoin</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="mf">1.</span> <span class="n">j</span> <span class="o">=</span> <span class="n">set</span> <span class="n">of</span> <span class="n">join</span> <span class="n">nodes</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mf">1.</span><span class="p">..</span><span class="o">|</span><span class="n">j</span><span class="o">|</span><span class="p">)</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span>     <span class="k">for</span> <span class="n">s</span> <span class="n">in</span> <span class="p">{</span><span class="n">all</span> <span class="n">length</span> <span class="n">i</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">j</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span>       <span class="n">bestPlan</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="mf">5.</span>       <span class="k">for</span> <span class="n">s</span><span class="err">&#39;</span> <span class="n">in</span> <span class="p">{</span><span class="n">all</span> <span class="n">length</span> <span class="n">d</span><span class="o">-</span><span class="mi">1</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">s</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="mf">6.</span>            <span class="n">subplan</span> <span class="o">=</span> <span class="n">optjoin</span><span class="p">(</span><span class="n">s</span><span class="err">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mf">7.</span>            <span class="n">plan</span> <span class="o">=</span> <span class="n">best</span> <span class="n">way</span> <span class="n">to</span> <span class="n">join</span> <span class="p">(</span><span class="n">s</span><span class="o">-</span><span class="n">s</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">to</span> <span class="n">subplan</span>
+</span></span><span class="line"><span class="cl"><span class="mf">8.</span>            <span class="k">if</span> <span class="p">(</span><span class="n">cost</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">cost</span><span class="p">(</span><span class="n">bestPlan</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="mf">9.</span>               <span class="n">bestPlan</span> <span class="o">=</span> <span class="n">plan</span>
+</span></span><span class="line"><span class="cl"><span class="mf">10.</span>      <span class="n">optjoin</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="n">bestPlan</span>
+</span></span><span class="line"><span class="cl"><span class="mf">11.</span> <span class="k">return</span> <span class="n">optjoin</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>为了帮助您实现这个算法，我们提供了几个类和方法来帮助您。首先，<code>JoinOptimizer.java</code> 中的<code>enumerateSubsets(List v，int size)</code>方法将返回一组大小为 <code>v</code> 的所有子集。这种方法对于大型集合来说效率非常低; 您可以通过实现更高效的枚举器来获得额外的分数(提示: 考虑使用就地生成算法和惰性迭代器(或流)接口来避免实现整个功率集)。</p>
 <p>然后，我们提供一个方法：</p>
@@ -1286,13 +1286,13 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java">    <span class="kd">private</span> <span class="n">CostCard</span> <span class="nf">computeCostAndCardOfSubplan</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span> 
-                                                <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">filterSelectivities</span><span class="o">,</span> 
-                                                <span class="n">LogicalJoinNode</span> <span class="n">joinToRemove</span><span class="o">,</span>  
-                                                <span class="n">Set</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="n">joinSet</span><span class="o">,</span>
-                                                <span class="kt">double</span> <span class="n">bestCostSoFar</span><span class="o">,</span>
-                                                <span class="n">PlanCache</span> <span class="n">pc</span><span class="o">)</span> 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">CostCard</span> <span class="nf">computeCostAndCardOfSubplan</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                                                <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">filterSelectivities</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                                                <span class="n">LogicalJoinNode</span> <span class="n">joinToRemove</span><span class="o">,</span>  
+</span></span><span class="line"><span class="cl">                                                <span class="n">Set</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="n">joinSet</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                                <span class="kt">double</span> <span class="n">bestCostSoFar</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                                                <span class="n">PlanCache</span> <span class="n">pc</span><span class="o">)</span> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>给定一个联接子集<code>(joinSet)</code>和一个要从该集中移除的联接<code>(joinToRemove)</code> ，此方法计算将 <code>joinToRemove</code> 联接到 <code>joinSet-{ joinToRemove }</code>的最佳方法。它在 <code>CostCard</code> 对象中返回这个最佳方法，其中包括成本、基数和最佳连接顺序(作为列表)。如果找不到计划(例如，因为不存在可能的左深连接) ，或者如果所有计划的成本大于<code> bestCostSoFar</code> 参数，则 <code>computeCostAndCardOfSubplan</code> 可能返回 null。该方法使用一个名为 <code>pc</code> (在上面的 伪代码中为 <code>optjoin</code>)的前联接缓存来快速查找联接 <code>joinSet-{ joToRemove }</code>的最快方法。其他参数(<code>stats</code> 和 <code>filterSelectivities</code>)被传递到 <code>orderJoins</code> 方法中，您必须将其作为练习4的一部分来实现，下面将对其进行解释。这个方法实际上执行前面描述的假代码的第6-8行。</p>
 <p>在之后，我们提供方法：</p>
@@ -1304,11 +1304,11 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">printJoins</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="n">js</span><span class="o">,</span> 
-                           <span class="n">PlanCache</span> <span class="n">pc</span><span class="o">,</span>
-                           <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span>
-                           <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">selectivities</span><span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">printJoins</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="n">js</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                           <span class="n">PlanCache</span> <span class="n">pc</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">selectivities</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>此方法可用于显示连接计划的图形化表示(例如，当通过优化器的&quot;-explain&quot;选项设置标志时)。</p>
 <p>最后，我们已经提供了一个类 <code>PlanCache</code>，它可以用来缓存到目前为止在 Selinger 实现中考虑的连接子集的最佳方式(使用 <code>computeCostAndCardOfSubplan</code> 需要该类的一个实例)。</p>
@@ -1325,10 +1325,10 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java">  <span class="n">List</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="nf">orderJoins</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span> 
-                   <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">filterSelectivities</span><span class="o">,</span>  
-                   <span class="kt">boolean</span> <span class="n">explain</span><span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">  <span class="n">List</span><span class="o">&lt;</span><span class="n">LogicalJoinNode</span><span class="o">&gt;</span> <span class="nf">orderJoins</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">TableStats</span><span class="o">&gt;</span> <span class="n">stats</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                   <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Double</span><span class="o">&gt;</span> <span class="n">filterSelectivities</span><span class="o">,</span>  
+</span></span><span class="line"><span class="cl">                   <span class="kt">boolean</span> <span class="n">explain</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>此方法应对<code>joins</code>类成员进行操作，并返回一个新列表，该列表指定了联接的执行顺序。此列表的项0指示左深计划中最左、最底的联接。返回列表中的相邻联接应该至少共享一个字段，以确保计划是左深的。这里的 <code>stats</code> 是一个对象，可以通过它找到出现在查询的 <code>FROM</code> 列表中的给定表名的 <code>TableStats</code>。<code>filterSelectivities</code> 允许您找到任何谓词对表的选择性; 它保证在 <code>FROM</code> 列表中每个表名有一个条目。最后，<code>explain</code>指定为了提供信息，应该输出连接顺序的表示形式。</p>
 <p>您可能希望使用上面描述的帮助器方法和类来帮助您的实现。粗略地说，您的实现应该遵循上面的伪代码，循环遍历子集大小、子集和子集的子计划，调用 <code>computeCostAndCardOfSubplan</code> 并构建一个 <code>PlanCache</code> 对象，该对象存储执行每个子集连接的最小成本方式。</p>
@@ -1396,7 +1396,7 @@ cost<span class="o">(</span>pageScan<span class="o">)</span> <span class="o">=</
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

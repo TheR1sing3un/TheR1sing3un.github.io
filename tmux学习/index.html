@@ -271,9 +271,9 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tmux split-window <span class="c1">#划分上下两个窗格</span>
-tmux split-window -h <span class="c1">#划分左右两个窗格</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux split-window <span class="c1">#划分上下两个窗格</span>
+</span></span><span class="line"><span class="cl">tmux split-window -h <span class="c1">#划分左右两个窗格</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img
         class="lazyload"
@@ -293,11 +293,11 @@ tmux split-window -h <span class="c1">#划分左右两个窗格</span>
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tmux <span class="k">select</span>-pane -U <span class="c1">#光标切换到上方窗格</span>
-tmux <span class="k">select</span>-pane -D <span class="c1">#光标切换到下方窗格</span>
-tmux <span class="k">select</span>-pane -L <span class="c1">#光标切换到左边窗格</span>
-tmux <span class="k">select</span>-pane -R <span class="c1">#光标切换到右边窗格</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux <span class="k">select</span>-pane -U <span class="c1">#光标切换到上方窗格</span>
+</span></span><span class="line"><span class="cl">tmux <span class="k">select</span>-pane -D <span class="c1">#光标切换到下方窗格</span>
+</span></span><span class="line"><span class="cl">tmux <span class="k">select</span>-pane -L <span class="c1">#光标切换到左边窗格</span>
+</span></span><span class="line"><span class="cl">tmux <span class="k">select</span>-pane -R <span class="c1">#光标切换到右边窗格</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="53交换窗格位置">5.3交换窗格位置</h3>
 <p><code>tmux swap-pane</code> 命令来交换窗格位置</p>
@@ -307,9 +307,9 @@ tmux <span class="k">select</span>-pane -R <span class="c1">#光标切换到右�
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tmux swap-pane -U <span class="c1">#当前窗格上移</span>
-tmux swap-pane -D <span class="c1">#当前窗格下移</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux swap-pane -U <span class="c1">#当前窗格上移</span>
+</span></span><span class="line"><span class="cl">tmux swap-pane -D <span class="c1">#当前窗格下移</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="54窗格快捷键">5.4窗格快捷键</h3>
 <ul>
@@ -339,9 +339,9 @@ tmux swap-pane -D <span class="c1">#当前窗格下移</span>
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tmux new-window <span class="c1">#新建一个窗口</span>
-tmux new-wndow -n &lt;window-name&gt; <span class="c1">#新建一个指定名称的窗口</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux new-window <span class="c1">#新建一个窗口</span>
+</span></span><span class="line"><span class="cl">tmux new-wndow -n &lt;window-name&gt; <span class="c1">#新建一个指定名称的窗口</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="62切换窗口">6.2切换窗口</h3>
 <p><code>tmux select-window</code>命令用来切换窗口</p>
@@ -351,9 +351,9 @@ tmux new-wndow -n &lt;window-name&gt; <span class="c1">#新建一个指定名称
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tmux <span class="k">select</span>-window -t &lt;window-number&gt; <span class="c1">#切换到指定编号的窗口</span>
-tmux <span class="k">select</span>-window -t &lt;widnow-name&gt; <span class="c1">#切换到指定编号的窗口</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux <span class="k">select</span>-window -t &lt;window-number&gt; <span class="c1">#切换到指定编号的窗口</span>
+</span></span><span class="line"><span class="cl">tmux <span class="k">select</span>-window -t &lt;widnow-name&gt; <span class="c1">#切换到指定编号的窗口</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="63重命名窗口">6.3重命名窗口</h3>
 <p><code>tmux rename-window</code>命令用于为当前窗口起名(或重命名)</p>
@@ -362,8 +362,8 @@ tmux <span class="k">select</span>-window -t &lt;widnow-name&gt; <span class="c1
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tmux rename-window &lt;new-name&gt;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tmux rename-window &lt;new-name&gt;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="64窗口快捷键">6.4窗口快捷键</h3>
 <ul>
@@ -391,18 +391,18 @@ tmux <span class="k">select</span>-window -t &lt;widnow-name&gt; <span class="c1
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 列出所有快捷键，及其对应的 Tmux 命令</span>
-tmux list-keys
-
-<span class="c1"># 列出所有 Tmux 命令及其参数</span>
-tmux list-commands
-
-<span class="c1"># 列出当前所有 Tmux 会话的信息</span>
-tmux info
-
-<span class="c1"># 重新加载当前的 Tmux 配置</span>
-tmux source-file ~/.tmux.conf
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 列出所有快捷键，及其对应的 Tmux 命令</span>
+</span></span><span class="line"><span class="cl">tmux list-keys
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 列出所有 Tmux 命令及其参数</span>
+</span></span><span class="line"><span class="cl">tmux list-commands
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 列出当前所有 Tmux 会话的信息</span>
+</span></span><span class="line"><span class="cl">tmux info
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 重新加载当前的 Tmux 配置</span>
+</span></span><span class="line"><span class="cl">tmux source-file ~/.tmux.conf
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="八参考连接">八.参考连接</h2>
@@ -439,7 +439,7 @@ tmux source-file ~/.tmux.conf
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">TheR1sing3un</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp">粤ICP备2021124507号</span></div>
         </div>
     </footer></div>

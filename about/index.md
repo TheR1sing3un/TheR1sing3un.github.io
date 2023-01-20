@@ -15,7 +15,7 @@
 
 ---
 
-# 会一点Golang & Java
+# 正在努力学Rust/Scala
 
 ---
 
